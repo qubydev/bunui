@@ -2,6 +2,7 @@ import {CodeBlock} from "@/components/codeblock";
 import {ComponentPreview} from "@/components/component-preview";
 import {DocsBody, DocsDescription, DocsPage, DocsTitle} from "@/components/fumadocs/layouts/notebook/page";
 import {InstallCommand} from "@/components/install-command";
+import {registryItemUrl} from "@/config/site";
 
 const toc = [
   {title:"Installation",url:"#installation",depth:2},
@@ -27,7 +28,7 @@ export default function ButtonPage() {
 
       <DocsBody className="prose-sm">
         <h2 id="installation">Installation</h2>
-        <InstallCommand item="https://bunui.com/r/button.json" />
+        <InstallCommand item={registryItemUrl("button")} />
 
         <ComponentPreview name="button-basic" />
 

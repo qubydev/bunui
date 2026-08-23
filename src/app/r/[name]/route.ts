@@ -3,6 +3,8 @@ import path from "node:path";
 
 import {NextResponse} from "next/server";
 
+import {siteConfig} from "@/config/site";
+
 import registry from "../../../../registry.json";
 
 export const dynamic = "force-static";
@@ -39,7 +41,7 @@ export async function GET(_request: Request, {params}: {params: Promise<{name: s
   const itemName = cleanName(name);
 
   if (itemName === "registry") {
-    return NextResponse.json(registry, {headers: jsonHeaders});
+    return NextResponse.json({...registry, homepage: siteConfig.url}, {headers: jsonHeaders});
   }
 
   const item = registry.items.find((entry) => entry.name === itemName);

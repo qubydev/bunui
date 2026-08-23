@@ -1,7 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "bunui",
-  "homepage": "https://bunui.com",
   "items": [
     {
       "name": "button",
