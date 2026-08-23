@@ -1,8 +1,10 @@
 import {CodeBlock} from "@/components/codeblock";
 import {ComponentPreview} from "@/components/component-preview";
 import {DocsBody, DocsDescription, DocsPage, DocsTitle} from "@/components/fumadocs/layouts/notebook/page";
+import {InstallCommand} from "@/components/install-command";
 
 const toc = [
+  {title:"Installation",url:"#installation",depth:2},
   {title:"Examples",url:"#examples",depth:2},
   {title:"Variants",url:"#variants",depth:3},
   {title:"Sizes",url:"#sizes",depth:3},
@@ -24,6 +26,9 @@ export default function ButtonPage() {
       </section>
 
       <DocsBody className="prose-sm">
+        <h2 id="installation">Installation</h2>
+        <InstallCommand item="https://bunui.com/r/button.json" />
+
         <ComponentPreview name="button-basic" />
 
         <h2 id="examples">Examples</h2>
