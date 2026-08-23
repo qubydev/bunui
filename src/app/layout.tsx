@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html suppressHydrationWarning lang="en" className={inter.variable}>
+    <html suppressHydrationWarning lang="en" className={inter.variable} data-scroll-behavior="smooth">
       <body className="flex min-h-screen flex-col font-sans">
         <RootProvider search={{ SearchDialog: BunSearchDialog }}>{children}</RootProvider>
       </body>

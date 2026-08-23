@@ -5,7 +5,7 @@ import {DocsBody, DocsDescription, DocsPage, DocsTitle} from "@/components/fumad
 const toc=[{title:"Buttons",url:"#buttons",depth:2}] as any;
 
 export default function ComponentsPage(){
-  return <DocsPage toc={toc} breadcrumb={{enabled:false}} footer={{enabled:false}}>
+  return <DocsPage toc={toc}>
     <section className="flex flex-col gap-2">
       <DocsTitle>All Components</DocsTitle>
       <DocsDescription className="text-md mt-2 mb-4">Explore the full list of components available in the library. More are on the way.</DocsDescription>

@@ -3,15 +3,13 @@
 import type {ComponentProps} from "react";
 
 import * as Base from "fumadocs-ui/components/sidebar/base";
-import {createLinkItemRenderer} from "fumadocs-ui/components/sidebar/link-item";
 import {createPageTreeRenderer} from "fumadocs-ui/components/sidebar/page-tree";
-import {useContext, useRef} from "react";
+import {useRef} from "react";
 import {tv} from "tailwind-variants";
 
 import {mergeRefs} from "@/components/fumadocs/utils/merge-refs";
 import {cn} from "@/utils/cn";
 
-import {LayoutContext} from "./client";
 
 const itemVariants = tv({
   base: "text-fd-muted-foreground relative flex flex-row items-center gap-2 rounded-lg px-3 py-2 text-start [&_svg]:size-4 [&_svg]:shrink-0",
@@ -32,7 +30,6 @@ function getItemOffset(depth: number) {
 }
 
 export const {
-  SidebarCollapseTrigger,
   SidebarFolder,
   SidebarProvider: Sidebar,
   SidebarTrigger,
@@ -45,9 +42,6 @@ export function SidebarContent({
   ref: refProp,
   ...props
 }: ComponentProps<"aside">) {
-  const context = useContext(LayoutContext);
-  const navMode = context?.navMode ?? "auto";
-
   const ref = useRef<HTMLElement>(null);
 
   return (
@@ -57,9 +51,7 @@ export function SidebarContent({
           data-sidebar-placeholder=""
           className={cn(
             "md:layout:[--fd-sidebar-width:268px] pointer-events-none sticky z-20 [grid-area:sidebar] *:pointer-events-auto max-md:hidden",
-            navMode === "auto"
-              ? "top-(--fd-docs-row-1) h-[calc(var(--fd-docs-height)-var(--fd-docs-row-1))]"
-              : "top-(--fd-docs-row-2) h-[calc(var(--fd-docs-height)-var(--fd-docs-row-2))]",
+            "top-(--fd-docs-row-2) h-[calc(var(--fd-docs-height)-var(--fd-docs-row-2))]",
           )}
         >
           {!!collapsed && <div className="absolute inset-y-0 start-0 w-4" {...rest} />}
@@ -70,8 +62,7 @@ export function SidebarContent({
             id="nd-sidebar"
             className={cn(
               "absolute inset-y-0 start-0 flex w-full flex-col items-end text-sm duration-250 *:w-(--fd-sidebar-width)",
-              navMode === "auto" && "bg-fd-card border-e",
-              collapsed && [
+                collapsed && [
                 "bg-fd-card inset-y-2 w-(--fd-sidebar-width) rounded-xl border transition-transform",
                 hovered
                   ? "translate-x-2 shadow-lg rtl:-translate-x-2"
@@ -227,12 +218,4 @@ export const SidebarPageTree = createPageTreeRenderer({
   SidebarFolderTrigger,
   SidebarItem,
   SidebarSeparator,
-});
-
-export const SidebarLinkItem = createLinkItemRenderer({
-  SidebarFolder,
-  SidebarFolderContent,
-  SidebarFolderLink,
-  SidebarFolderTrigger,
-  SidebarItem,
 });

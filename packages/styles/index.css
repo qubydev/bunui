@@ -1,23 +1,8 @@
 @layer theme, base, components, utilities;
 
-/* BunUI v3 Styles - Layered Theme Architecture */
-
-/* Base layer - Tailwind CSS v4 */
 @import "tailwindcss";
-@import "tw-animate-css";
-
-/* Base styles */
 @import "./base/base.css" layer(base);
-@import "./base/scrollbar.css" layer(base);
-
-/* Base component structures (unstyled) */
 @import "./components/index.css" layer(components);
-
-/* Default theme (variables + component customizations) */
 @import "./themes/default/index.css" layer(theme);
-
-/* Utilities */
 @import "./utilities/index.css";
-
-/* Variants */
 @import "./variants/index.css";

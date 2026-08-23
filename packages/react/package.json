@@ -10,8 +10,7 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@bunui/styles": "workspace:*",
-    "tailwind-variants": "3.3.1"
+    "@bunui/styles": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=19.0.0",

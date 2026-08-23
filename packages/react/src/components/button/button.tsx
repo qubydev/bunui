@@ -3,10 +3,9 @@
 import type { ButtonVariants } from "@bunui/styles";
 import type { ComponentPropsWithRef } from "react";
 
-import { buttonVariants } from "@bunui/styles";
+import {buttonVariants, cx} from "@bunui/styles";
 import { Button as ButtonPrimitive } from "react-aria-components/Button";
 import { composeRenderProps } from "react-aria-components/composeRenderProps";
-import { cx } from "tailwind-variants";
 
 export interface ButtonProps
   extends ComponentPropsWithRef<typeof ButtonPrimitive>, ButtonVariants {}
