@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import { Inter } from "next/font/google";
+import { ClickSpark } from "@/components/click-spark";
 import BunSearchDialog from "@/components/search-dialog";
 import "./globals.css";
 
@@ -14,9 +15,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html suppressHydrationWarning lang="en" className={inter.variable} data-scroll-behavior="smooth">
+    <html
+      suppressHydrationWarning
+      lang="en"
+      className={inter.variable}
+      data-scroll-behavior="smooth"
+    >
       <body className="flex min-h-screen flex-col font-sans">
-        <RootProvider search={{ SearchDialog: BunSearchDialog }}>{children}</RootProvider>
+        <ClickSpark sparkRadius={18} sparkCount={10}>
+          <RootProvider search={{ SearchDialog: BunSearchDialog }}>{children}</RootProvider>
+        </ClickSpark>
       </body>
     </html>
   );
