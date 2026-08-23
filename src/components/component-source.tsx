@@ -44,7 +44,7 @@ export async function ComponentSource({
     try {
       const file = await fs.readFile(path.join(process.cwd(), "src", "demos", src), "utf-8");
 
-      code = file.replaceAll("@/registry/default/ui/button", "@/components/ui/button");
+      code = file.replaceAll("@/registry/default/ui/button", "@/components/bunui/button");
     } catch (error) {
       // Failed to read demo file
 

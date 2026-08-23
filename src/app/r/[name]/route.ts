@@ -22,7 +22,7 @@ async function withFileContent(item: RegistryItem) {
   const files = await Promise.all(
     item.files.map(async (file) => ({
       ...file,
-      target: `@ui/${item.name}.tsx`,
+      target: `@components/bunui/${item.name}.tsx`,
       content: await fs.readFile(path.join(process.cwd(), file.path), "utf-8"),
     })),
   );
