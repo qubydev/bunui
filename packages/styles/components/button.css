@@ -9,7 +9,7 @@
    * CRITICAL: motion-reduce must be AFTER transition for correct override specificity
    */
   transition:
-    transform 250ms var(--ease-smooth),
+    transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
     background-color 100ms var(--ease-out),
     box-shadow 100ms var(--ease-out);
   @apply transform-gpu will-change-transform motion-reduce:transition-none;
@@ -47,13 +47,12 @@
   &:active,
   &[data-pressed="true"] {
     background-color: var(--button-bg-pressed);
-    transform: scale(0.97);
   }
 
   /* Hover */
   @media (hover: hover) {
-    &:hover,
-    &[data-hovered="true"] {
+    &:hover:not(:active):not([data-pressed="true"]),
+    &[data-hovered="true"]:not(:active):not([data-pressed="true"]) {
       background-color: var(--button-bg-hover);
     }
   }
@@ -72,10 +71,6 @@
     @apply size-4;
   }
 
-  &:active,
-  &[data-pressed="true"] {
-    transform: scale(0.98);
-  }
 }
 
 .button--md {
@@ -85,10 +80,6 @@
 .button--lg {
   @apply h-11 text-base md:h-10;
 
-  &:active,
-  &[data-pressed="true"] {
-    transform: scale(0.96);
-  }
 }
 
 /* Color variants - only set custom property values */
@@ -104,12 +95,6 @@
   --button-bg-hover: var(--default-hover);
   --button-bg-pressed: var(--default-hover);
   --button-fg: var(--accent-soft-foreground);
-}
-
-.button--tertiary {
-  --button-bg: var(--default);
-  --button-bg-hover: var(--default-hover);
-  --button-bg-pressed: var(--default-hover);
 }
 
 .button--ghost,

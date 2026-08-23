@@ -30,7 +30,6 @@ export const buttonVariants = tv({
       outline: "button--outline",
       primary: "button--primary",
       secondary: "button--secondary",
-      tertiary: "button--tertiary",
     },
   },
 });

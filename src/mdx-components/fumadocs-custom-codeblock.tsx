@@ -17,8 +17,8 @@ export function FumadocsCustomCodeblock({allowCopy = true, children, code, ...pr
       allowCopy={allowCopy}
       // @ts-expect-error fumadocs viewport ref type
       viewportProps={{ref: areaRef}}
-      Actions={(actionsProps) => (
-        <div {...actionsProps} className={cn("z-1! empty:hidden", actionsProps.className)}>
+      Actions={({className: _className, ...actionsProps}) => (
+        <div {...actionsProps} className="absolute top-2.5 right-2.5 z-10 flex empty:hidden">
           {!!allowCopy && <CopyButton code={code} containerRef={areaRef} />}
         </div>
       )}

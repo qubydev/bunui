@@ -4,7 +4,7 @@ import {Button} from "@bunui/react";
 export function IconOnly() {
   return (
     <div className="flex gap-3">
-      <Button isIconOnly aria-label="More options" variant="tertiary">
+      <Button isIconOnly aria-label="More options" variant="ghost">
         <Ellipsis />
       </Button>
       <Button isIconOnly aria-label="Settings" variant="secondary">

@@ -128,7 +128,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   @apply rounded-field;
-  transition: none;
 
   &:hover {
     background: rgba(0, 0, 0, 0.04);
@@ -137,6 +136,25 @@
   &[data-active="true"] {
     @apply bg-surface shadow-surface;
   }
+}
+
+.sidebar-bouncy-item {
+  transform-origin: 50% 50%;
+  transition:
+    transform 180ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 120ms var(--ease-out),
+    color 120ms var(--ease-out) !important;
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  .sidebar-bouncy-item:hover {
+    transform: scaleX(1.025) scaleY(1.02);
+  }
+}
+
+.sidebar-bouncy-item:active {
+  transform: scaleX(1.04) scaleY(0.94);
 }
 
 #nd-page {
@@ -235,8 +253,34 @@ code {
   }
 }
 
-.is-isolated .docs-code-block {
+.standalone-code-block {
+  @apply my-5 overflow-hidden rounded-xl border border-separator bg-background-secondary px-4 py-3 shadow-surface;
+  max-width: min(100%, 46rem);
+
+  .fd-scroll-container {
+    @apply bg-transparent! px-0 py-0;
+  }
+
+  pre {
+    @apply m-0 text-[13px] leading-6;
+  }
+
+  div:first-of-type {
+    @apply bg-transparent!;
+  }
+
+  button {
+    @apply text-muted transition-colors hover:text-foreground;
+  }
+}
+
+.is-isolated .docs-code-block,
+.docs-code-block.is-isolated {
   background: rgba(0, 0, 0, 0.04) !important;
+}
+
+.docs-code-block.standalone-code-block {
+  @apply bg-background-secondary!;
 }
 
 .code-block-wrapper {
@@ -287,8 +331,17 @@ code {
     }
   }
 
-  .is-isolated .docs-code-block {
+  .standalone-code-block {
+    @apply border-border bg-background-secondary shadow-none;
+  }
+
+  .is-isolated .docs-code-block,
+  .docs-code-block.is-isolated {
     background: rgba(40, 40, 40, 0.4) !important;
+  }
+
+  .docs-code-block.standalone-code-block {
+    @apply bg-background-secondary!;
   }
 
   .shiki:not(.not-fumadocs-codeblock *) code .highlighted {

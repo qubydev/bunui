@@ -12,7 +12,7 @@ import {cn} from "@/utils/cn";
 
 
 const itemVariants = tv({
-  base: "text-fd-muted-foreground relative flex flex-row items-center gap-2 rounded-lg px-3 py-2 text-start [&_svg]:size-4 [&_svg]:shrink-0",
+  base: "sidebar-bouncy-item text-fd-muted-foreground relative flex flex-row items-center gap-2 rounded-lg px-3 py-2 text-start [&_svg]:size-4 [&_svg]:shrink-0",
   variants: {
     highlight: {
       true: "data-[active=true]:before:bg-fd-primary data-[active=true]:before:absolute data-[active=true]:before:inset-y-2.5 data-[active=true]:before:start-2.5 data-[active=true]:before:w-px data-[active=true]:before:content-['']",

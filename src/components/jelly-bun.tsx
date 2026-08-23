@@ -1,6 +1,6 @@
 "use client";
 
-import {type CSSProperties, type PointerEvent, useEffect, useId, useRef} from "react";
+import {type CSSProperties, useEffect, useId, useRef} from "react";
 import gsap from "gsap";
 import {cn} from "@/utils/cn";
 
@@ -51,6 +51,7 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
   const reduceMotionRef = useRef(false);
   const isPressedRef = useRef(false);
   const isHoveringRef = useRef(false);
+  const hasPointerRef = useRef(false);
 
   useEffect(() => {
     const bun = bunRef.current;
@@ -66,6 +67,79 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
     reduceMotionRef.current = reduceMotion;
 
     gsap.set([eyes, leftEye, rightEye], {transformOrigin: "50% 50%"});
+
+    const intro = reduceMotion
+      ? null
+      : gsap
+          .timeline()
+          .fromTo(
+            bun,
+            {
+              opacity: 0,
+              scaleX: 0.96,
+              scaleY: 1.04,
+              y: -150,
+            },
+            {
+              duration: 0.38,
+              ease: "power2.in",
+              opacity: 1,
+              scaleX: 0.98,
+              scaleY: 1.02,
+              y: 0,
+            },
+          )
+          .to(bun, {
+            duration: 0.1,
+            ease: "power2.out",
+            scaleX: 1.14,
+            scaleY: 0.82,
+            y: 8,
+          }, "-=0.05")
+          .to(bun, {
+            duration: 0.16,
+            ease: "power2.out",
+            scaleX: 0.96,
+            scaleY: 1.08,
+            y: -6,
+          })
+          .to(bun, {
+            duration: 0.38,
+            ease: "elastic.out(1, 0.42)",
+            scaleX: 1,
+            scaleY: 1,
+            y: 0,
+          });
+
+    const followPointer = (event: PointerEvent) => {
+      hasPointerRef.current = true;
+      lookTweenRef.current?.kill();
+      lookTweenRef.current = null;
+
+      if (lookTimerRef.current) {
+        clearTimeout(lookTimerRef.current);
+      }
+
+      const rect = bun.getBoundingClientRect();
+
+      if (!rect.width || !rect.height) {
+        return;
+      }
+
+      const localX = (event.clientX - rect.left) * (612 / rect.width);
+      const localY = (event.clientY - rect.top) * (612 / rect.height);
+      const dx = localX - 306;
+      const dy = localY - 306;
+      const distance = isHoveringRef.current ? 0.28 : 0.16;
+
+      followTweenRef.current = gsap.to(eyes, {
+        duration: isHoveringRef.current ? 0.34 : 0.5,
+        ease: "power3.out",
+        overwrite: "auto",
+        x: gsap.utils.clamp(-70, 70, dx * distance),
+        y: gsap.utils.clamp(-40, 40, dy * distance),
+      });
+    };
 
     const stopAnimation = () => {
       activeTweenRef.current?.kill();
@@ -145,7 +219,7 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
       }
 
       lookTimerRef.current = setTimeout(() => {
-        if (isHoveringRef.current) {
+        if (isHoveringRef.current || hasPointerRef.current) {
           return;
         }
 
@@ -171,10 +245,12 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
     if (!reduceMotion) {
       scheduleBlink();
       scheduleLook();
+      window.addEventListener("pointermove", followPointer);
     }
 
     return () => {
       stopAnimation();
+      intro?.kill();
       lookTweenRef.current?.kill();
       followTweenRef.current?.kill();
       scheduleBlinkRef.current = null;
@@ -195,6 +271,8 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
       if (lookTimerRef.current) {
         clearTimeout(lookTimerRef.current);
       }
+
+      window.removeEventListener("pointermove", followPointer);
     };
   }, []);
 
@@ -215,7 +293,7 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
     }
 
     lookTimerRef.current = setTimeout(() => {
-      if (isHoveringRef.current) {
+      if (isHoveringRef.current || hasPointerRef.current) {
         return;
       }
 
@@ -252,18 +330,6 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
       ease: "back.out(1.5)",
       scale: 1.12,
     });
-
-    gsap.to(leftEye, {
-      duration: 0.3,
-      ease: "power2.out",
-      x: 24,
-    });
-
-    gsap.to(rightEye, {
-      duration: 0.3,
-      ease: "power2.out",
-      x: -24,
-    });
   };
 
   const leaveHover = () => {
@@ -288,34 +354,6 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
       duration: 0.25,
       ease: "power2.out",
       x: 0,
-    });
-  };
-
-  const handlePointerMove = (event: PointerEvent<SVGSVGElement>) => {
-    const bun = bunRef.current;
-    const eyes = eyesRef.current;
-
-    if (!bun || !eyes || !isHoveringRef.current) {
-      return;
-    }
-
-    const rect = bun.getBoundingClientRect();
-
-    if (!rect.width || !rect.height) {
-      return;
-    }
-
-    const localX = (event.clientX - rect.left) * (612 / rect.width);
-    const localY = (event.clientY - rect.top) * (612 / rect.height);
-    const dx = localX - 306;
-    const dy = localY - 306;
-
-    followTweenRef.current = gsap.to(eyes, {
-      duration: 0.4,
-      ease: "power3.out",
-      overwrite: "auto",
-      x: gsap.utils.clamp(-70, 70, dx * 0.28),
-      y: gsap.utils.clamp(-40, 40, dy * 0.28),
     });
   };
 
@@ -442,14 +480,12 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
         isHoveringRef.current = true;
         stopLook();
         enterHover();
-        handlePointerMove(event);
       }}
       onPointerLeave={() => {
         isHoveringRef.current = false;
         leaveHover();
         resumeLook();
       }}
-      onPointerMove={handlePointerMove}
       onPointerUp={(event) => {
         event.preventDefault();
         release();

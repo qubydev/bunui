@@ -12,7 +12,7 @@ export function WithIcons() {
         <Plus />
         Add Member
       </Button>
-      <Button variant="tertiary">
+      <Button variant="outline">
         <Envelope />
         Email
       </Button>

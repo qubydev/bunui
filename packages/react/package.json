@@ -10,7 +10,8 @@
     "./package.json": "./package.json"
   },
   "dependencies": {
-    "@bunui/styles": "workspace:*"
+    "@bunui/styles": "workspace:*",
+    "gsap": "3.15.0"
   },
   "peerDependencies": {
     "react": ">=19.0.0",

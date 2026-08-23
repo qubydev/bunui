@@ -9,7 +9,7 @@ import {cn} from "@/utils/cn";
 export function CodeBlock({children,className,code,collapsible,isIsolated=false,preview,showLineNumbers,title,...props}:{isIsolated?:boolean;lang?:string;code?:string;collapsible?:boolean;showLineNumbers?:boolean;title:string|undefined;children:React.ReactNode|React.ReactElement;preview?:React.ReactNode} & CodeBlockProps) {
   const [isCollapsed,setIsCollapsed]=React.useState(true);
   if(!collapsible){
-    return <BaseCodeBlock code={code} title={title} className={cn("code-block-wrapper docs-code-block",isIsolated&&"is-isolated",showLineNumbers&&"docs-code-block-line-numbers",className)} {...props}>{children}</BaseCodeBlock>;
+    return <BaseCodeBlock code={code} title={title} className={cn("code-block-wrapper docs-code-block standalone-code-block",isIsolated&&"is-isolated",showLineNumbers&&"docs-code-block-line-numbers",className)} {...props}>{children}</BaseCodeBlock>;
   }
   return <div className="relative">
     <div className={cn("code-block-wrapper",isIsolated&&"is-isolated",isCollapsed&&"mask-to-bottom relative max-h-[150px] overflow-hidden",!isCollapsed&&"pb-10")}>
@@ -17,8 +17,10 @@ export function CodeBlock({children,className,code,collapsible,isIsolated=false,
         {isCollapsed&&preview?preview:children}
       </BaseCodeBlock>
     </div>
-    <Button className="absolute end-1/2 bottom-2 translate-x-1/2 bg-surface text-xs shadow-sm shadow-black/5" size="sm" type="button" variant="tertiary" onPress={()=>setIsCollapsed(!isCollapsed)}>
-      {isCollapsed?"Expand code":"Collapse code"}
-    </Button>
+    <div className="absolute end-1/2 bottom-2 translate-x-1/2">
+      <Button className="bg-surface text-xs shadow-sm shadow-black/5" size="sm" type="button" variant="secondary" onPress={()=>setIsCollapsed(!isCollapsed)}>
+        {isCollapsed?"Expand code":"Collapse code"}
+      </Button>
+    </div>
   </div>;
 }
