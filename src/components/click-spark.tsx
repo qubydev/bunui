@@ -7,6 +7,7 @@ interface ClickSparkProps {
   sparkSize?: number;
   sparkRadius?: number;
   sparkCount?: number;
+  sparkOpacity?: number;
   duration?: number;
   easing?: "linear" | "ease-in" | "ease-out" | "ease-in-out";
   extraScale?: number;
@@ -34,6 +35,7 @@ export function ClickSpark({
   sparkSize = 10,
   sparkRadius = 15,
   sparkCount = 8,
+  sparkOpacity = 0.7,
   duration = 400,
   easing = "ease-out",
   extraScale = 1,
@@ -151,12 +153,14 @@ export function ClickSpark({
         const x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
         const y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
 
+        ctx.globalAlpha = sparkOpacity;
         ctx.strokeStyle = resolvedSparkColor;
         ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
         ctx.stroke();
+        ctx.globalAlpha = 1;
 
         return true;
       });
@@ -169,7 +173,7 @@ export function ClickSpark({
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, [sparkColor, sparkSize, sparkRadius, duration, easeFunc, extraScale]);
+  }, [sparkColor, sparkSize, sparkRadius, sparkOpacity, duration, easeFunc, extraScale]);
 
   return (
     <div className="relative flex min-h-screen flex-col">

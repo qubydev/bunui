@@ -137,7 +137,3 @@
   @apply w-11 md:w-10;
 }
 
-/* Full width modifier */
-.button--full-width {
-  @apply w-full;
-}

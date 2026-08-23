@@ -1,5 +1,5 @@
 import {Ellipsis, Gear, TrashBin} from "@gravity-ui/icons";
-import {Button} from "@bunui/react";
+import {Button} from "@/registry/default/ui/button";
 
 export function IconOnly() {
   return (

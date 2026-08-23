@@ -4,7 +4,7 @@ import {useEffect, useRef} from "react";
 import {useRouter} from "next/navigation";
 import {ArrowRight} from "@gravity-ui/icons";
 import gsap from "gsap";
-import {Button} from "@bunui/react";
+import {Button} from "@/registry/default/ui/button";
 
 function HeroUIIcon() {
   return (

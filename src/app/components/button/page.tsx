@@ -3,7 +3,6 @@ import {ComponentPreview} from "@/components/component-preview";
 import {DocsBody, DocsDescription, DocsPage, DocsTitle} from "@/components/fumadocs/layouts/notebook/page";
 
 const toc = [
-  {title:"Usage",url:"#usage",depth:2},
   {title:"Examples",url:"#examples",depth:2},
   {title:"Variants",url:"#variants",depth:3},
   {title:"Sizes",url:"#sizes",depth:3},
@@ -25,8 +24,6 @@ export default function ButtonPage() {
       </section>
 
       <DocsBody className="prose-sm">
-        <h2 id="usage">Usage</h2>
-        <CodeBlock code={'import { Button } from "@bunui/react";'} lang="tsx" title={undefined} />
         <ComponentPreview name="button-basic" />
 
         <h2 id="examples">Examples</h2>

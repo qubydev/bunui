@@ -3,7 +3,7 @@
 import type {CodeBlockProps} from "fumadocs-ui/components/codeblock";
 import type {ComponentProps, RefObject} from "react";
 import {Check, Copy} from "@gravity-ui/icons";
-import {buttonVariants} from "@bunui/react";
+import {buttonVariants} from "@/registry/default/ui/button";
 import {CodeBlock} from "fumadocs-ui/components/codeblock";
 import {useCopyButton} from "fumadocs-ui/utils/use-copy-button";
 import {useRef} from "react";

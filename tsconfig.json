@@ -23,6 +23,9 @@
       }
     ],
     "paths": {
+      "@/registry/*": [
+        "./registry/*"
+      ],
       "@/*": [
         "./src/*"
       ]

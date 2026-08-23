@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@bunui/react':
-        specifier: workspace:*
-        version: link:packages/react
       '@bunui/styles':
         specifier: workspace:*
         version: link:packages/styles
@@ -63,21 +60,6 @@ importers:
       typescript:
         specifier: 5.9.3
         version: 5.9.3
-
-  packages/react:
-    dependencies:
-      '@bunui/styles':
-        specifier: workspace:*
-        version: link:../styles
-      gsap:
-        specifier: 3.15.0
-        version: 3.15.0
-      react:
-        specifier: '>=19.0.0'
-        version: 19.2.6
-      react-aria-components:
-        specifier: ^1.20.0
-        version: 1.20.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
 
   packages/styles:
     dependencies:

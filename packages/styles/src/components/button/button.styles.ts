@@ -5,16 +5,11 @@ import {tv} from "tailwind-variants";
 export const buttonVariants = tv({
   base: "button",
   defaultVariants: {
-    fullWidth: false,
     isIconOnly: false,
     size: "md",
     variant: "primary",
   },
   variants: {
-    fullWidth: {
-      false: "",
-      true: "button--full-width",
-    },
     isIconOnly: {
       true: "button--icon-only",
     },

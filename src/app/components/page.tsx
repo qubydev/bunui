@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {Button} from "@bunui/react";
+import {Button} from "@/registry/default/ui/button";
 import {DocsBody, DocsDescription, DocsPage, DocsTitle} from "@/components/fumadocs/layouts/notebook/page";
 
 const toc=[{title:"Buttons",url:"#buttons",depth:2}] as any;

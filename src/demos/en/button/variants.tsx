@@ -1,4 +1,4 @@
-import {Button} from "@bunui/react";
+import {Button} from "@/registry/default/ui/button";
 
 export function Variants() {
   return (

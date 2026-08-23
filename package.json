@@ -15,7 +15,6 @@
     "check": "pnpm typecheck && pnpm build"
   },
   "dependencies": {
-    "@bunui/react": "workspace:*",
     "@bunui/styles": "workspace:*",
     "@gravity-ui/icons": "2.16.0",
     "fumadocs-core": "16.9.0",
