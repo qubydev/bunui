@@ -18,7 +18,7 @@ export function CodeBlock({children,className,code,collapsible,isIsolated=false,
       </BaseCodeBlock>
     </div>
     <div className="absolute end-1/2 bottom-2 translate-x-1/2">
-      <Button className="bg-surface text-xs shadow-sm shadow-black/5" size="sm" type="button" variant="secondary" onPress={()=>setIsCollapsed(!isCollapsed)}>
+      <Button className="border border-separator bg-background-tertiary text-xs text-foreground shadow-none [--button-bg:var(--background-tertiary)] [--button-bg-hover:var(--default-hover)] [--button-fg:var(--foreground)]" size="sm" type="button" variant="secondary" onPress={()=>setIsCollapsed(!isCollapsed)}>
         {isCollapsed?"Expand code":"Collapse code"}
       </Button>
     </div>
