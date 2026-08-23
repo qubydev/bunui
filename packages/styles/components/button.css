@@ -1,0 +1,158 @@
+/* Button component styles */
+
+/* Base button styles */
+.button {
+  @apply relative isolate inline-flex h-10 w-fit origin-center items-center justify-center gap-2 rounded-3xl px-4 text-sm font-medium whitespace-nowrap outline-none select-none no-highlight md:h-9;
+
+  /**
+   * Transitions
+   * CRITICAL: motion-reduce must be AFTER transition for correct override specificity
+   */
+  transition:
+    transform 250ms var(--ease-smooth),
+    background-color 100ms var(--ease-out),
+    box-shadow 100ms var(--ease-out);
+  @apply transform-gpu will-change-transform motion-reduce:transition-none;
+
+  /* Cursor */
+  cursor: var(--cursor-interactive);
+
+  /* Default tokens (fallback behavior) */
+  --button-bg: transparent;
+  --button-bg-hover: var(--button-bg);
+  --button-bg-pressed: var(--button-bg-hover);
+  --button-fg: currentColor;
+
+  background-color: var(--button-bg);
+  color: var(--button-fg);
+
+  /* Focus state */
+  &:focus-visible:not(:focus),
+  &[data-focus-visible="true"] {
+    @apply status-focused;
+  }
+
+  /* Disabled state */
+  &:disabled,
+  &[aria-disabled="true"] {
+    @apply status-disabled;
+  }
+
+  /* Pending state */
+  &[data-pending="true"] {
+    @apply status-pending;
+  }
+
+  /* Active / pressed */
+  &:active,
+  &[data-pressed="true"] {
+    background-color: var(--button-bg-pressed);
+    transform: scale(0.97);
+  }
+
+  /* Hover */
+  @media (hover: hover) {
+    &:hover,
+    &[data-hovered="true"] {
+      background-color: var(--button-bg-hover);
+    }
+  }
+
+  /* SVG icon styling - exclude spinner and link-icon svgs */
+  & svg:not([data-slot="spinner"] svg, [data-slot="link-icon"] svg) {
+    @apply pointer-events-none -mx-0.5 my-0.5 size-5 shrink-0 self-center sm:my-1 sm:size-4;
+  }
+}
+
+/* Size variants */
+.button--sm {
+  @apply h-9 px-3 md:h-8;
+
+  & svg:not([data-slot="spinner"] svg, [data-slot="link-icon"] svg) {
+    @apply size-4;
+  }
+
+  &:active,
+  &[data-pressed="true"] {
+    transform: scale(0.98);
+  }
+}
+
+.button--md {
+  /* No styles as this is the default size */
+}
+
+.button--lg {
+  @apply h-11 text-base md:h-10;
+
+  &:active,
+  &[data-pressed="true"] {
+    transform: scale(0.96);
+  }
+}
+
+/* Color variants - only set custom property values */
+.button--primary {
+  --button-bg: var(--accent);
+  --button-bg-hover: var(--accent-hover);
+  --button-bg-pressed: var(--accent-hover);
+  --button-fg: var(--accent-foreground);
+}
+
+.button--secondary {
+  --button-bg: var(--default);
+  --button-bg-hover: var(--default-hover);
+  --button-bg-pressed: var(--default-hover);
+  --button-fg: var(--accent-soft-foreground);
+}
+
+.button--tertiary {
+  --button-bg: var(--default);
+  --button-bg-hover: var(--default-hover);
+  --button-bg-pressed: var(--default-hover);
+}
+
+.button--ghost,
+.button--outline {
+  --button-bg: transparent;
+  --button-bg-hover: var(--default);
+  --button-bg-pressed: var(--default);
+  --button-fg: var(--default-foreground);
+}
+
+.button--outline {
+  @apply border border-border;
+  --button-bg-hover: color-mix(in srgb, var(--default) 60%, transparent);
+}
+
+.button--danger {
+  --button-bg: var(--danger);
+  --button-bg-hover: var(--danger-hover);
+  --button-bg-pressed: var(--danger-hover);
+  --button-fg: var(--danger-foreground);
+}
+
+.button--danger-soft {
+  --button-bg: var(--danger-soft);
+  --button-bg-hover: var(--danger-soft-hover);
+  --button-bg-pressed: var(--danger-soft-hover);
+  --button-fg: var(--danger-soft-foreground);
+}
+
+/* Icon-only modifier */
+.button--icon-only {
+  @apply w-10 p-0 md:w-9;
+}
+
+.button--icon-only.button--sm {
+  @apply w-9 md:w-8;
+}
+
+.button--icon-only.button--lg {
+  @apply w-11 md:w-10;
+}
+
+/* Full width modifier */
+.button--full-width {
+  @apply w-full;
+}

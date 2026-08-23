@@ -1,0 +1,20 @@
+{
+  "name": "@bunui/react",
+  "version": "0.1.0",
+  "description": "BunUI React components",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@bunui/styles": "workspace:*",
+    "tailwind-variants": "3.3.1"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-aria-components": "^1.20.0"
+  }
+}
