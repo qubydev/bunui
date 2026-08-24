@@ -1,5 +1,4 @@
 import Link from "next/link";
-import {Button} from "@/registry/default/ui/button";
 import {DocsBody, DocsDescription, DocsPage, DocsTitle} from "@/components/fumadocs/layouts/notebook/page";
 
 const toc=[{title:"Buttons",url:"#buttons",depth:2}] as any;
@@ -19,8 +18,14 @@ export default function ComponentsPage(){
               <div className="order-1 sm:order-2">
                 <Link className="link no-underline" href="/components/button">Button</Link>
               </div>
-              <div className="relative order-2 h-[198px] overflow-hidden rounded-xl border border-separator sm:order-1">
-                <Link className="flex h-full w-full items-center justify-center" href="/components/button"><Button>Button</Button></Link>
+              <div className="relative order-2 aspect-square overflow-hidden rounded-xl border border-separator sm:order-1">
+                <Link className="block h-full w-full" href="/components/button">
+                  <img
+                    alt="Button component preview"
+                    className="h-full w-full object-cover"
+                    src="/previews/button.png"
+                  />
+                </Link>
               </div>
             </div>
           </div>

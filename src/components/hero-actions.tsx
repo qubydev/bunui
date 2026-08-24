@@ -1,16 +1,20 @@
 "use client";
 
-import {useEffect, useRef} from "react";
-import {useRouter} from "next/navigation";
-import {ArrowRight} from "@gravity-ui/icons";
+import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowRight } from "@gravity-ui/icons";
 import gsap from "gsap";
-import {Button} from "@/registry/default/ui/button";
+import { Button } from "@/registry/default/ui/button";
 
-function HeroUIIcon() {
+function HeroUIIcon({
+  className,
+}: {
+  className?: string;
+}) {
   return (
     <svg
       aria-hidden="true"
-      className="h-6 w-[18px]"
+      className={className || "h-6 w-auto"}
       fill="none"
       height="26"
       viewBox="0 0 32 44"
@@ -47,12 +51,12 @@ export function HeroActions() {
     });
 
     if (reduceMotion) {
-      gsap.set([description, button], {opacity: 1});
+      gsap.set([description, button], { opacity: 1 });
       return;
     }
 
     const intro = gsap
-      .timeline({delay: 0.12})
+      .timeline({ delay: 0.12 })
       .fromTo(
         description,
         {
@@ -103,29 +107,23 @@ export function HeroActions() {
           rel="noreferrer"
           target="_blank"
         >
-          <span className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded-md bg-foreground px-2 py-1 text-xs font-medium whitespace-nowrap text-background opacity-0 transition-opacity group-hover:opacity-100">
-            yui540
-          </span>
           <img
             alt="yui540"
-            className="size-6 rounded-full border border-border"
+            className="size-8 rounded-full border"
             height="24"
             src="https://pbs.twimg.com/profile_images/1998260440758140928/Yw4oQOjY_400x400.jpg"
             width="24"
           />
         </a>
-        <span className="text-muted/70">and</span>
+        <span className="text-muted/70">&</span>
         <a
           aria-label="HeroUI"
-          className="group relative inline-flex translate-y-[2px] items-center text-foreground transition-transform hover:scale-110"
+          className="group relative inline-flex items-center text-foreground transition-transform hover:scale-110"
           href="https://heroui.com/"
           rel="noreferrer"
           target="_blank"
         >
-          <span className="pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded-md bg-foreground px-2 py-1 text-xs font-medium whitespace-nowrap text-background opacity-0 transition-opacity group-hover:opacity-100">
-            HeroUI
-          </span>
-          <HeroUIIcon />
+          <HeroUIIcon className="h-10" />
         </a>
       </p>
       <div
