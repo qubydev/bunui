@@ -17,6 +17,7 @@
   --color-fd-accent-foreground: var(--foreground);
   --color-fd-muted-foreground: var(--muted);
   --color-backdrop: rgba(255, 255, 255, 0.4);
+  --docs-code-surface: color-mix(in oklab, var(--background) 94%, var(--foreground) 6%);
   --animate-fd-fade-in: custom-fade-in 200ms ease-out forwards;
   --animate-fd-fade-out: custom-fade-out 150ms ease-out forwards;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -38,6 +39,7 @@
   --color-fd-border: var(--border);
   --color-fd-muted-foreground: var(--muted);
   --color-backdrop: rgba(0, 0, 0, 0.4);
+  --docs-code-surface: rgba(40, 40, 40, 0.4);
 }
 
 /* Shared topbar */
@@ -119,7 +121,7 @@ button:disabled,
 }
 
 #nd-sidebar {
-  @apply items-start px-5 pt-4 transition-none;
+  @apply items-start px-4 pt-4 transition-none;
   --sidebar-item-hover: color-mix(in oklab, var(--background) 96%, var(--foreground) 4%);
   --sidebar-item-active: color-mix(in oklab, var(--background) 94%, var(--foreground) 6%);
 
@@ -137,7 +139,6 @@ button:disabled,
   }
 
   [data-radix-scroll-area-viewport] {
-    @apply px-3 pt-2;
     min-width: 0;
 
     > div {
@@ -145,13 +146,6 @@ button:disabled,
       min-width: 0;
     }
 
-    p {
-      @apply font-medium;
-    }
-
-    p:not(:first-child) {
-      @apply mt-4;
-    }
   }
 
   [data-fd-if-empty] {
@@ -289,10 +283,11 @@ code {
 }
 
 .docs-code-block {
-  @apply m-0 rounded-none border-none pt-4 pr-2 pb-4 pl-2;
+  @apply m-0 overflow-x-auto overflow-y-hidden rounded-none border-none pt-4 pr-2 pb-4 pl-2;
+  background: var(--docs-code-surface);
 
-  .fd-scroll-container {
-    @apply rounded-none border-none bg-transparent! p-0;
+  .docs-code-block-viewport {
+    @apply min-w-full overflow-visible rounded-none border-none bg-transparent! p-0;
   }
 
   .line {
@@ -302,6 +297,12 @@ code {
   [role="region"] {
     max-height: 75vh;
   }
+}
+
+.prose .shiki.docs-code-block {
+  background: var(--docs-code-surface);
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .docs-code-block-with-toggle {
@@ -331,7 +332,7 @@ code {
 
 .is-isolated .docs-code-block,
 .docs-code-block.is-isolated {
-  background: rgba(0, 0, 0, 0.04) !important;
+  background: var(--docs-code-surface) !important;
 }
 
 .docs-code-block.standalone-code-block {
@@ -380,11 +381,15 @@ code {
   }
 
   .docs-code-block {
-    background: rgba(40, 40, 40, 0.4);
+    background: var(--docs-code-surface);
 
     .fd-scroll-container {
       background: transparent !important;
     }
+  }
+
+  .prose .shiki.docs-code-block {
+    background: var(--docs-code-surface);
   }
 
   .standalone-code-block {
@@ -393,7 +398,7 @@ code {
 
   .is-isolated .docs-code-block,
   .docs-code-block.is-isolated {
-    background: rgba(40, 40, 40, 0.4) !important;
+    background: var(--docs-code-surface) !important;
   }
 
   .docs-code-block.standalone-code-block {

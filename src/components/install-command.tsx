@@ -1,16 +1,16 @@
 "use client";
 
-import {Check, Copy, Terminal} from "@gravity-ui/icons";
+import {Check, Copy} from "@gravity-ui/icons";
 import {useMemo, useState} from "react";
 
 import {buttonVariants} from "@/registry/default/ui/button";
 import {cn} from "@/utils/cn";
 
 const managers = [
-  {name: "pnpm", command: (item: string) => `pnpm dlx shadcn@latest add ${item}`},
   {name: "npm", command: (item: string) => `npx shadcn@latest add ${item}`},
-  {name: "yarn", command: (item: string) => `yarn dlx shadcn@latest add ${item}`},
+  {name: "pnpm", command: (item: string) => `pnpm dlx shadcn@latest add ${item}`},
   {name: "bun", command: (item: string) => `bunx shadcn@latest add ${item}`},
+  {name: "yarn", command: (item: string) => `yarn dlx shadcn@latest add ${item}`},
 ] as const;
 
 interface InstallCommandProps {
@@ -19,7 +19,7 @@ interface InstallCommandProps {
 }
 
 export function InstallCommand({className, item}: InstallCommandProps) {
-  const [active, setActive] = useState<(typeof managers)[number]["name"]>("pnpm");
+  const [active, setActive] = useState<(typeof managers)[number]["name"]>("npm");
   const [copied, setCopied] = useState(false);
   const selected = managers.find((manager) => manager.name === active) ?? managers[0];
   const command = useMemo(() => selected.command(item), [item, selected]);
@@ -33,13 +33,12 @@ export function InstallCommand({className, item}: InstallCommandProps) {
   return (
     <div
       className={cn(
-        "install-command not-prose my-5 overflow-hidden rounded-xl border border-separator bg-transparent",
+        "install-command not-prose my-5 overflow-hidden rounded-xl border border-separator",
         className,
       )}
     >
-      <div className="border-b border-separator px-3 py-3">
+      <div className="flex items-center gap-3 border-b border-separator px-4 py-3">
         <div className="install-command-tabs flex w-fit flex-wrap items-center gap-1">
-          <Terminal className="mr-2 size-4.5 shrink-0 text-muted" />
           {managers.map((manager) => (
             <button
               key={manager.name}
@@ -55,21 +54,19 @@ export function InstallCommand({className, item}: InstallCommandProps) {
             </button>
           ))}
         </div>
-      </div>
-      <div className="flex min-w-0 items-center gap-3 px-3 py-3">
-        <div className="install-command-line flex min-w-0 flex-1 items-center overflow-hidden px-3 py-2.5">
-          <code className="block min-w-0 flex-1 overflow-x-auto whitespace-nowrap border-none bg-transparent p-0 font-mono text-[13px] leading-6 text-foreground">
-            {command}
-          </code>
-        </div>
         <button
           aria-label={copied ? "Copied command" : "Copy command"}
-          className={buttonVariants({class: "shrink-0 text-muted", isIconOnly:true, size:"sm", variant:"transparent"})}
+          className={buttonVariants({class: "ml-auto shrink-0 text-muted", isIconOnly:true, size:"sm", variant:"transparent"})}
           type="button"
           onClick={copyCommand}
         >
           {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
         </button>
+      </div>
+      <div className="bg-(--docs-code-surface) overflow-x-auto px-4 py-4">
+        <code className="block w-max min-w-full whitespace-nowrap border-none bg-transparent px-2 py-1 font-mono text-[13px] leading-6 text-foreground">
+          {command}
+        </code>
       </div>
     </div>
   );

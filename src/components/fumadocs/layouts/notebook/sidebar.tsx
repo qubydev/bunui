@@ -1,9 +1,10 @@
 "use client";
 
-import type {ComponentProps} from "react";
+import type {ComponentProps, ReactNode} from "react";
 
 import * as Base from "fumadocs-ui/components/sidebar/base";
 import {createPageTreeRenderer} from "fumadocs-ui/components/sidebar/page-tree";
+import {ScrollArea, ScrollViewport} from "fumadocs-ui/components/ui/scroll-area";
 import gsap from "gsap";
 import {useLayoutEffect, useRef, useState} from "react";
 import {tv} from "tailwind-variants";
@@ -36,8 +37,34 @@ export const {
   SidebarFolder,
   SidebarProvider: Sidebar,
   SidebarTrigger,
-  SidebarViewport,
 } = Base;
+
+export function SidebarViewport({
+  area,
+  viewport,
+  children,
+}: {
+  area?: ComponentProps<typeof ScrollArea>;
+  viewport?: ComponentProps<typeof ScrollViewport>;
+  children: ReactNode;
+}) {
+  return (
+    <ScrollArea
+      {...area}
+      className={cn("min-h-0 flex-1", area?.className)}
+    >
+      <ScrollViewport
+        {...viewport}
+        className={cn(
+          "*:flex! *:flex-col! *:gap-0.5! pt-2 overscroll-contain mask-[linear-gradient(to_bottom,transparent,white_12px,white_calc(100%-12px),transparent)]",
+          viewport?.className,
+        )}
+      >
+        {children}
+      </ScrollViewport>
+    </ScrollArea>
+  );
+}
 
 export function MobileSidebarTrigger({
   className,
@@ -259,7 +286,10 @@ export function SidebarSeparator({children, className, style, ...props}: Compone
 
   return (
     <Base.SidebarSeparator
-      className={cn("mb-1.5 [&_svg]:size-4 [&_svg]:shrink-0", className)}
+      className={cn(
+        "mb-2 mt-5 text-xs font-semibold uppercase tracking-[0.08em] text-fd-muted-foreground/70 first:mt-0 [&_svg]:size-4 [&_svg]:shrink-0",
+        className,
+      )}
       style={{
         paddingInlineStart: getItemOffset(depth),
         ...style,

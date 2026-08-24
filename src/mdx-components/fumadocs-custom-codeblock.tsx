@@ -1,30 +1,80 @@
 "use client";
 
 import type {CodeBlockProps} from "fumadocs-ui/components/codeblock";
-import type {ComponentProps, RefObject} from "react";
+import type {CSSProperties, ComponentProps, RefObject} from "react";
 import {Check, Copy} from "@gravity-ui/icons";
 import {buttonVariants} from "@/registry/default/ui/button";
-import {CodeBlock} from "fumadocs-ui/components/codeblock";
 import {useCopyButton} from "fumadocs-ui/utils/use-copy-button";
 import {useRef} from "react";
 import {cn} from "@/utils/cn";
 
-export function FumadocsCustomCodeblock({allowCopy = true, children, code, ...props}: {children: React.ReactNode; code?: string} & CodeBlockProps) {
+type CodeBlockViewportStyle = CSSProperties & {
+  "--padding-right"?: string;
+};
+
+export function FumadocsCustomCodeblock({
+  allowCopy = true,
+  children,
+  className,
+  code,
+  icon,
+  keepBackground,
+  title,
+  viewportProps,
+  ...props
+}: {children: React.ReactNode; code?: string} & CodeBlockProps) {
   const areaRef = useRef<HTMLDivElement>(null);
+  const {className: viewportClassName, style: viewportStyle, ...restViewportProps} = viewportProps ?? {};
+
   return (
-    <CodeBlock
-      {...props}
-      allowCopy={allowCopy}
-      // @ts-expect-error fumadocs viewport ref type
-      viewportProps={{ref: areaRef}}
-      Actions={({className: _className, ...actionsProps}) => (
-        <div {...actionsProps} className="absolute top-2.5 right-2.5 z-10 flex empty:hidden">
-          {!!allowCopy && <CopyButton code={code} containerRef={areaRef} />}
+    <div className="relative overflow-hidden rounded-b-xl">
+      <figure
+        {...props}
+        className={cn(
+          "shiki relative border shadow-sm not-prose text-sm",
+          keepBackground && "bg-(--shiki-light-bg) dark:bg-(--shiki-dark-bg)",
+          className,
+        )}
+        dir="ltr"
+        tabIndex={-1}
+      >
+        {title ? (
+          <div className="flex h-9.5 items-center gap-2 border-b px-4 text-fd-muted-foreground">
+            {typeof icon === "string" ? (
+              <div
+                className="[&_svg]:size-3.5"
+                dangerouslySetInnerHTML={{__html: icon}}
+              />
+            ) : (
+              icon
+            )}
+            <figcaption className="flex-1 truncate">{title}</figcaption>
+          </div>
+        ) : null}
+        <div
+          {...restViewportProps}
+          ref={areaRef}
+          className={cn(
+            "docs-code-block-viewport fd-scroll-container focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-fd-ring",
+            viewportClassName,
+          )}
+          role="region"
+          style={{
+            "--padding-right": !title ? "calc(var(--spacing) * 8)" : undefined,
+            counterSet: props["data-line-numbers"] ? `line ${Number(props["data-line-numbers-start"] ?? 1) - 1}` : undefined,
+            ...viewportStyle,
+          } as CodeBlockViewportStyle}
+          tabIndex={0}
+        >
+          {children}
         </div>
-      )}
-    >
-      {children}
-    </CodeBlock>
+      </figure>
+      {allowCopy ? (
+        <div className={cn("absolute right-2.5 z-10 flex", title ? "top-1.5" : "top-2.5")}>
+          <CopyButton code={code} containerRef={areaRef} />
+        </div>
+      ) : null}
+    </div>
   );
 }
 

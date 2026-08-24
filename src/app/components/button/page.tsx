@@ -27,10 +27,10 @@ export default function ButtonPage() {
       </section>
 
       <DocsBody className="prose-sm">
+        <ComponentPreview name="button-basic" />
+
         <h2 id="installation">Installation</h2>
         <InstallCommand item={registryItemUrl("button")} />
-
-        <ComponentPreview name="button-basic" />
 
         <h2 id="examples">Examples</h2>
 

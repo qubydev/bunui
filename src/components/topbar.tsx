@@ -1,4 +1,7 @@
+"use client";
+
 import type {ReactNode} from "react";
+import {usePathname} from "next/navigation";
 
 import {BunUILogo} from "@/components/bunui-logo";
 import {BunUILogotype} from "@/components/bunui-logotype";
@@ -11,6 +14,9 @@ export function Topbar({
 }: {
   mobileSidebarTrigger?: ReactNode;
 }) {
+  const pathname = usePathname();
+  const showMobileSidebarTrigger = pathname !== "/";
+
   return (
     <header className="bun-topbar sticky top-0 z-20 bg-background [grid-area:header]">
       <div className="flex h-14 w-full items-center gap-3 px-4 sm:px-6">
@@ -31,7 +37,7 @@ export function Topbar({
             <SearchToggle hideIfDisabled />
           </div>
           <ThemeToggle mode="light-dark-system" />
-          {mobileSidebarTrigger}
+          {showMobileSidebarTrigger ? mobileSidebarTrigger : null}
           <div className="hidden items-center gap-1 md:flex">
             <GitHubLinkSmall />
           </div>

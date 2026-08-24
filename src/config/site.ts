@@ -1,5 +1,5 @@
 export const siteConfig = {
-  url: "https://bunui.vercel.app",
+  url: "https://bunui.xyz",
 };
 
 export function registryItemUrl(name: string) {

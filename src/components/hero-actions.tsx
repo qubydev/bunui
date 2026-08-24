@@ -76,29 +76,29 @@ export function HeroActions() {
 
   return (
     <div ref={containerRef} className="flex flex-col items-center">
-      <p data-hero-description className="mt-4 flex max-w-xl flex-wrap items-center justify-center gap-x-1.5 gap-y-2 text-balance text-sm leading-7 text-muted sm:text-base">
+      <p data-hero-description className="mt-2 md:mt-4 flex max-w-xl flex-wrap items-center justify-center gap-x-1.5 gap-y-2 text-balance text-sm leading-7 text-muted sm:text-base">
         <span>A playful React UI library inspired by</span>
         <a
           aria-label="yui540 on X"
-          className="group relative inline-flex translate-y-[2px] items-center text-foreground transition-transform hover:scale-110"
+          className="group relative inline-flex items-center text-foreground transition-transform hover:scale-110"
           href="https://x.com/yui540"
           rel="noreferrer"
           target="_blank"
         >
           <img
             alt="yui540"
-            className="size-8 rounded-full border"
+            className="size-6 rounded-full border"
             height="24"
-            src="https://pbs.twimg.com/profile_images/1998260440758140928/Yw4oQOjY_400x400.jpg"
+            src="/yui540-avatar.jpg"
             width="24"
           />
         </a>
       </p>
       <div
         data-hero-button
-        className="mt-6 inline-flex origin-center [transform-origin:50%_50%]"
+        className="mt-6 inline-flex"
       >
-        <Button className="h-12 gap-2 px-6 text-base [--button-bg-hover:var(--button-bg)]" onPress={openComponents}>
+        <Button className="h-12 gap-2 px-6 text-base" onPress={openComponents}>
           Get started
           <ArrowRight className="size-4" aria-hidden="true" />
         </Button>
