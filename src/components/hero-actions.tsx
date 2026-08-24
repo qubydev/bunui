@@ -95,7 +95,7 @@ export function HeroActions() {
         </a>
         <span className="text-muted/70">&</span>
         <a
-          aria-label="BunUI"
+          aria-label="Bunui"
           className="group relative inline-flex items-center text-foreground transition-transform hover:scale-110"
           href="/"
         >

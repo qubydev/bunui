@@ -1,7 +1,7 @@
 {
   "name": "@bunui/styles",
   "version": "0.1.0",
-  "description": "BunUI styles and design tokens",
+  "description": "Bunui styles and design tokens",
   "license": "MIT",
   "type": "module",
   "sideEffects": [

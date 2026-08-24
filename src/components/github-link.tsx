@@ -43,7 +43,7 @@ export function GitHubLinkSmall() {
 
   return (
     <a
-      aria-label="BunUI on GitHub"
+      aria-label="Bunui on GitHub"
       className="inline-flex no-underline"
       href={REPO_URL}
       rel="noreferrer"

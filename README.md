@@ -1,6 +1,6 @@
-# BunUI
+# Bunui
 
-BunUI is a shadcn-style component registry for cute, animated React components.
+Bunui is a shadcn-style component registry for cute, animated React components.
 
 ## Development
 
@@ -29,7 +29,7 @@ Currently included: `Button`.
 
 ## License
 
-BunUI is released under the MIT License. You can use it in personal projects, startups, and production company apps.
+Bunui is released under the MIT License. You can use it in personal projects, startups, and production company apps.
 
 Please do not clone the registry and resell it as a barely changed component pack. The license permits broad use, but the project is intended to be built on, credited, and improved, not repackaged wholesale.
 

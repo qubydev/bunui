@@ -1,5 +1,5 @@
 /**
- * Minimal Lucide icon subset used by the BunUI docs shell.
+ * Minimal Lucide icon subset used by the Bunui docs shell.
  * @license lucide-react - ISC
  */
 import type {ComponentProps} from "react";

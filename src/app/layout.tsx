@@ -5,14 +5,42 @@ import { Fredoka, Inter } from "next/font/google";
 import { ClickSpark } from "@/components/click-spark";
 import BunSearchDialog from "@/components/search-dialog";
 import {ThemeProvider} from "@/components/theme-provider";
+import {siteConfig} from "@/config/site";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const fredoka = Fredoka({ subsets: ["latin"], variable: "--font-fredoka" });
 
 export const metadata: Metadata = {
-  title: { default: "BunUI", template: "%s | BunUI" },
+  metadataBase: new URL(siteConfig.url),
+  applicationName: "Bunui",
+  title: { default: "Bunui", template: "%s | Bunui" },
   description: "Beautiful by default. Customizable by design.",
+  keywords: ["Bunui", "React", "Next.js", "UI components", "shadcn", "Tailwind CSS", "React Aria"],
+  authors: [{name: "Bunui"}],
+  creator: "Bunui",
+  publisher: "Bunui",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteConfig.url,
+    siteName: "Bunui",
+    title: "Bunui",
+    description: "Beautiful by default. Customizable by design.",
+  },
+  twitter: {
+    card: "summary",
+    title: "Bunui",
+    description: "Beautiful by default. Customizable by design.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 const themeScript = `
