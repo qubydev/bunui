@@ -4,7 +4,7 @@
 @import "../../packages/styles/index.css";
 
 :root {
-  --fd-layout-width: 1400px;
+  --fd-layout-width: 100vw;
   --color-fd-background: var(--background);
   --color-fd-foreground: var(--foreground);
   --color-fd-primary: var(--foreground);
@@ -267,6 +267,25 @@ button:disabled,
 
 code {
   @apply border-separator bg-transparent px-[3px];
+}
+
+.prose :not(pre) > code {
+  @apply rounded-md border px-1.5 py-0.5 text-[0.86em] font-medium;
+  border-color: color-mix(in oklab, #f59e0b 28%, transparent);
+  background: color-mix(in oklab, #f59e0b 14%, transparent);
+  color: color-mix(in oklab, #92400e 86%, var(--foreground));
+}
+
+.install-command-tabs button.is-active {
+  background: var(--sidebar-item-active, color-mix(in oklab, var(--background) 94%, var(--foreground) 6%));
+}
+
+.prose .install-command code,
+.install-command code {
+  border: none !important;
+  background: transparent !important;
+  color: var(--foreground) !important;
+  padding: 0 !important;
 }
 
 .docs-code-block {

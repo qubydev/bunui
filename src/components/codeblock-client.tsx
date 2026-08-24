@@ -6,10 +6,10 @@ import {Button} from "@/registry/default/ui/button";
 import {FumadocsCustomCodeblock as BaseCodeBlock} from "@/mdx-components/fumadocs-custom-codeblock";
 import {cn} from "@/utils/cn";
 
-export function CodeBlock({children,className,code,collapsible,isIsolated=false,preview,showLineNumbers,title,...props}:{isIsolated?:boolean;lang?:string;code?:string;collapsible?:boolean;showLineNumbers?:boolean;title:string|undefined;children:React.ReactNode|React.ReactElement;preview?:React.ReactNode} & CodeBlockProps) {
+export function CodeBlock({children,className,code,collapsible,isEmbedded=false,isIsolated=false,preview,showLineNumbers,title,...props}:{isEmbedded?:boolean;isIsolated?:boolean;lang?:string;code?:string;collapsible?:boolean;showLineNumbers?:boolean;title:string|undefined;children:React.ReactNode|React.ReactElement;preview?:React.ReactNode} & CodeBlockProps) {
   const [isCollapsed,setIsCollapsed]=React.useState(true);
   if(!collapsible){
-    return <BaseCodeBlock code={code} title={title} className={cn("code-block-wrapper docs-code-block standalone-code-block",isIsolated&&"is-isolated",showLineNumbers&&"docs-code-block-line-numbers",className)} {...props}>{children}</BaseCodeBlock>;
+    return <BaseCodeBlock code={code} title={title} className={cn("code-block-wrapper docs-code-block",!isEmbedded&&"standalone-code-block",isIsolated&&"is-isolated",showLineNumbers&&"docs-code-block-line-numbers",className)} {...props}>{children}</BaseCodeBlock>;
   }
   return <div className="relative">
     <div className={cn("code-block-wrapper",isIsolated&&"is-isolated",isCollapsed&&"mask-to-bottom relative max-h-[150px] overflow-hidden")}>

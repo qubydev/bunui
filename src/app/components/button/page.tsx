@@ -53,12 +53,16 @@ export default function ButtonPage() {
         <p>
           Use the built-in props for common styles, then pass <code>className</code> for one-off customization.
         </p>
-        <CodeBlock
-          code={'<Button variant="outline" size="lg" className="rounded-xl px-8">\n  Get started\n</Button>'}
-          isIsolated
-          lang="tsx"
-          title={undefined}
-        />
+        <div className="code-section relative rounded-xl border border-separator bg-transparent">
+          <CodeBlock
+            code={'<Button variant="outline" size="lg" className="rounded-xl px-8">\n  Get started\n</Button>'}
+            className="rounded-xl shadow-none"
+            isEmbedded
+            lang="tsx"
+            showLineNumbers
+            title={undefined}
+          />
+        </div>
 
         <h2 id="api-reference">API Reference</h2>
         <h3>Button</h3>

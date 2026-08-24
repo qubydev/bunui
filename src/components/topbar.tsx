@@ -13,7 +13,7 @@ export function Topbar({
 }) {
   return (
     <header className="bun-topbar sticky top-0 z-20 bg-background [grid-area:header]">
-      <div className="mx-auto flex h-14 w-full max-w-[1400px] items-center gap-3 px-4 sm:px-6">
+      <div className="flex h-14 w-full items-center gap-3 px-4 sm:px-6">
         <div className="flex min-w-0 flex-1 items-center">
           <a className="inline-flex items-center gap-1.5 font-semibold" href="/">
             <BunUILogo />

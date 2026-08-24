@@ -79,11 +79,9 @@ export interface ButtonProps
 export function Button({
   className,
   isIconOnly,
-  onPointerCancel,
-  onPointerDown,
-  onPointerEnter,
-  onPointerLeave,
-  onPointerUp,
+  onHoverChange,
+  onPressEnd,
+  onPressStart,
   ref,
   size,
   variant,
@@ -93,9 +91,19 @@ export function Button({
   const tweenRef = useRef<gsap.core.Timeline | gsap.core.Tween | null>(null);
   const isHoveredRef = useRef(false);
   const isPressedRef = useRef(false);
+  const reduceMotionRef = useRef(false);
 
   useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotionPreference = () => {
+      reduceMotionRef.current = query.matches;
+    };
+
+    updateMotionPreference();
+    query.addEventListener("change", updateMotionPreference);
+
     return () => {
+      query.removeEventListener("change", updateMotionPreference);
       tweenRef.current?.kill();
     };
   }, []);
@@ -113,31 +121,47 @@ export function Button({
     }
   };
 
-  const press = () => {
+  const canAnimate = () => {
+    const button = buttonRef.current;
+
+    return button && !reduceMotionRef.current && !button.disabled && button.getAttribute("data-disabled") !== "true";
+  };
+
+  const animate = (vars: gsap.TweenVars) => {
     const button = buttonRef.current;
 
     if (!button) {
       return;
     }
 
-    isPressedRef.current = true;
     tweenRef.current?.kill();
     tweenRef.current = gsap.to(button, {
-      duration: 0.08,
-      ease: "power2.out",
       overwrite: "auto",
-      scaleX: 1.08,
-      scaleY: 0.9,
       transformOrigin: "50% 50%",
       x: 0,
       y: 0,
+      ...vars,
+    });
+  };
+
+  const press = () => {
+    if (!canAnimate()) {
+      return;
+    }
+
+    isPressedRef.current = true;
+    animate({
+      duration: 0.08,
+      ease: "power2.out",
+      scaleX: 1.08,
+      scaleY: 0.9,
     });
   };
 
   const hover = () => {
     const button = buttonRef.current;
 
-    if (!button || isPressedRef.current) {
+    if (!canAnimate() || !button || isPressedRef.current) {
       return;
     }
 
@@ -172,7 +196,7 @@ export function Button({
 
     isHoveredRef.current = false;
 
-    if (!button || isPressedRef.current) {
+    if (!canAnimate() || !button || isPressedRef.current) {
       return;
     }
 
@@ -204,7 +228,7 @@ export function Button({
   const release = () => {
     const button = buttonRef.current;
 
-    if (!button || !isPressedRef.current) {
+    if (!canAnimate() || !button || !isPressedRef.current) {
       return;
     }
 
@@ -264,20 +288,14 @@ export function Button({
       className={composeRenderProps(className, (value) =>
         buttonVariants({class: value, isIconOnly, size, variant}),
       )}
-      onPointerCancel={(event) => {
-        onPointerCancel?.(event);
-        release();
-      }}
-      onPointerDown={(event) => {
-        onPointerDown?.(event);
-        press();
-      }}
-      onPointerEnter={(event) => {
-        onPointerEnter?.(event);
-        hover();
-      }}
-      onPointerLeave={(event) => {
-        onPointerLeave?.(event);
+      onHoverChange={(isHovered) => {
+        onHoverChange?.(isHovered);
+
+        if (isHovered) {
+          hover();
+          return;
+        }
+
         if (isPressedRef.current) {
           isHoveredRef.current = false;
           release();
@@ -286,9 +304,13 @@ export function Button({
 
         leave();
       }}
-      onPointerUp={(event) => {
-        onPointerUp?.(event);
+      onPressEnd={(event) => {
+        onPressEnd?.(event);
         release();
+      }}
+      onPressStart={(event) => {
+        onPressStart?.(event);
+        press();
       }}
     />
   );

@@ -16,8 +16,21 @@ const jsonHeaders = {
   "Cache-Control": "public, max-age=0, s-maxage=86400",
 };
 
+const registryRoot = path.join(process.cwd(), "registry");
+
 function cleanName(name: string) {
   return name.replace(/\.json$/, "");
+}
+
+function registryFilePath(filePath: string) {
+  const relativePath = filePath.replace(/^registry[\\/]/, "");
+  const fullPath = path.resolve(registryRoot, relativePath);
+
+  if (!fullPath.startsWith(registryRoot + path.sep)) {
+    throw new Error("Registry file path escapes registry root.");
+  }
+
+  return fullPath;
 }
 
 async function withFileContent(item: RegistryItem) {
@@ -25,7 +38,7 @@ async function withFileContent(item: RegistryItem) {
     item.files.map(async (file) => ({
       ...file,
       target: `@components/bunui/${item.name}.tsx`,
-      content: await fs.readFile(path.join(process.cwd(), file.path), "utf-8"),
+      content: await fs.readFile(registryFilePath(file.path), "utf-8"),
     })),
   );
 

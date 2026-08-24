@@ -27,6 +27,12 @@ pnpm check
 
 Currently included: `Button`.
 
+## License
+
+BunUI is released under the MIT License. You can use it in personal projects, startups, and production company apps.
+
+Please do not clone the registry and resell it as a barely changed component pack. The license permits broad use, but the project is intended to be built on, credited, and improved, not repackaged wholesale.
+
 ## Adding a component
 
 1. Add its installable implementation under `registry/default/ui/`.
@@ -36,4 +42,4 @@ Currently included: `Button`.
 5. Add the component to `src/components/component-tree.ts` and the Components page.
 6. Add its detail route under `src/app/components/<component>/` using `ComponentPreview` so the rendered demo and displayed source stay in sync.
 
-The `LICENSE` file is intentionally kept because this is an open-source project and the retained HeroUI-derived source needs its licensing notice preserved.
+The `LICENSE` file is intentionally kept because this is an open-source project.

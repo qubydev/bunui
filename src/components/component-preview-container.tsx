@@ -34,7 +34,7 @@ export function ComponentPreviewContainer({
         className={cn("preview not-prose relative min-h-[350px] w-full overflow-hidden rounded-t-xl border-s border-e border-t border-separator p-4 sm:p-10", isBgSolid && "bg-background", alignmentClasses[align], "flex")}
         onClickCapture={shouldPreventNavigation ? preventPlaceholderHashNavigation : undefined}
       >
-        <div className="flex w-full items-center justify-center" style={{minHeight}}>{Component}</div>
+        <div className="flex min-h-[inherit] w-full items-center justify-center [&>*]:justify-center" style={{minHeight}}>{Component}</div>
       </div>
       {!hideCode && !!Code && (
         <div className="code-section relative rounded-b-xl border border-separator bg-transparent">
