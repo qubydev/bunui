@@ -37,6 +37,16 @@ export const Search = createIcon("search", [
   ["path", {d: "m21 21-4.3-4.3", key: "1qie3q"}],
 ]);
 
+export const PanelLeft = createIcon("panel-left", [
+  ["rect", {height: "18", key: "1m3agn", rx: "2", width: "18", x: "3", y: "3"}],
+  ["path", {d: "M9 3v18", key: "fh3hqa"}],
+]);
+
+export const PanelRight = createIcon("panel-right", [
+  ["rect", {height: "18", key: "1m3agn", rx: "2", width: "18", x: "3", y: "3"}],
+  ["path", {d: "M15 3v18", key: "14nvp0"}],
+]);
+
 export const Moon = createIcon("moon", [["path", {d: "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z", key: "a7tn18"}]]);
 
 export const Sun = createIcon("sun", [

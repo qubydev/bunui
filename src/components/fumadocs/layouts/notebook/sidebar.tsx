@@ -4,9 +4,12 @@ import type {ComponentProps} from "react";
 
 import * as Base from "fumadocs-ui/components/sidebar/base";
 import {createPageTreeRenderer} from "fumadocs-ui/components/sidebar/page-tree";
-import {useRef} from "react";
+import gsap from "gsap";
+import {useLayoutEffect, useRef, useState} from "react";
 import {tv} from "tailwind-variants";
 
+import {Button, type ButtonProps} from "@/registry/default/ui/button";
+import {PanelRight, X} from "@/components/fumadocs/ui/icons";
 import {mergeRefs} from "@/components/fumadocs/utils/merge-refs";
 import {cn} from "@/utils/cn";
 
@@ -35,6 +38,50 @@ export const {
   SidebarTrigger,
   SidebarViewport,
 } = Base;
+
+export function MobileSidebarTrigger({
+  className,
+  ...props
+}: Omit<ButtonProps, "children" | "isIconOnly" | "onPress" | "size" | "variant">) {
+  const {setOpen} = Base.useSidebar();
+
+  return (
+    <Button
+      aria-label="Open sidebar"
+      className={cn("md:hidden", className)}
+      isIconOnly
+      size="sm"
+      type="button"
+      variant="ghost"
+      {...props}
+      onPress={() => setOpen(true)}
+    >
+      <PanelRight className="size-4.5" />
+    </Button>
+  );
+}
+
+export function SidebarDrawerClose({
+  className,
+  ...props
+}: Omit<ButtonProps, "children" | "isIconOnly" | "onPress" | "size" | "variant">) {
+  const {setOpen} = Base.useSidebar();
+
+  return (
+    <Button
+      aria-label="Close sidebar"
+      className={cn("text-muted", className)}
+      isIconOnly
+      size="sm"
+      type="button"
+      variant="ghost"
+      {...props}
+      onPress={() => setOpen(false)}
+    >
+      <X className="size-4.5" />
+    </Button>
+  );
+}
 
 export function SidebarContent({
   children,
@@ -89,18 +136,120 @@ export function SidebarDrawer({
   className,
   ...props
 }: ComponentProps<typeof Base.SidebarDrawerContent>) {
+  const {mode, open, setOpen} = Base.useSidebar();
+  const [mounted, setMounted] = useState(open);
+  const drawerRef = useRef<HTMLElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    if (open) {
+      setMounted(true);
+    }
+  }, [open]);
+
+  useLayoutEffect(() => {
+    if (mode !== "drawer" || !mounted) {
+      return;
+    }
+
+    const drawer = drawerRef.current;
+    const overlay = overlayRef.current;
+
+    if (!drawer || !overlay) {
+      return;
+    }
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    gsap.killTweensOf([drawer, overlay]);
+
+    if (reduceMotion) {
+      gsap.set(drawer, {clearProps: "transform"});
+      gsap.set(overlay, {opacity: open ? 1 : 0});
+      if (!open) {
+        setMounted(false);
+      }
+      return;
+    }
+
+    if (open) {
+      gsap.set(drawer, {
+        transformOrigin: "100% 50%",
+        xPercent: 100,
+        scaleX: 0.985,
+      });
+      gsap.set(overlay, {opacity: 0});
+
+      const intro = gsap
+        .timeline()
+        .to(overlay, {
+          duration: 0.22,
+          ease: "power2.out",
+          opacity: 1,
+        })
+        .to(
+          drawer,
+          {
+            duration: 0.66,
+            ease: "elastic.out(1, 0.72)",
+            scaleX: 1,
+            xPercent: 0,
+          },
+          0,
+        );
+
+      return () => {
+        intro.kill();
+      };
+    }
+
+    const outro = gsap
+      .timeline({
+        onComplete: () => setMounted(false),
+      })
+      .to(drawer, {
+        duration: 0.24,
+        ease: "power3.in",
+        scaleX: 0.985,
+        xPercent: 100,
+      })
+      .to(
+        overlay,
+        {
+          duration: 0.18,
+          ease: "power2.in",
+          opacity: 0,
+        },
+        0,
+      );
+
+    return () => {
+      outro.kill();
+    };
+  }, [mode, mounted, open]);
+
+  if (mode !== "drawer" || !mounted) {
+    return null;
+  }
+
   return (
     <>
-      <Base.SidebarDrawerOverlay className="data-[state=open]:animate-fd-fade-in data-[state=closed]:animate-fd-fade-out fixed inset-0 z-40 backdrop-blur-xs" />
-      <Base.SidebarDrawerContent
+      <div
+        ref={overlayRef}
+        className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+        onClick={() => setOpen(false)}
+      />
+      <aside
+        id="nd-sidebar-mobile"
+        ref={drawerRef}
+        data-state={open ? "open" : "closed"}
         className={cn(
-          "bg-fd-background data-[state=open]:animate-fd-sidebar-in data-[state=closed]:animate-fd-sidebar-out fixed inset-y-0 end-0 z-40 flex w-[85%] max-w-[380px] flex-col text-[0.9375rem] shadow-lg",
+          "bun-sidebar-drawer bg-fd-background fixed inset-y-0 end-0 z-[42] flex w-[85%] max-w-[380px] flex-col border-s border-separator text-[0.9375rem]",
           className,
         )}
         {...props}
       >
         {children}
-      </Base.SidebarDrawerContent>
+      </aside>
     </>
   );
 }

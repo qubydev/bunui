@@ -4,6 +4,7 @@ import { RootProvider } from "fumadocs-ui/provider/next";
 import { Fredoka, Inter } from "next/font/google";
 import { ClickSpark } from "@/components/click-spark";
 import BunSearchDialog from "@/components/search-dialog";
+import {ThemeProvider} from "@/components/theme-provider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -14,6 +15,22 @@ export const metadata: Metadata = {
   description: "Beautiful by default. Customizable by design.",
 };
 
+const themeScript = `
+(() => {
+  try {
+    const theme = localStorage.getItem("theme") || "system";
+    const resolved = theme === "system"
+      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      : theme;
+    const root = document.documentElement;
+
+    root.classList.toggle("dark", resolved === "dark");
+    root.dataset.theme = resolved;
+    root.style.colorScheme = resolved;
+  } catch {}
+})();
+`;
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
@@ -22,15 +39,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       className={`${inter.variable} ${fredoka.variable}`}
       data-scroll-behavior="smooth"
     >
+      <head>
+        <script suppressHydrationWarning dangerouslySetInnerHTML={{__html: themeScript}} />
+      </head>
       <body className="flex min-h-screen flex-col font-sans">
-        <ClickSpark sparkRadius={18} sparkCount={10}>
-          <RootProvider
-            search={{ SearchDialog: BunSearchDialog }}
-            theme={{ defaultTheme: "system", enableSystem: true }}
-          >
-            {children}
-          </RootProvider>
-        </ClickSpark>
+        <RootProvider
+          search={{ SearchDialog: BunSearchDialog }}
+          theme={{enabled: false}}
+        >
+          <ThemeProvider>
+            <ClickSpark sparkRadius={18} sparkCount={10}>
+              {children}
+            </ClickSpark>
+          </ThemeProvider>
+        </RootProvider>
       </body>
     </html>
   );

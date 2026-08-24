@@ -1,12 +1,12 @@
 import {HeroActions} from "@/components/hero-actions";
 import {HeroTitle} from "@/components/hero-title";
 import {JellyBun} from "@/components/jelly-bun";
-import {Topbar} from "@/components/topbar";
+import {TopbarWithMobileSidebar} from "@/components/topbar-with-mobile-sidebar";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
-      <Topbar />
+      <TopbarWithMobileSidebar />
 
       <main className="mx-auto flex min-h-[calc(100vh-3.5rem)] w-full max-w-[1400px] flex-col px-4 md:px-6">
         <section className="z-10 flex min-h-0 flex-1 flex-col items-center pt-12 text-center">

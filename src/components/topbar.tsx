@@ -1,13 +1,19 @@
+import type {ReactNode} from "react";
+
 import {BunUILogo} from "@/components/bunui-logo";
 import {BunUILogotype} from "@/components/bunui-logotype";
 import {GitHubLinkSmall} from "@/components/github-link";
 import {LargeSearchToggle, SearchToggle} from "@/components/fumadocs/ui/search-toggle";
 import {ThemeToggle} from "@/components/fumadocs/ui/theme-toggle";
 
-export function Topbar() {
+export function Topbar({
+  mobileSidebarTrigger,
+}: {
+  mobileSidebarTrigger?: ReactNode;
+}) {
   return (
     <header className="bun-topbar sticky top-0 z-20 bg-background [grid-area:header]">
-      <div className="mx-auto flex h-14 w-full max-w-[1400px] items-center gap-3 px-6">
+      <div className="mx-auto flex h-14 w-full max-w-[1400px] items-center gap-3 px-4 sm:px-6">
         <div className="flex min-w-0 flex-1 items-center">
           <a className="inline-flex items-center gap-1.5 font-semibold" href="/">
             <BunUILogo />
@@ -22,9 +28,10 @@ export function Topbar() {
 
         <div className="flex min-w-0 flex-1 items-center justify-end gap-2">
           <div className="md:hidden">
-            <SearchToggle hideIfDisabled className="p-2" />
+            <SearchToggle hideIfDisabled />
           </div>
           <ThemeToggle mode="light-dark-system" />
+          {mobileSidebarTrigger}
           <div className="hidden items-center gap-1 md:flex">
             <GitHubLinkSmall />
           </div>

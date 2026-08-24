@@ -18,7 +18,7 @@ export default function ComponentsPage(){
               <div className="order-1 sm:order-2">
                 <Link className="link no-underline" href="/components/button">Button</Link>
               </div>
-              <div className="relative order-2 aspect-square overflow-hidden rounded-xl border border-separator sm:order-1">
+              <div className="relative order-2 aspect-[3/2] overflow-hidden rounded-xl border border-separator sm:order-1">
                 <Link className="block h-full w-full" href="/components/button">
                   <img
                     alt="Button component preview"

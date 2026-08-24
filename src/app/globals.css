@@ -58,6 +58,17 @@
   @apply border-none bg-background-tertiary text-muted dark:bg-surface-secondary;
 }
 
+button,
+[role="button"] {
+  cursor: pointer;
+}
+
+button:disabled,
+[role="button"][aria-disabled="true"],
+[role="button"][data-disabled="true"] {
+  cursor: default;
+}
+
 .jelly-bun-mascot,
 .jelly-bun-mascot * {
   cursor: grab !important;
@@ -190,7 +201,7 @@
 }
 
 #nd-page {
-  @apply mt-4 gap-4 p-4 px-6 sm:px-4 md:px-6 md:pt-0 xl:px-12 xl:pt-8;
+  @apply gap-4 p-4 px-6 sm:px-4 md:px-6 md:pt-0 xl:px-12 xl:pt-8;
 
   @media (min-width: 80rem) {
     margin-top: 0;
@@ -396,6 +407,21 @@ code {
   to {
     opacity: 0;
     backdrop-filter: blur(0);
+  }
+}
+
+.bun-sidebar-drawer {
+  transform-origin: right center;
+  will-change: transform;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 100%;
+    width: 64px;
+    background: inherit;
+    pointer-events: none;
   }
 }
 

@@ -1,9 +1,8 @@
 "use client";
 
-import {useTheme} from "next-themes";
-
 import {Button} from "@/registry/default/ui/button";
 import {Airplay, Moon, Sun} from "@/components/fumadocs/ui/icons";
+import {useTheme} from "@/components/theme-provider";
 import {useIsMounted} from "@/hooks/use-is-mounted";
 
 const full = [["light", Sun] as const, ["dark", Moon] as const, ["system", Airplay] as const];
@@ -35,7 +34,7 @@ export function ThemeToggle({
       variant="ghost"
       onPress={() => setTheme(nextTheme)}
     >
-      <Icon className="size-4" />
+      <Icon className="size-4.5" />
     </Button>
   );
 }
