@@ -3,6 +3,7 @@ import type {ReactNode} from "react";
 
 import {TreeContextProvider} from "fumadocs-ui/contexts/tree";
 
+import {GitHubLinkSmall} from "@/components/github-link";
 import {Topbar} from "@/components/topbar";
 import {LayoutBody, LayoutContextProvider} from "./client";
 import {
@@ -21,8 +22,8 @@ export interface DocsLayoutProps {
 }
 
 export function DocsLayout({children, tree}: DocsLayoutProps) {
-  const viewport = () => (
-    <SidebarViewport>
+  const viewport = (isDrawer = false) => (
+    <SidebarViewport viewport={isDrawer ? {className: "px-4 pb-4"} : undefined}>
       <SidebarPageTree />
     </SidebarViewport>
   );
@@ -37,7 +38,10 @@ export function DocsLayout({children, tree}: DocsLayoutProps) {
               <div className="flex p-4 pb-2">
                 <SidebarDrawerClose className="ms-auto" />
               </div>
-              {viewport()}
+              {viewport(true)}
+              <div className="border-t border-separator px-4 py-3">
+                <GitHubLinkSmall compact />
+              </div>
             </SidebarDrawer>
             <Topbar mobileSidebarTrigger={<MobileSidebarTrigger />} />
             {children}

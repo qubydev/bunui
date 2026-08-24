@@ -1,6 +1,7 @@
 import {TreeContextProvider} from "fumadocs-ui/contexts/tree";
 
 import {componentTree} from "@/components/component-tree";
+import {GitHubLinkSmall} from "@/components/github-link";
 import {Topbar} from "@/components/topbar";
 import {
   MobileSidebarTrigger,
@@ -13,7 +14,7 @@ import {
 
 export function TopbarWithMobileSidebar() {
   const viewport = () => (
-    <SidebarViewport>
+    <SidebarViewport viewport={{className: "px-4 pb-4"}}>
       <SidebarPageTree />
     </SidebarViewport>
   );
@@ -26,6 +27,9 @@ export function TopbarWithMobileSidebar() {
             <SidebarDrawerClose className="ms-auto" />
           </div>
           {viewport()}
+          <div className="border-t border-separator px-4 py-3">
+            <GitHubLinkSmall compact />
+          </div>
         </SidebarDrawer>
         <Topbar mobileSidebarTrigger={<MobileSidebarTrigger />} />
       </Sidebar>

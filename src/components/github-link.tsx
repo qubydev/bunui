@@ -1,7 +1,9 @@
 "use client";
 
+import {ArrowLeft} from "@gravity-ui/icons";
 import {useEffect, useState} from "react";
 import {Button} from "@/registry/default/ui/button";
+import {cn} from "@/utils/cn";
 
 const REPO = "qubydev/bunui";
 const REPO_URL = `https://github.com/${REPO}`;
@@ -21,7 +23,15 @@ function GitHubIcon() {
   );
 }
 
-export function GitHubLinkSmall() {
+export function GitHubLinkSmall({
+  buttonClassName,
+  className,
+  compact = false,
+}: {
+  buttonClassName?: string;
+  className?: string;
+  compact?: boolean;
+}) {
   const [stars, setStars] = useState<number | null>(null);
 
   useEffect(() => {
@@ -44,15 +54,26 @@ export function GitHubLinkSmall() {
   return (
     <a
       aria-label="Bunui on GitHub"
-      className="inline-flex no-underline"
+      className={cn("inline-flex no-underline", className)}
       href={REPO_URL}
       rel="noreferrer"
       target="_blank"
     >
-      <Button size="sm" type="button" variant="secondary">
+      <Button
+        className={cn(compact && "h-8 gap-2 px-2.5 shadow-none", buttonClassName)}
+        size="sm"
+        type="button"
+        variant={compact ? "ghost" : "secondary"}
+      >
         <GitHubIcon />
         <span className="tabular-nums">{stars === null ? "..." : formatStars(stars)}</span>
       </Button>
+      {compact ? (
+        <span className="ml-2 inline-flex items-center gap-1 text-sm font-medium text-foreground">
+          <ArrowLeft className="size-4" />
+          Star us on GitHub?
+        </span>
+      ) : null}
     </a>
   );
 }
