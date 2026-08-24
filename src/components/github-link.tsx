@@ -1,6 +1,8 @@
 "use client";
 
 import {useEffect, useState} from "react";
+import {buttonVariants} from "@/registry/default/ui/button";
+import {cn} from "@/utils/cn";
 
 const REPO = "facebook/react";
 const REPO_URL = `https://github.com/${REPO}`;
@@ -37,7 +39,7 @@ export function GitHubLinkSmall() {
   return (
     <a
       aria-label="React on GitHub"
-      className="inline-flex h-[34px] items-center gap-2 rounded-full bg-default/80 px-3 text-sm font-medium text-muted no-underline transition-colors hover:bg-default hover:text-foreground"
+      className={cn(buttonVariants({size: "sm", variant: "secondary"}), "no-underline")}
       href={REPO_URL}
       rel="noreferrer"
       target="_blank"

@@ -24,7 +24,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     >
       <body className="flex min-h-screen flex-col font-sans">
         <ClickSpark sparkRadius={18} sparkCount={10}>
-          <RootProvider search={{ SearchDialog: BunSearchDialog }}>{children}</RootProvider>
+          <RootProvider
+            search={{ SearchDialog: BunSearchDialog }}
+            theme={{ defaultTheme: "system", enableSystem: true }}
+          >
+            {children}
+          </RootProvider>
         </ClickSpark>
       </body>
     </html>

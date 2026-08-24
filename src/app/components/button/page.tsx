@@ -68,7 +68,7 @@ export default function ButtonPage() {
               <tr><th className="p-3">Prop</th><th className="p-3">Type</th><th className="p-3">Default</th><th className="p-3">Description</th></tr>
             </thead>
             <tbody className="divide-y divide-separator">
-              <tr><td className="p-3"><code>variant</code></td><td className="p-3">primary | secondary | outline | ghost | danger | danger-soft</td><td className="p-3">primary</td><td className="p-3">Visual style variant</td></tr>
+              <tr><td className="p-3"><code>variant</code></td><td className="p-3">primary | secondary | outline | ghost | transparent | success | success-soft | danger | danger-soft</td><td className="p-3">primary</td><td className="p-3">Visual style variant</td></tr>
               <tr><td className="p-3"><code>size</code></td><td className="p-3">sm | md | lg</td><td className="p-3">md</td><td className="p-3">Size of the button</td></tr>
               <tr><td className="p-3"><code>isDisabled</code></td><td className="p-3">boolean</td><td className="p-3">false</td><td className="p-3">Whether the button is disabled</td></tr>
               <tr><td className="p-3"><code>isIconOnly</code></td><td className="p-3">boolean</td><td className="p-3">false</td><td className="p-3">Whether the button contains only an icon</td></tr>

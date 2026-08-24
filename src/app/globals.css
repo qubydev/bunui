@@ -58,13 +58,14 @@
   @apply border-none bg-background-tertiary text-muted dark:bg-surface-secondary;
 }
 
-[data-theme-toggle] {
-  @apply border-none bg-default/80;
+.jelly-bun-mascot,
+.jelly-bun-mascot * {
+  cursor: grab !important;
+}
 
-  button {
-    @apply rounded-2xl;
-    cursor: var(--cursor-interactive);
-  }
+.jelly-bun-mascot:active,
+.jelly-bun-mascot:active * {
+  cursor: grabbing !important;
 }
 
 .bun-search-dialog {
@@ -220,17 +221,6 @@
   }
 }
 
-[data-toc-popover] {
-  @apply top-[93px] z-2 md:top-[101px];
-
-  header {
-    @apply border-b border-separator md:border-b-0;
-    padding: 0 0.5rem;
-    background: var(--background) !important;
-    backdrop-filter: none !important;
-  }
-}
-
 /* Prose and source-code previews */
 .prose .shiki {
   @apply border-none;
@@ -269,7 +259,7 @@ code {
 }
 
 .docs-code-block {
-  @apply m-0 rounded-none border-none pt-4 pr-2 pl-2;
+  @apply m-0 rounded-none border-none pt-4 pr-2 pb-4 pl-2;
 
   .fd-scroll-container {
     @apply rounded-none border-none bg-transparent! p-0;
@@ -282,6 +272,10 @@ code {
   [role="region"] {
     max-height: 75vh;
   }
+}
+
+.docs-code-block-with-toggle {
+  @apply pb-10;
 }
 
 .standalone-code-block {

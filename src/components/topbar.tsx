@@ -24,8 +24,8 @@ export function Topbar() {
           <div className="md:hidden">
             <SearchToggle hideIfDisabled className="p-2" />
           </div>
+          <ThemeToggle mode="light-dark-system" />
           <div className="hidden items-center gap-1 md:flex">
-            <ThemeToggle mode="light-dark-system" />
             <GitHubLinkSmall />
           </div>
         </div>

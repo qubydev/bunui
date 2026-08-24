@@ -97,6 +97,28 @@
   --button-fg: var(--accent-soft-foreground);
 }
 
+.button--success {
+  --button-bg: var(--success);
+  --button-bg-hover: var(--success-hover);
+  --button-bg-pressed: var(--success-hover);
+  --button-fg: var(--success-foreground);
+}
+
+.button--success-soft {
+  --button-bg: var(--success-soft);
+  --button-bg-hover: var(--success-soft-hover);
+  --button-bg-pressed: var(--success-soft-hover);
+  --button-fg: var(--success-soft-foreground);
+}
+
+.button--transparent {
+  --button-bg: transparent;
+  --button-bg-hover: transparent;
+  --button-bg-pressed: transparent;
+  --button-fg: var(--foreground);
+  border-color: transparent;
+}
+
 .button--ghost,
 .button--outline {
   --button-bg: transparent;

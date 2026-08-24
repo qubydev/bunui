@@ -45,8 +45,31 @@ export const buttonVariants = tv({
         "[--button-bg:var(--accent,var(--primary))] [--button-bg-hover:var(--accent-hover,var(--primary))] [--button-fg:var(--accent-foreground,var(--primary-foreground))]",
       secondary:
         "[--button-bg:var(--default,var(--secondary))] [--button-bg-hover:var(--default-hover,var(--secondary))] [--button-fg:var(--accent-soft-foreground,var(--secondary-foreground))]",
+      success:
+        "[--button-bg:var(--success)] [--button-bg-hover:var(--success-hover)] [--button-fg:var(--success-foreground)]",
+      "success-soft":
+        "[--button-bg:var(--success-soft)] [--button-bg-hover:var(--success-soft-hover)] [--button-fg:var(--success-soft-foreground)]",
+      transparent:
+        "[--button-bg:transparent] [--button-bg-hover:transparent] [--button-fg:var(--foreground)] hover:text-[var(--button-fg)]",
     },
   },
+  compoundVariants: [
+    {
+      isIconOnly: true,
+      size: "sm",
+      class: "w-9 px-0",
+    },
+    {
+      isIconOnly: true,
+      size: "md",
+      class: "w-10 px-0",
+    },
+    {
+      isIconOnly: true,
+      size: "lg",
+      class: "w-11 px-0",
+    },
+  ],
 });
 
 export interface ButtonProps

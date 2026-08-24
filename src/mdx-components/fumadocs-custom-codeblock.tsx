@@ -43,7 +43,7 @@ function CopyButton({className, code, containerRef, ...props}: ComponentProps<"b
 
   return (
     <button aria-label={checked ? "Copied Text" : "Copy Text"} data-checked={checked || undefined} type="button"
-      className={buttonVariants({class: cn("-mt-0.5 bg-transparent text-muted", className), isIconOnly:true, size:"sm", variant:"ghost"})}
+      className={buttonVariants({class: cn("-mt-0.5 text-muted", className), isIconOnly:true, size:"sm", variant:"transparent"})}
       onClick={onClick} {...props}>
       {checked ? <Check className="size-4" /> : <Copy className="size-4" />}
     </button>

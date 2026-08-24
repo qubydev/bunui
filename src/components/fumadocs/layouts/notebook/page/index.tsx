@@ -4,7 +4,6 @@ import type {ComponentProps, ReactNode} from "react";
 import {TOCProvider, TOCScrollArea} from "fumadocs-ui/components/toc";
 import {Text} from "@/components/fumadocs/ui/icons";
 import {cn} from "@/utils/cn";
-import {PageTOCPopover, PageTOCPopoverContent, PageTOCPopoverTrigger} from "./client";
 import {TOCItems} from "./toc-items";
 
 export interface DocsPageProps {
@@ -15,15 +14,6 @@ export interface DocsPageProps {
 export function DocsPage({children, toc = []}: DocsPageProps) {
   const content = (
     <>
-      {toc.length > 0 && (
-        <PageTOCPopover>
-          <PageTOCPopoverTrigger />
-          <PageTOCPopoverContent>
-            <TOCScrollArea><TOCItems /></TOCScrollArea>
-          </PageTOCPopoverContent>
-        </PageTOCPopover>
-      )}
-
       <article
         id="nd-page"
         className="flex flex-col gap-4 px-4 py-6 [grid-area:main] *:max-w-[900px] md:px-6 md:pt-8 xl:px-8 xl:pt-14"

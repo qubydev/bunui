@@ -77,7 +77,7 @@
 
     /* Status Colors */
     --success: oklch(0.7329 0.1935 150.81);
-    --success-foreground: var(--eclipse);
+    --success-foreground: var(--snow);
 
     --warning: oklch(0.7819 0.1585 72.33);
     --warning-foreground: var(--eclipse);
@@ -214,6 +214,8 @@
     --field-foreground: var(--foreground);
 
     /* Status Colors */
+    --success-foreground: var(--snow);
+
     --warning: oklch(0.8203 0.1388 76.34);
     --warning-foreground: var(--eclipse);
 

@@ -458,7 +458,7 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
     <svg
       ref={bunRef}
       aria-label="Animated BunUI mascot"
-      className={cn("group touch-none cursor-pointer select-none overflow-visible", className)}
+      className={cn("jelly-bun-mascot group touch-none select-none overflow-visible", className)}
       fill="none"
       height={size}
       role="img"
