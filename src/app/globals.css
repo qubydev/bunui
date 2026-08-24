@@ -7,13 +7,15 @@
   --fd-layout-width: 1400px;
   --color-fd-background: var(--background);
   --color-fd-foreground: var(--foreground);
-  --color-fd-primary: oklch(0.14 0 0);
-  --color-fd-secondary: #f9f9f9;
-  --color-fd-card: #f9f9f9;
+  --color-fd-primary: var(--foreground);
+  --color-fd-primary-foreground: var(--background);
+  --color-fd-secondary: var(--background-secondary);
+  --color-fd-card: var(--surface);
   --spacing-fd-container: 1120px;
-  --color-fd-border: oklch(0 0 0 / 10%);
-  --color-fd-accent: #f9f9f9;
-  --color-fd-muted-foreground: var(--color-neutral-500);
+  --color-fd-border: var(--border);
+  --color-fd-accent: var(--default);
+  --color-fd-accent-foreground: var(--foreground);
+  --color-fd-muted-foreground: var(--muted);
   --color-backdrop: rgba(255, 255, 255, 0.4);
   --animate-fd-fade-in: custom-fade-in 200ms ease-out forwards;
   --animate-fd-fade-out: custom-fade-out 150ms ease-out forwards;
@@ -26,12 +28,15 @@
 
 [data-theme="dark"],
 .dark {
-  --color-fd-primary: oklch(0.99 0 0);
-  --color-fd-card: rgba(40, 40, 40, 0.4);
-  --color-fd-secondary: #18181b;
-  --color-fd-accent: #2c2c2c;
-  --color-fd-popover: #383435;
-  --color-fd-border: rgba(255, 255, 255, 0.1);
+  --color-fd-primary: var(--foreground);
+  --color-fd-primary-foreground: var(--background);
+  --color-fd-card: var(--surface);
+  --color-fd-secondary: var(--background-secondary);
+  --color-fd-accent: var(--default);
+  --color-fd-accent-foreground: var(--foreground);
+  --color-fd-popover: var(--overlay);
+  --color-fd-border: var(--border);
+  --color-fd-muted-foreground: var(--muted);
   --color-backdrop: rgba(0, 0, 0, 0.4);
 }
 
@@ -103,6 +108,8 @@
 
 #nd-sidebar {
   @apply items-start px-5 pt-4 transition-none;
+  --sidebar-item-hover: color-mix(in oklab, var(--background) 96%, var(--foreground) 4%);
+  --sidebar-item-active: color-mix(in oklab, var(--background) 94%, var(--foreground) 6%);
 
   @media (min-width: 600px) {
     --fd-sidebar-width: 220px;
@@ -151,16 +158,14 @@
   text-overflow: ellipsis;
   @apply rounded-field;
 
-  &:hover {
-    background: rgba(0, 0, 0, 0.04);
+  &:hover:not([data-active="true"]) {
+    background: var(--sidebar-item-hover);
   }
 
   &[data-active="true"] {
     @apply text-foreground shadow-none;
-    background: color-mix(in oklab, var(--default) 70%, var(--accent) 5%);
-    box-shadow:
-      inset 0 0 0 1px color-mix(in oklab, var(--foreground) 7%, transparent),
-      inset 0 1px 0 color-mix(in oklab, var(--white) 55%, transparent);
+    background: var(--sidebar-item-active);
+    box-shadow: none;
   }
 }
 
@@ -337,15 +342,13 @@ code {
 
 [data-theme="dark"],
 .dark {
-  #nd-sidebar a:hover {
-    background: rgba(255, 255, 255, 0.04);
+  #nd-sidebar {
+    --sidebar-item-hover: color-mix(in oklab, var(--background) 92%, var(--foreground) 8%);
+    --sidebar-item-active: color-mix(in oklab, var(--background) 88%, var(--foreground) 12%);
   }
 
-  #nd-sidebar a[data-active="true"] {
-    background: color-mix(in oklab, var(--default) 76%, var(--accent) 8%);
-    box-shadow:
-      inset 0 0 0 1px color-mix(in oklab, var(--foreground) 9%, transparent),
-      inset 0 1px 0 color-mix(in oklab, var(--white) 8%, transparent);
+  #nd-sidebar a:hover:not([data-active="true"]) {
+    background: var(--sidebar-item-hover);
   }
 
   .prose .shiki .fd-scroll-container {

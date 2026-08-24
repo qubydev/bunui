@@ -62,7 +62,7 @@ export function LargeSearchToggle({
       type="button"
       {...props}
       className={cn(
-        "bg-fd-secondary/50 text-fd-muted-foreground hover:bg-fd-accent hover:text-fd-accent-foreground inline-flex items-center gap-2 rounded-lg border p-1.5 ps-2 text-sm transition-colors",
+        "bg-fd-secondary/50 text-fd-muted-foreground hover:bg-fd-accent hover:text-fd-muted-foreground inline-flex items-center gap-2 rounded-lg border p-1.5 ps-2 text-sm transition-colors",
         props.className,
       )}
       onClick={() => {

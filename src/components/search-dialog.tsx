@@ -31,8 +31,8 @@ export default function BunSearchDialog(props: SharedProps) {
       <SearchDialogOverlay className="bg-black/55 backdrop-blur-sm" />
       <SearchDialogContent className="bun-search-dialog border border-separator bg-background text-foreground shadow-[0_18px_60px_rgba(0,0,0,0.22)] dark:border-white/10 dark:bg-[#111113]">
         <SearchDialogHeader className="border-b border-separator bg-background-secondary dark:border-white/10 dark:bg-[#18181b]">
-          <SearchDialogIcon className="text-muted" />
-          <SearchDialogInput className="text-foreground placeholder:text-muted" placeholder="Search components..." />
+          <SearchDialogIcon className="!text-field-placeholder" />
+          <SearchDialogInput className="text-foreground placeholder:!text-field-placeholder" placeholder="Search components..." />
         </SearchDialogHeader>
         <SearchDialogList items={items} />
       </SearchDialogContent>
