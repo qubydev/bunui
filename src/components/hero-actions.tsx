@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "@gravity-ui/icons";
 import gsap from "gsap";
-import { BunUILogo } from "@/components/bunui-logo";
+import {HeroUIIcon} from "@/components/heroui-icon";
 import { Button } from "@/registry/default/ui/button";
 
 export function HeroActions() {
@@ -92,6 +92,18 @@ export function HeroActions() {
             src="/yui540-avatar.jpg"
             width="24"
           />
+        </a>
+        <span aria-hidden="true" className="text-muted">
+          &
+        </span>
+        <a
+          aria-label="HeroUI"
+          className="group relative inline-flex items-center text-foreground transition-transform hover:scale-110"
+          href="https://www.heroui.com/"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <HeroUIIcon className="size-6" />
         </a>
       </p>
       <div

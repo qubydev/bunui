@@ -2,7 +2,7 @@ import {Button} from "@/registry/default/ui/button";
 
 export function Variants() {
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="grid grid-cols-2 place-items-center gap-3 sm:grid-cols-4">
       <Button>Primary</Button>
       <Button variant="secondary">Secondary</Button>
       <Button variant="outline">Outline</Button>
