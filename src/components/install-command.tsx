@@ -56,7 +56,7 @@ export function InstallCommand({className, item}: InstallCommandProps) {
         </div>
         <button
           aria-label={copied ? "Copied command" : "Copy command"}
-          className={buttonVariants({class: "ml-auto shrink-0 text-muted", isIconOnly:true, size:"sm", variant:"transparent"})}
+          className={buttonVariants({class: "ml-auto shrink-0 text-muted", isIconOnly:true, size:"sm", variant:"ghost"})}
           type="button"
           onClick={copyCommand}
         >

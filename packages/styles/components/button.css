@@ -111,14 +111,6 @@
   --button-fg: var(--success-soft-foreground);
 }
 
-.button--transparent {
-  --button-bg: transparent;
-  --button-bg-hover: transparent;
-  --button-bg-pressed: transparent;
-  --button-fg: var(--foreground);
-  border-color: transparent;
-}
-
 .button--ghost,
 .button--outline {
   --button-bg: transparent;

@@ -27,7 +27,6 @@ export const buttonVariants = tv({
       secondary: "button--secondary",
       success: "button--success",
       "success-soft": "button--success-soft",
-      transparent: "button--transparent",
     },
   },
 });

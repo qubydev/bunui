@@ -7,7 +7,6 @@ export function Variants() {
       <Button variant="secondary">Secondary</Button>
       <Button variant="outline">Outline</Button>
       <Button variant="ghost">Ghost</Button>
-      <Button variant="transparent">Transparent</Button>
       <Button variant="success">Success</Button>
       <Button variant="success-soft">Success Soft</Button>
       <Button variant="danger">Danger</Button>

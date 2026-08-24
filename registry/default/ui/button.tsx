@@ -49,8 +49,6 @@ export const buttonVariants = tv({
         "[--button-bg:var(--success)] [--button-bg-hover:var(--success-hover)] [--button-fg:var(--success-foreground)]",
       "success-soft":
         "[--button-bg:var(--success-soft)] [--button-bg-hover:var(--success-soft-hover)] [--button-fg:var(--success-soft-foreground)]",
-      transparent:
-        "[--button-bg:transparent] [--button-bg-hover:transparent] [--button-fg:var(--foreground)] hover:text-[var(--button-fg)]",
     },
   },
   compoundVariants: [
