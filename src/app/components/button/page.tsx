@@ -6,12 +6,11 @@ import {registryItemUrl} from "@/config/site";
 
 const toc = [
   {title:"Installation",url:"#installation",depth:2},
-  {title:"Examples",url:"#examples",depth:2},
-  {title:"Variants",url:"#variants",depth:3},
-  {title:"Sizes",url:"#sizes",depth:3},
-  {title:"With Icons",url:"#with-icons",depth:3},
-  {title:"Icon Only",url:"#icon-only",depth:3},
-  {title:"Disabled State",url:"#disabled-state",depth:3},
+  {title:"Variants",url:"#variants",depth:2},
+  {title:"Sizes",url:"#sizes",depth:2},
+  {title:"With Icons",url:"#with-icons",depth:2},
+  {title:"Icon Only",url:"#icon-only",depth:2},
+  {title:"Disabled State",url:"#disabled-state",depth:2},
   {title:"Customization",url:"#customization",depth:2},
   {title:"API Reference",url:"#api-reference",depth:2},
 ] as any;
@@ -32,21 +31,19 @@ export default function ButtonPage() {
         <h2 id="installation">Installation</h2>
         <InstallCommand item={registryItemUrl("button")} />
 
-        <h2 id="examples">Examples</h2>
-
-        <h3 id="variants">Variants</h3>
+        <h2 id="variants">Variants</h2>
         <ComponentPreview name="button-variants" />
 
-        <h3 id="sizes">Sizes</h3>
+        <h2 id="sizes">Sizes</h2>
         <ComponentPreview name="button-sizes" />
 
-        <h3 id="with-icons">With Icons</h3>
+        <h2 id="with-icons">With Icons</h2>
         <ComponentPreview name="button-with-icons" />
 
-        <h3 id="icon-only">Icon Only</h3>
+        <h2 id="icon-only">Icon Only</h2>
         <ComponentPreview name="button-icon-only" />
 
-        <h3 id="disabled-state">Disabled State</h3>
+        <h2 id="disabled-state">Disabled State</h2>
         <ComponentPreview name="button-disabled" />
 
         <h2 id="customization">Customization</h2>

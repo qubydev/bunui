@@ -32,6 +32,11 @@ export function TOCItems({className, ...props}: TOCItemsProps) {
   const [indicator, setIndicator] = useState<IndicatorPosition | null>(null);
 
   useLayoutEffect(() => {
+    if (items.length <= 1) {
+      setIndicator(null);
+      return;
+    }
+
     const container = containerRef.current;
     if (!container || !activeAnchor) return;
 
@@ -40,9 +45,13 @@ export function TOCItems({className, ...props}: TOCItemsProps) {
 
     if (!activeItem) return;
 
+    const styles = getComputedStyle(activeItem);
+    const lineHeight = Number.parseFloat(styles.lineHeight);
+    const height = Number.isFinite(lineHeight) ? lineHeight : activeItem.offsetHeight;
+
     setIndicator({
-      top: activeItem.offsetTop,
-      height: activeItem.offsetHeight,
+      top: activeItem.offsetTop + (activeItem.offsetHeight - height) / 2,
+      height,
     });
   }, [activeAnchor, items]);
 
