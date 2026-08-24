@@ -93,14 +93,6 @@ export function HeroActions() {
             width="24"
           />
         </a>
-        <span className="text-muted/70">&</span>
-        <a
-          aria-label="Bunui"
-          className="group relative inline-flex items-center text-foreground transition-transform hover:scale-110"
-          href="/"
-        >
-          <BunUILogo className="h-10 w-10" />
-        </a>
       </p>
       <div
         data-hero-button
