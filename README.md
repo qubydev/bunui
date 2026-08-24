@@ -1,31 +1,34 @@
 # Bunui
 
-Bunui is a shadcn-style component registry for cute, animated React components.
+Cute, animated React components you can copy into your app with the shadcn CLI.
 
-## Development
+## Usage
 
-```bash
-pnpm install
-pnpm dev
-```
-
-Run the full local validation with:
+Install a component from the Bunui registry:
 
 ```bash
-pnpm check
+npx shadcn@latest add https://bunui.xyz/r/button.json
 ```
 
-## Structure
+You can also use another package manager:
 
-- `registry/default/ui/` - installable shadcn registry components
-- `packages/styles/` - public design tokens and component styles
-- `src/demos/` - live docs demos and their displayed source code
-- `src/app/components/` - component index and detail pages
-- `src/components/` - minimal docs shell (topbar, sidebar, TOC, search, code previews)
-- `registry.json` - shadcn registry manifest
-- `src/app/r/[name]/route.ts` - hosted shadcn registry JSON endpoint
+```bash
+pnpm dlx shadcn@latest add https://bunui.xyz/r/button.json
+bunx shadcn@latest add https://bunui.xyz/r/button.json
+yarn dlx shadcn@latest add https://bunui.xyz/r/button.json
+```
 
-Currently included: `Button`.
+## Components
+
+Currently available:
+
+- Button
+
+Browse the docs at [bunui.xyz](https://bunui.xyz).
+
+## Requirements
+
+Bunui components are designed for React apps using Tailwind CSS and the shadcn registry workflow.
 
 ## License
 
@@ -33,13 +36,4 @@ Bunui is released under the MIT License. You can use it in personal projects, st
 
 Please do not clone the registry and resell it as a barely changed component pack. The license permits broad use, but the project is intended to be built on, credited, and improved, not repackaged wholesale.
 
-## Adding a component
-
-1. Add its installable implementation under `registry/default/ui/`.
-2. Add the component entry to `registry.json` with its dependencies and files.
-3. Update `src/app/r/[name]/route.ts` if the component needs a custom install target.
-4. Add live examples under `src/demos/en/<component>/` and register them in `src/demos/en/index.ts`.
-5. Add the component to `src/components/component-tree.ts` and the Components page.
-6. Add its detail route under `src/app/components/<component>/` using `ComponentPreview` so the rendered demo and displayed source stay in sync.
-
-The `LICENSE` file is intentionally kept because this is an open-source project.
+For development setup and project structure, see [CONTRIBUTING.md](./CONTRIBUTING.md).
