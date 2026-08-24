@@ -3,5 +3,5 @@
 import {Button} from "@/registry/default/ui/button";
 
 export function Basic() {
-  return <Button onPress={() => console.log("Button pressed")}>Click me</Button>;
+  return <Button onClick={() => console.log("Button clicked")}>Click me</Button>;
 }

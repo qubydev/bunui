@@ -4,8 +4,6 @@ import type {ComponentPropsWithRef} from "react";
 
 import gsap from "gsap";
 import {useEffect, useRef} from "react";
-import {Button as ButtonPrimitive} from "react-aria-components/Button";
-import {composeRenderProps} from "react-aria-components/composeRenderProps";
 import {tv, type VariantProps} from "tailwind-variants";
 
 export const buttonVariants = tv({
@@ -71,15 +69,20 @@ export const buttonVariants = tv({
 });
 
 export interface ButtonProps
-  extends ComponentPropsWithRef<typeof ButtonPrimitive>,
+  extends ComponentPropsWithRef<"button">,
     VariantProps<typeof buttonVariants> {}
 
 export function Button({
   className,
   isIconOnly,
-  onHoverChange,
-  onPressEnd,
-  onPressStart,
+  onBlur,
+  onKeyDown,
+  onKeyUp,
+  onPointerCancel,
+  onPointerDown,
+  onPointerEnter,
+  onPointerLeave,
+  onPointerUp,
   ref,
   size,
   variant,
@@ -226,11 +229,16 @@ export function Button({
   const release = () => {
     const button = buttonRef.current;
 
-    if (!canAnimate() || !button || !isPressedRef.current) {
+    if (!button || !isPressedRef.current) {
       return;
     }
 
     isPressedRef.current = false;
+
+    if (!canAnimate()) {
+      return;
+    }
+
     const targetScale = isHoveredRef.current ? 1.015 : 1;
 
     tweenRef.current?.kill();
@@ -279,20 +287,57 @@ export function Button({
   };
 
   return (
-    <ButtonPrimitive
+    <button
       {...props}
       data-slot="button"
       ref={setRef}
-      className={composeRenderProps(className, (value) =>
-        buttonVariants({class: value, isIconOnly, size, variant}),
-      )}
-      onHoverChange={(isHovered) => {
-        onHoverChange?.(isHovered);
+      className={buttonVariants({class: className, isIconOnly, size, variant})}
+      onBlur={(event) => {
+        onBlur?.(event);
+        isHoveredRef.current = false;
+        release();
+        animate({
+          duration: 0.18,
+          ease: "elastic.out(1, 0.55)",
+          scaleX: 1,
+          scaleY: 1,
+        });
+      }}
+      onKeyDown={(event) => {
+        onKeyDown?.(event);
 
-        if (isHovered) {
-          hover();
+        if (event.repeat || (event.key !== " " && event.key !== "Enter")) {
           return;
         }
+
+        press();
+      }}
+      onKeyUp={(event) => {
+        onKeyUp?.(event);
+
+        if (event.key === " " || event.key === "Enter") {
+          release();
+        }
+      }}
+      onPointerCancel={(event) => {
+        onPointerCancel?.(event);
+        release();
+      }}
+      onPointerDown={(event) => {
+        onPointerDown?.(event);
+
+        if (event.button !== 0) {
+          return;
+        }
+
+        press();
+      }}
+      onPointerEnter={(event) => {
+        onPointerEnter?.(event);
+        hover();
+      }}
+      onPointerLeave={(event) => {
+        onPointerLeave?.(event);
 
         if (isPressedRef.current) {
           isHoveredRef.current = false;
@@ -302,13 +347,9 @@ export function Button({
 
         leave();
       }}
-      onPressEnd={(event) => {
-        onPressEnd?.(event);
+      onPointerUp={(event) => {
+        onPointerUp?.(event);
         release();
-      }}
-      onPressStart={(event) => {
-        onPressStart?.(event);
-        press();
       }}
     />
   );

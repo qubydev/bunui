@@ -29,7 +29,7 @@ export function Topbar({
 
         <LargeSearchToggle
           hideIfDisabled
-          className="bun-topbar-search h-9 w-[400px] max-w-[40vw] shrink-0 max-md:hidden"
+          className="bun-topbar-search h-9 w-[25rem] max-w-[40vw] shrink-0 max-md:hidden"
         />
 
         <div className="flex min-w-0 flex-1 items-center justify-end gap-2">

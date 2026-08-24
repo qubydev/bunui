@@ -14,7 +14,7 @@ export default function ComponentsPage(){
       <div className="not-prose flex flex-col gap-12">
         <div className="flex flex-col gap-6">
           <div className="grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            <div className="flex flex-col gap-[9px]">
+            <div className="flex flex-col gap-[0.5625rem]">
               <div className="order-1 sm:order-2">
                 <Link className="link no-underline" href="/components/button">Button</Link>
               </div>

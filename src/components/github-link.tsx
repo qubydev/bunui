@@ -1,6 +1,6 @@
 "use client";
 
-import {ArrowLeft} from "@gravity-ui/icons";
+import {ArrowLeft} from "lucide-react";
 import {useEffect, useState} from "react";
 import {Button} from "@/registry/default/ui/button";
 import {cn} from "@/utils/cn";
@@ -77,3 +77,8 @@ export function GitHubLinkSmall({
     </a>
   );
 }
+
+
+
+
+

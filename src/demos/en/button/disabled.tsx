@@ -3,17 +3,17 @@ import {Button} from "@/registry/default/ui/button";
 export function Disabled() {
   return (
     <div className="flex flex-wrap gap-3">
-      <Button isDisabled>Primary</Button>
-      <Button isDisabled variant="secondary">
+      <Button disabled>Primary</Button>
+      <Button disabled variant="secondary">
         Secondary
       </Button>
-      <Button isDisabled variant="outline">
+      <Button disabled variant="outline">
         Outline
       </Button>
-      <Button isDisabled variant="ghost">
+      <Button disabled variant="ghost">
         Ghost
       </Button>
-      <Button isDisabled variant="danger">
+      <Button disabled variant="danger">
         Danger
       </Button>
     </div>

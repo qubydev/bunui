@@ -11,7 +11,7 @@ import {Button, type ButtonProps} from "@/registry/default/ui/button";
 import {Search} from "@/components/fumadocs/ui/icons";
 import {cn} from "@/utils/cn";
 
-interface SearchToggleProps extends Omit<ButtonProps, "children" | "onPress"> {
+interface SearchToggleProps extends Omit<ButtonProps, "children"> {
   hideIfDisabled?: boolean;
 }
 
@@ -34,7 +34,7 @@ export function SearchToggle({
       type="button"
       variant={variant}
       {...props}
-      onPress={() => {
+      onClick={() => {
         setOpenSearch(true);
       }}
     >

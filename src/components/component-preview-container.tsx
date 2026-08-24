@@ -31,7 +31,7 @@ export function ComponentPreviewContainer({
       {!!description && <p className="text-muted-foreground mb-2 text-sm">{description}</p>}
       <div
         data-name={name}
-        className={cn("preview not-prose relative min-h-[350px] w-full overflow-hidden rounded-t-xl border-s border-e border-t border-separator p-4 sm:p-10", isBgSolid && "bg-background", alignmentClasses[align], "flex")}
+        className={cn("preview not-prose relative min-h-[21.875rem] w-full overflow-hidden rounded-t-xl border-s border-e border-t border-separator p-4 sm:p-10", isBgSolid && "bg-background", alignmentClasses[align], "flex")}
         onClickCapture={shouldPreventNavigation ? preventPlaceholderHashNavigation : undefined}
       >
         <div className="flex min-h-[inherit] w-full items-center justify-center [&>*]:justify-center" style={{minHeight}}>{Component}</div>

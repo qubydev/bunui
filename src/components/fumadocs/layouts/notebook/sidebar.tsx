@@ -69,7 +69,7 @@ export function SidebarViewport({
 export function MobileSidebarTrigger({
   className,
   ...props
-}: Omit<ButtonProps, "children" | "isIconOnly" | "onPress" | "size" | "variant">) {
+}: Omit<ButtonProps, "children" | "isIconOnly" | "size" | "variant">) {
   const {setOpen} = Base.useSidebar();
 
   return (
@@ -81,7 +81,7 @@ export function MobileSidebarTrigger({
       type="button"
       variant="ghost"
       {...props}
-      onPress={() => setOpen(true)}
+      onClick={() => setOpen(true)}
     >
       <PanelRight className="size-4.5" />
     </Button>
@@ -91,7 +91,7 @@ export function MobileSidebarTrigger({
 export function SidebarDrawerClose({
   className,
   ...props
-}: Omit<ButtonProps, "children" | "isIconOnly" | "onPress" | "size" | "variant">) {
+}: Omit<ButtonProps, "children" | "isIconOnly" | "size" | "variant">) {
   const {setOpen} = Base.useSidebar();
 
   return (
@@ -103,7 +103,7 @@ export function SidebarDrawerClose({
       type="button"
       variant="ghost"
       {...props}
-      onPress={() => setOpen(false)}
+      onClick={() => setOpen(false)}
     >
       <X className="size-4.5" />
     </Button>
@@ -262,7 +262,7 @@ export function SidebarDrawer({
     <>
       <div
         ref={overlayRef}
-        className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+        className="fixed inset-0 z-40 bg-backdrop backdrop-blur-sm"
         onClick={() => setOpen(false)}
       />
       <aside

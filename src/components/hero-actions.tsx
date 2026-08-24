@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight } from "@gravity-ui/icons";
+import {ArrowRight} from "lucide-react";
 import gsap from "gsap";
 import {HeroUIIcon} from "@/components/heroui-icon";
 import { Button } from "@/registry/default/ui/button";
@@ -110,7 +110,7 @@ export function HeroActions() {
         data-hero-button
         className="mt-6 inline-flex"
       >
-        <Button className="h-12 gap-2 px-6 text-base" onPress={openComponents}>
+        <Button className="h-12 gap-2 px-6 text-base" onClick={openComponents}>
           Get started
           <ArrowRight className="size-4" aria-hidden="true" />
         </Button>
@@ -118,3 +118,8 @@ export function HeroActions() {
     </div>
   );
 }
+
+
+
+
+

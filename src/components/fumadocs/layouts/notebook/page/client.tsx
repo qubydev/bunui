@@ -1,7 +1,7 @@
 "use client";
 
 import type {ComponentProps} from "react";
-import {ChevronDown} from "@gravity-ui/icons";
+import {ChevronDown} from "lucide-react";
 import {useActiveAnchor} from "fumadocs-core/toc";
 import {useTOCItems} from "fumadocs-ui/components/toc";
 import {Collapsible, CollapsibleContent, CollapsibleTrigger} from "fumadocs-ui/components/ui/collapsible";
@@ -117,3 +117,7 @@ export function PageTOCPopoverContent(props: ComponentProps<"div">) {
     </CollapsibleContent>
   );
 }
+
+
+
+

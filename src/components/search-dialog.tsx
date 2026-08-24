@@ -28,9 +28,9 @@ export default function BunSearchDialog(props: SharedProps) {
 
   return (
     <SearchDialog {...props} search={search} onSearchChange={setSearch}>
-      <SearchDialogOverlay className="bg-black/55 backdrop-blur-sm" />
-      <SearchDialogContent className="bun-search-dialog border border-separator bg-background text-foreground shadow-[0_18px_60px_rgba(0,0,0,0.22)] dark:border-white/10 dark:bg-[#111113]">
-        <SearchDialogHeader className="border-b border-separator bg-background-secondary dark:border-white/10 dark:bg-[#18181b]">
+      <SearchDialogOverlay className="bg-[var(--search-dialog-backdrop)] backdrop-blur-sm" />
+      <SearchDialogContent className="bun-search-dialog border border-[var(--search-dialog-border)] bg-[var(--search-dialog-background)] text-foreground shadow-[var(--search-dialog-shadow)]">
+        <SearchDialogHeader className="border-b border-[var(--search-dialog-border)] bg-[var(--search-dialog-header-background)]">
           <SearchDialogIcon className="!text-field-placeholder" />
           <SearchDialogInput className="text-foreground placeholder:!text-field-placeholder" placeholder="Search components..." />
         </SearchDialogHeader>

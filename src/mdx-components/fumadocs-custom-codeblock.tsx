@@ -2,7 +2,7 @@
 
 import type {CodeBlockProps} from "fumadocs-ui/components/codeblock";
 import type {CSSProperties, ComponentProps, RefObject} from "react";
-import {Check, Copy} from "@gravity-ui/icons";
+import {Check, Copy} from "lucide-react";
 import {buttonVariants} from "@/registry/default/ui/button";
 import {useCopyButton} from "fumadocs-ui/utils/use-copy-button";
 import {useRef} from "react";
@@ -99,3 +99,8 @@ function CopyButton({className, code, containerRef, ...props}: ComponentProps<"b
     </button>
   );
 }
+
+
+
+
+

@@ -6,10 +6,9 @@
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
-      "description": "A cute, springy button component with accessible React Aria behavior.",
+      "description": "A cute, springy button component that forwards native button props.",
       "dependencies": [
         "gsap",
-        "react-aria-components",
         "tailwind-variants"
       ],
       "files": [

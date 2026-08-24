@@ -1,1 +1,1 @@
-export {cn} from "@bunui/styles";
+export {cn} from "tailwind-variants";

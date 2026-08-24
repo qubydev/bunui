@@ -1,4 +1,4 @@
-import {CircleCheck, PaperPlane, Rocket, TrashBin} from "@gravity-ui/icons";
+import {CircleCheck, Rocket, Send, Trash2} from "lucide-react";
 import {Button} from "@/registry/default/ui/button";
 
 export function WithIcons() {
@@ -9,11 +9,11 @@ export function WithIcons() {
         Launch
       </Button>
       <Button variant="danger">
-        <TrashBin />
+        <Trash2 />
         Delete
       </Button>
       <Button variant="outline">
-        <PaperPlane />
+        <Send />
         Send
       </Button>
       <Button variant="success">
@@ -23,3 +23,4 @@ export function WithIcons() {
     </div>
   );
 }
+

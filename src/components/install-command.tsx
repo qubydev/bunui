@@ -1,6 +1,6 @@
 "use client";
 
-import {Check, Copy} from "@gravity-ui/icons";
+import {Check, Copy} from "lucide-react";
 import {useMemo, useState} from "react";
 
 import {buttonVariants} from "@/registry/default/ui/button";
@@ -64,10 +64,15 @@ export function InstallCommand({className, item}: InstallCommandProps) {
         </button>
       </div>
       <div className="bg-(--docs-code-surface) overflow-x-auto px-4 py-4">
-        <code className="block w-max min-w-full whitespace-nowrap border-none bg-transparent px-2 py-1 font-mono text-[13px] leading-6 text-foreground">
+        <code className="block w-max min-w-full whitespace-nowrap border-none bg-transparent px-2 py-1 font-mono text-[0.8125rem] leading-6 text-foreground">
           {command}
         </code>
       </div>
     </div>
   );
 }
+
+
+
+
+

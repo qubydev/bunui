@@ -12,13 +12,13 @@ export function CodeBlock({children,className,code,collapsible,isEmbedded=false,
     return <BaseCodeBlock code={code} title={title} className={cn("code-block-wrapper docs-code-block",!isEmbedded&&"standalone-code-block",isIsolated&&"is-isolated",showLineNumbers&&"docs-code-block-line-numbers",className)} {...props}>{children}</BaseCodeBlock>;
   }
   return <div className="relative">
-    <div className={cn("code-block-wrapper",isIsolated&&"is-isolated",isCollapsed&&"mask-to-bottom relative max-h-[150px] overflow-hidden")}>
+    <div className={cn("code-block-wrapper",isIsolated&&"is-isolated",isCollapsed&&"mask-to-bottom relative max-h-[9.375rem] overflow-hidden")}>
       <BaseCodeBlock code={code} title={title} className={cn("docs-code-block docs-code-block-with-toggle shadow-none",showLineNumbers&&"docs-code-block-line-numbers",className)} {...props}>
         {isCollapsed&&preview?preview:children}
       </BaseCodeBlock>
     </div>
     <div className="absolute end-1/2 bottom-2 translate-x-1/2">
-      <Button className="border border-separator text-xs shadow-none" size="sm" type="button" variant="secondary" onPress={()=>setIsCollapsed(!isCollapsed)}>
+      <Button className="border border-separator text-xs shadow-none" size="sm" type="button" variant="secondary" onClick={()=>setIsCollapsed(!isCollapsed)}>
         {isCollapsed?"Expand code":"Collapse code"}
       </Button>
     </div>

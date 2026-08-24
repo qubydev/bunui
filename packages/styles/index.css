@@ -1,8 +1,0 @@
-@layer theme, base, components, utilities;
-
-@import "tailwindcss";
-@import "./base/base.css" layer(base);
-@import "./components/index.css" layer(components);
-@import "./themes/default/index.css" layer(theme);
-@import "./utilities/index.css";
-@import "./variants/index.css";

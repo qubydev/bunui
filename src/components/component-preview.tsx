@@ -26,7 +26,7 @@ export function ComponentPreviewFallback() {
   return (
     <div
       aria-hidden="true"
-      className="component-preview-container my-4 h-[200px] animate-pulse rounded-lg border bg-muted/30"
+      className="component-preview-container my-4 h-50 animate-pulse rounded-lg border bg-muted/30"
     />
   );
 }
@@ -46,8 +46,8 @@ export async function ComponentPreview({
 
   if (!demo) {
     return (
-      <div className={cn("my-4 rounded-md border border-red-200 bg-red-50 p-4", className)}>
-        <p className="text-sm text-red-600">
+      <div className={cn("my-4 rounded-md border border-danger/20 bg-danger-soft p-4", className)}>
+        <p className="text-sm text-danger-soft-foreground">
           Component demo &quot;{name}&quot; not found. Make sure the demo is registered in the demos
           index.
         </p>

@@ -67,17 +67,17 @@ export default function ButtonPage() {
         <h2 id="api-reference">API Reference</h2>
         <h3>Button</h3>
         <div className="not-prose my-4 overflow-x-auto rounded-xl border border-separator">
-          <table className="w-full min-w-[760px] border-collapse text-left text-sm">
+          <table className="w-full min-w-[47.5rem] border-collapse text-left text-sm">
             <thead className="bg-default/60">
               <tr><th className="p-3">Prop</th><th className="p-3">Type</th><th className="p-3">Default</th><th className="p-3">Description</th></tr>
             </thead>
             <tbody className="divide-y divide-separator">
               <tr><td className="p-3"><code>variant</code></td><td className="p-3">primary | secondary | outline | ghost | success | success-soft | danger | danger-soft</td><td className="p-3">primary</td><td className="p-3">Visual style variant</td></tr>
               <tr><td className="p-3"><code>size</code></td><td className="p-3">sm | md | lg</td><td className="p-3">md</td><td className="p-3">Size of the button</td></tr>
-              <tr><td className="p-3"><code>isDisabled</code></td><td className="p-3">boolean</td><td className="p-3">false</td><td className="p-3">Whether the button is disabled</td></tr>
+              <tr><td className="p-3"><code>disabled</code></td><td className="p-3">boolean</td><td className="p-3">false</td><td className="p-3">Whether the button is disabled</td></tr>
               <tr><td className="p-3"><code>isIconOnly</code></td><td className="p-3">boolean</td><td className="p-3">false</td><td className="p-3">Whether the button contains only an icon</td></tr>
               <tr><td className="p-3"><code>className</code></td><td className="p-3">string</td><td className="p-3">-</td><td className="p-3">Custom classes applied to the button</td></tr>
-              <tr><td className="p-3"><code>onPress</code></td><td className="p-3">(e: PressEvent) =&gt; void</td><td className="p-3">-</td><td className="p-3">Handler called when the button is pressed</td></tr>
+              <tr><td className="p-3"><code>onClick</code></td><td className="p-3">MouseEventHandler&lt;HTMLButtonElement&gt;</td><td className="p-3">-</td><td className="p-3">Handler called when the button is clicked</td></tr>
               <tr><td className="p-3"><code>children</code></td><td className="p-3">ReactNode</td><td className="p-3">-</td><td className="p-3">Button content</td></tr>
             </tbody>
           </table>

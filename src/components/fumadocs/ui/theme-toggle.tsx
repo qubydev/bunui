@@ -27,12 +27,12 @@ export function ThemeToggle({
       aria-label={`Switch to ${nextTheme} theme`}
       className={className}
       data-theme-toggle=""
-      isDisabled={!mounted}
+      disabled={!mounted}
       isIconOnly
       size="sm"
       type="button"
       variant="ghost"
-      onPress={() => setTheme(nextTheme)}
+      onClick={() => setTheme(nextTheme)}
     >
       <Icon className="size-4.5" />
     </Button>

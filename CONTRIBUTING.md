@@ -25,7 +25,7 @@ pnpm check
 ## Project Structure
 
 - `registry/default/ui/` - installable shadcn registry components
-- `packages/styles/` - public design tokens and component styles
+- `src/app/globals.css` - Tailwind import, global color tokens, Fumadocs overrides, and truly shared custom classes
 - `src/demos/` - live docs demos and their displayed source code
 - `src/app/components/` - component index and detail pages
 - `src/components/` - docs shell, previews, navigation, search, and shared UI

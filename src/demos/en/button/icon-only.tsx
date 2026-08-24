@@ -1,4 +1,4 @@
-import {Bell, Check, Sun, TrashBin} from "@gravity-ui/icons";
+import {Bell, Check, Sun, Trash2} from "lucide-react";
 import {Button} from "@/registry/default/ui/button";
 
 export function IconOnly() {
@@ -8,7 +8,7 @@ export function IconOnly() {
         <Check />
       </Button>
       <Button isIconOnly aria-label="Delete" variant="danger">
-        <TrashBin />
+        <Trash2 />
       </Button>
       <Button isIconOnly aria-label="Theme" variant="secondary">
         <Sun />
@@ -19,3 +19,4 @@ export function IconOnly() {
     </div>
   );
 }
+
