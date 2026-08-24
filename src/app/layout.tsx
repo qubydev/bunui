@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { RootProvider } from "fumadocs-ui/provider/next";
+import { Analytics } from "@vercel/analytics/next";
 import { Fredoka, Inter } from "next/font/google";
 import { ClickSpark } from "@/components/click-spark";
 import BunSearchDialog from "@/components/search-dialog";
@@ -81,6 +82,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             </ClickSpark>
           </ThemeProvider>
         </RootProvider>
+        <Analytics />
       </body>
     </html>
   );
