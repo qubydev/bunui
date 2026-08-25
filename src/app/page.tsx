@@ -1,23 +1,7 @@
-import {HeroActions} from "@/components/hero-actions";
-import {HeroTitle} from "@/components/hero-title";
-import {JellyBun} from "@/components/jelly-bun";
-import {TopbarWithMobileSidebar} from "@/components/topbar-with-mobile-sidebar";
-
-export default function HomePage() {
+export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
-      <TopbarWithMobileSidebar />
-
-      <main className="flex min-h-[calc(100vh-3.5rem)] w-full flex-col px-4 md:px-6">
-        <section className="z-10 flex min-h-0 flex-1 flex-col items-center pt-12 text-center">
-          <div className="mx-auto flex max-w-2xl flex-col items-center justify-center">
-            <JellyBun className="size-28 text-foreground sm:size-36" />
-            <HeroTitle />
-            <HeroActions />
-          </div>
-
-        </section>
-      </main>
-    </div>
+    <main className="flex min-h-screen items-center justify-center">
+      <h1 className="text-4xl font-semibold tracking-tight">Bun UI</h1>
+    </main>
   );
 }

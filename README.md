@@ -1,39 +1,36 @@
-# Bunui
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Cute, animated React components you can copy into your app with the shadcn CLI.
+## Getting Started
 
-## Usage
-
-Install a component from the Bunui registry:
+First, run the development server:
 
 ```bash
-npx shadcn@latest add https://bunui.xyz/r/button.json
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-You can also use another package manager:
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-pnpm dlx shadcn@latest add https://bunui.xyz/r/button.json
-bunx shadcn@latest add https://bunui.xyz/r/button.json
-yarn dlx shadcn@latest add https://bunui.xyz/r/button.json
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Components
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-Currently available:
+## Learn More
 
-- Button
+To learn more about Next.js, take a look at the following resources:
 
-Browse the docs at [bunui.xyz](https://bunui.xyz).
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-## Requirements
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-Bunui components are designed for React apps using Tailwind CSS and the shadcn registry workflow.
+## Deploy on Vercel
 
-## License
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Bunui is released under the MIT License. You can use it in personal projects, startups, and production company apps.
-
-Please do not clone the registry and resell it as a barely changed component pack. The license permits broad use, but the project is intended to be built on, credited, and improved, not repackaged wholesale.
-
-For development setup and project structure, see [CONTRIBUTING.md](./CONTRIBUTING.md).
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
