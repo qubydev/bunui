@@ -34,7 +34,7 @@ export function HeroActions() {
 
   return (
     <div ref={containerRef} className="flex flex-col items-center">
-      <p data-hero-description className="mt-4 max-w-lg text-balance text-sm leading-7 text-muted-foreground sm:text-base">
+      <p data-hero-description className="mt-4 max-w-xl text-balance text-sm text-muted-foreground sm:text-base">
         A playful React UI library with polished, accessible components that feel good to use.
       </p>
       <div data-hero-button className="mt-6 inline-flex">
