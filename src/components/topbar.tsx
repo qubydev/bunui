@@ -1,21 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import {useEffect, useState} from "react";
-import {Moon, PanelRight, Sun, X} from "lucide-react";
-import {useTheme} from "next-themes";
-import {FullSearchTrigger, SearchTrigger} from "fumadocs-ui/layouts/shared/slots/search-trigger";
-import {SidebarTrigger, useSidebar} from "fumadocs-ui/components/sidebar/base";
+import { useSyncExternalStore } from "react";
+import { Moon, PanelRight, Sun, X } from "lucide-react";
+import { useTheme } from "next-themes";
+import { FullSearchTrigger, SearchTrigger } from "fumadocs-ui/layouts/shared/slots/search-trigger";
+import { SidebarTrigger, useSidebar } from "fumadocs-ui/components/sidebar/base";
 
-import {BunUILogo} from "@/components/bunui-logo";
-import {BunUILogotype} from "@/components/bunui-logotype";
-import {Button} from "@/components/ui/button";
+import { BunUILogo } from "@/components/bunui-logo";
+import { BunUILogotype } from "@/components/bunui-logotype";
+import { Button } from "@/components/ui/button";
 
 export function ThemeToggle() {
-  const {resolvedTheme, setTheme} = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
+  const { resolvedTheme, setTheme } = useTheme();
+  const mounted = useSyncExternalStore(
+    () => () => { },
+    () => true,
+    () => false,
+  );
 
   const dark = mounted && resolvedTheme === "dark";
 
@@ -67,7 +69,7 @@ export function GitHubLink() {
 }
 
 function MobileSidebarTrigger() {
-  const {open} = useSidebar();
+  const { open } = useSidebar();
 
   return (
     <SidebarTrigger className="relative inline-flex size-8 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground md:hidden">
@@ -92,9 +94,9 @@ export function Topbar() {
           </Link>
         </div>
 
-        <FullSearchTrigger hideIfDisabled className="hidden h-8 w-[25rem] max-w-[40vw] md:flex" />
+        <FullSearchTrigger hideIfDisabled className="hidden h-8 w-full max-w-80 md:flex" />
 
-        <div className="flex min-w-0 flex-1 items-center justify-end gap-1">
+        <div className="flex min-w-0 items-center justify-end gap-1">
           <div className="md:hidden">
             <SearchTrigger hideIfDisabled className="size-8" />
           </div>

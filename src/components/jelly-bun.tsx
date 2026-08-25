@@ -1,6 +1,6 @@
 "use client";
 
-import {type CSSProperties, useEffect, useId, useRef} from "react";
+import {type CSSProperties, type PointerEvent as ReactPointerEvent, useEffect, useId, useRef} from "react";
 import gsap from "gsap";
 import {cn} from "@/lib/utils";
 
@@ -30,6 +30,21 @@ const eyeData = {
 const bunBodyPath =
   "M306 78.5c36.5 0 25.267 54.5 43.767 69.5 0 0 4.5-44 17.5-57s31.311-8.08 43.5 5c61.5 66 142.965 75 172.593 186.544C616.581 407.615 563.83 530.197 306 530.197S-4.315 407.615 28.906 282.544C58.534 171 140 162 201.5 96c12.189-13.08 30.5-18 43.5-5s17.5 57 17.5 57c18.5-15 7-69.5 43.5-69.5";
 
+const TAP_WINDOW_MS = 850;
+const ANGRY_TAP_THRESHOLD = 5;
+const ANGRY_COOLDOWN_MS = 5000;
+const PAT_WINDOW_MS = 1100;
+const PAT_MOVE_THRESHOLD_PX = 14;
+const PAT_DIRECTION_CHANGES = 3;
+const BLUSH_COOLDOWN_MS = 5000;
+
+interface PatGesture {
+  startTime: number;
+  lastX: number;
+  lastDirection: -1 | 0 | 1;
+  directionChanges: number;
+}
+
 export function JellyBun({className, size = 160}: JellyBunProps) {
   const shadowId = useId().replace(/:/g, "");
   const clipId = `${shadowId}-body-clip`;
@@ -38,28 +53,40 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
   const rimGlowId = `${shadowId}-rim-glow`;
   const bunRef = useRef<SVGSVGElement>(null);
   const eyesRef = useRef<SVGGElement>(null);
+  const angryMarkRef = useRef<SVGGElement>(null);
+  const blushRef = useRef<SVGPathElement>(null);
   const leftEyeRef = useRef<SVGRectElement>(null);
   const rightEyeRef = useRef<SVGRectElement>(null);
   const activeTweenRef = useRef<gsap.core.Tween | gsap.core.Timeline | null>(null);
   const lookTweenRef = useRef<gsap.core.Timeline | null>(null);
   const followTweenRef = useRef<gsap.core.Tween | null>(null);
+  const angryMarkTweenRef = useRef<gsap.core.Tween | null>(null);
+  const blushTweenRef = useRef<gsap.core.Tween | null>(null);
   const blinkTweensRef = useRef<Set<gsap.core.Timeline>>(new Set());
   const blinkTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const blinkStaggerTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lookTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const angryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const blushTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const angryTweenRef = useRef<gsap.core.Tween | null>(null);
+  const patGestureRef = useRef<PatGesture | null>(null);
+  const tapTimesRef = useRef<number[]>([]);
   const scheduleBlinkRef = useRef<(() => void) | null>(null);
   const reduceMotionRef = useRef(false);
   const isPressedRef = useRef(false);
+  const isAngryRef = useRef(false);
   const isHoveringRef = useRef(false);
   const hasPointerRef = useRef(false);
 
   useEffect(() => {
     const bun = bunRef.current;
     const eyes = eyesRef.current;
+    const angryMark = angryMarkRef.current;
+    const blush = blushRef.current;
     const leftEye = leftEyeRef.current;
     const rightEye = rightEyeRef.current;
 
-    if (!bun || !eyes || !leftEye || !rightEye) {
+    if (!bun || !eyes || !angryMark || !blush || !leftEye || !rightEye) {
       return;
     }
 
@@ -67,6 +94,16 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
     reduceMotionRef.current = reduceMotion;
 
     gsap.set([eyes, leftEye, rightEye], {transformOrigin: "50% 50%"});
+    gsap.set(angryMark, {
+      opacity: 0,
+      scale: 0.72,
+      transformOrigin: "50% 50%",
+    });
+    gsap.set(blush, {
+      opacity: 0,
+      scale: 0.9,
+      transformOrigin: "50% 50%",
+    });
 
     const intro = reduceMotion
       ? null
@@ -150,7 +187,7 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
       eye: SVGRectElement,
       data: {height: number; rx: number; y: number},
     ) => {
-      if (isPressedRef.current) {
+      if (isPressedRef.current || isAngryRef.current) {
         return;
       }
 
@@ -190,7 +227,7 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
       }
 
       blinkTimerRef.current = setTimeout(() => {
-        if (isPressedRef.current) {
+        if (isPressedRef.current || isAngryRef.current) {
           scheduleBlink();
           return;
         }
@@ -248,17 +285,22 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
       window.addEventListener("pointermove", followPointer);
     }
 
+    const blinkTweens = blinkTweensRef.current;
+
     return () => {
       stopAnimation();
       intro?.kill();
       lookTweenRef.current?.kill();
       followTweenRef.current?.kill();
+      angryTweenRef.current?.kill();
+      angryMarkTweenRef.current?.kill();
+      blushTweenRef.current?.kill();
       scheduleBlinkRef.current = null;
 
-      blinkTweensRef.current.forEach((tween) => {
+      blinkTweens.forEach((tween) => {
         tween.kill();
       });
-      blinkTweensRef.current.clear();
+      blinkTweens.clear();
 
       if (blinkTimerRef.current) {
         clearTimeout(blinkTimerRef.current);
@@ -272,9 +314,268 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
         clearTimeout(lookTimerRef.current);
       }
 
+      if (angryTimerRef.current) {
+        clearTimeout(angryTimerRef.current);
+      }
+
+      if (blushTimerRef.current) {
+        clearTimeout(blushTimerRef.current);
+      }
+
       window.removeEventListener("pointermove", followPointer);
     };
   }, []);
+
+  const clearBlinking = () => {
+    if (blinkTimerRef.current) {
+      clearTimeout(blinkTimerRef.current);
+    }
+
+    if (blinkStaggerTimerRef.current) {
+      clearTimeout(blinkStaggerTimerRef.current);
+    }
+
+    blinkTweensRef.current.forEach((tween) => {
+      tween.kill();
+    });
+    blinkTweensRef.current.clear();
+  };
+
+  const animateAngryEyes = () => {
+    const angryMark = angryMarkRef.current;
+    const leftEye = leftEyeRef.current;
+    const rightEye = rightEyeRef.current;
+
+    if (!leftEye || !rightEye) {
+      return;
+    }
+
+    clearBlinking();
+    gsap.set(leftEye, {attr: eyeData.left});
+    gsap.set(rightEye, {attr: eyeData.right});
+    angryTweenRef.current?.kill();
+
+    angryTweenRef.current = gsap.to([leftEye, rightEye], {
+      duration: 0.18,
+      ease: "back.out(2.6)",
+      overwrite: "auto",
+      scaleX: 1.28,
+      scaleY: 0.28,
+      rotate: (index) => (index === 0 ? 14 : -14),
+    });
+
+    if (angryMark) {
+      angryMarkTweenRef.current?.kill();
+      angryMarkTweenRef.current = gsap.to(angryMark, {
+        duration: 0.22,
+        ease: "back.out(2.9)",
+        opacity: 1,
+        scale: 1,
+      });
+    }
+  };
+
+  const relaxAngryEyes = () => {
+    const angryMark = angryMarkRef.current;
+    const leftEye = leftEyeRef.current;
+    const rightEye = rightEyeRef.current;
+
+    if (!leftEye || !rightEye) {
+      return;
+    }
+
+    isAngryRef.current = false;
+    angryTweenRef.current?.kill();
+    angryTweenRef.current = gsap.to([leftEye, rightEye], {
+      duration: 0.48,
+      ease: "elastic.out(1, 0.62)",
+      overwrite: "auto",
+      scaleX: 1,
+      scaleY: 1,
+      rotate: 0,
+    });
+
+    if (angryMark) {
+      angryMarkTweenRef.current?.kill();
+      angryMarkTweenRef.current = gsap.to(angryMark, {
+        duration: 0.2,
+        ease: "power2.in",
+        opacity: 0,
+        scale: 0.72,
+      });
+    }
+
+    if (!reduceMotionRef.current) {
+      scheduleBlinkRef.current?.();
+    }
+  };
+
+  const hideBlush = () => {
+    const blush = blushRef.current;
+
+    if (blushTimerRef.current) {
+      clearTimeout(blushTimerRef.current);
+      blushTimerRef.current = null;
+    }
+
+    if (!blush) {
+      return;
+    }
+
+    blushTweenRef.current?.kill();
+    blushTweenRef.current = gsap.to(blush, {
+      duration: 0.18,
+      ease: "power2.in",
+      opacity: 0,
+      scale: 0.9,
+    });
+  };
+
+  const clearAnger = () => {
+    const angryMark = angryMarkRef.current;
+    const leftEye = leftEyeRef.current;
+    const rightEye = rightEyeRef.current;
+
+    if (angryTimerRef.current) {
+      clearTimeout(angryTimerRef.current);
+      angryTimerRef.current = null;
+    }
+
+    isAngryRef.current = false;
+    angryTweenRef.current?.kill();
+
+    if (leftEye && rightEye) {
+      gsap.to([leftEye, rightEye], {
+        duration: 0.22,
+        ease: "power2.out",
+        overwrite: "auto",
+        rotate: 0,
+        scaleX: 1,
+        scaleY: isPressedRef.current ? 0.35 : 1,
+      });
+    }
+
+    if (angryMark) {
+      angryMarkTweenRef.current?.kill();
+      angryMarkTweenRef.current = gsap.to(angryMark, {
+        duration: 0.16,
+        ease: "power2.in",
+        opacity: 0,
+        scale: 0.72,
+      });
+    }
+  };
+
+  const triggerAnger = () => {
+    hideBlush();
+    isAngryRef.current = true;
+    animateAngryEyes();
+
+    if (angryTimerRef.current) {
+      clearTimeout(angryTimerRef.current);
+    }
+
+    angryTimerRef.current = setTimeout(() => {
+      angryTimerRef.current = null;
+
+      if (!isPressedRef.current) {
+        relaxAngryEyes();
+      }
+    }, ANGRY_COOLDOWN_MS);
+  };
+
+  const trackTapRate = () => {
+    const now = performance.now();
+    tapTimesRef.current = [...tapTimesRef.current, now].filter(
+      (tapTime) => now - tapTime <= TAP_WINDOW_MS,
+    );
+
+    if (tapTimesRef.current.length >= ANGRY_TAP_THRESHOLD) {
+      tapTimesRef.current = [];
+      triggerAnger();
+    }
+  };
+
+  const resetPatGesture = (clientX: number) => {
+    patGestureRef.current = {
+      startTime: performance.now(),
+      lastX: clientX,
+      lastDirection: 0,
+      directionChanges: 0,
+    };
+  };
+
+  const showBlush = () => {
+    const blush = blushRef.current;
+
+    if (!blush) {
+      return;
+    }
+
+    clearAnger();
+    blushTweenRef.current?.kill();
+    blushTweenRef.current = gsap.to(blush, {
+      duration: 0.24,
+      ease: "back.out(2.4)",
+      opacity: 1,
+      scale: 1,
+    });
+
+    if (blushTimerRef.current) {
+      clearTimeout(blushTimerRef.current);
+    }
+
+    blushTimerRef.current = setTimeout(() => {
+      blushTimerRef.current = null;
+      blushTweenRef.current?.kill();
+      blushTweenRef.current = gsap.to(blush, {
+        duration: 0.32,
+        ease: "power2.inOut",
+        opacity: 0,
+        scale: 0.9,
+      });
+    }, BLUSH_COOLDOWN_MS);
+  };
+
+  const trackPat = (event: ReactPointerEvent<SVGSVGElement>) => {
+    if (!isPressedRef.current) {
+      return;
+    }
+
+    const gesture = patGestureRef.current;
+
+    if (!gesture) {
+      resetPatGesture(event.clientX);
+      return;
+    }
+
+    const now = performance.now();
+
+    if (now - gesture.startTime > PAT_WINDOW_MS) {
+      resetPatGesture(event.clientX);
+      return;
+    }
+
+    const deltaX = event.clientX - gesture.lastX;
+
+    if (Math.abs(deltaX) < PAT_MOVE_THRESHOLD_PX) {
+      return;
+    }
+
+    const direction = deltaX > 0 ? 1 : -1;
+
+    if (gesture.lastDirection !== 0 && direction !== gesture.lastDirection) {
+      gesture.directionChanges += 1;
+    }
+
+    gesture.lastDirection = direction;
+    gesture.lastX = event.clientX;
+
+    if (gesture.directionChanges >= PAT_DIRECTION_CHANGES) {
+      showBlush();
+      resetPatGesture(event.clientX);
+    }
+  };
 
   const stopLook = () => {
     if (lookTimerRef.current) {
@@ -367,18 +668,7 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
     }
 
     isPressedRef.current = true;
-    if (blinkTimerRef.current) {
-      clearTimeout(blinkTimerRef.current);
-    }
-
-    if (blinkStaggerTimerRef.current) {
-      clearTimeout(blinkStaggerTimerRef.current);
-    }
-
-    blinkTweensRef.current.forEach((tween) => {
-      tween.kill();
-    });
-    blinkTweensRef.current.clear();
+    clearBlinking();
 
     gsap.set(leftEye, {attr: eyeData.left});
     gsap.set(rightEye, {attr: eyeData.right});
@@ -395,6 +685,8 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
       duration: 0.15,
       ease: "power2.out",
       overwrite: "auto",
+      rotate: isAngryRef.current ? (index) => (index === 0 ? 14 : -14) : 0,
+      scaleX: isAngryRef.current ? 1.28 : 1,
       scaleY: 0.35,
     });
   };
@@ -409,18 +701,27 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
     }
 
     isPressedRef.current = false;
+    patGestureRef.current = null;
     if (!reduceMotionRef.current) {
       scheduleBlinkRef.current?.();
     }
 
     activeTweenRef.current?.kill();
 
-    gsap.to([leftEye, rightEye], {
-      duration: 0.4,
-      ease: "back.out(2.5)",
-      overwrite: "auto",
-      scaleY: 1,
-    });
+    if (isAngryRef.current && !angryTimerRef.current) {
+      relaxAngryEyes();
+    } else if (isAngryRef.current) {
+      animateAngryEyes();
+    } else {
+      gsap.to([leftEye, rightEye], {
+        duration: 0.4,
+        ease: "back.out(2.5)",
+        overwrite: "auto",
+        rotate: 0,
+        scaleX: 1,
+        scaleY: 1,
+      });
+    }
 
     activeTweenRef.current = gsap
       .timeline({
@@ -458,7 +759,10 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
     <svg
       ref={bunRef}
       aria-label="Animated Bunui mascot"
-      className={cn("jelly-bun-mascot group touch-none select-none overflow-visible", className)}
+      className={cn(
+        "jelly-bun-mascot group cursor-grab touch-none select-none overflow-visible active:cursor-grabbing",
+        className,
+      )}
       fill="none"
       height={size}
       role="img"
@@ -474,20 +778,25 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
       onPointerDown={(event) => {
         event.preventDefault();
         event.currentTarget.setPointerCapture(event.pointerId);
+        trackTapRate();
+        resetPatGesture(event.clientX);
         press();
       }}
-      onPointerEnter={(event) => {
+      onPointerEnter={() => {
         isHoveringRef.current = true;
         stopLook();
         enterHover();
       }}
       onPointerLeave={() => {
         isHoveringRef.current = false;
+        patGestureRef.current = null;
         leaveHover();
         resumeLook();
       }}
+      onPointerMove={trackPat}
       onPointerUp={(event) => {
         event.preventDefault();
+        patGestureRef.current = null;
         release();
 
         if (event.currentTarget.hasPointerCapture(event.pointerId)) {
@@ -529,6 +838,23 @@ export function JellyBun({className, size = 160}: JellyBunProps) {
             strokeWidth="26"
           />
         </g>
+        <g transform="translate(380 156) scale(0.42)">
+          <g ref={angryMarkRef} aria-hidden="true" fill="#e42933" opacity="0" pointerEvents="none">
+            <path d="M12.97 72.225C72.246 73.8 106.759 61.286 162.243 9.5 161 69.102 72.664 125.232 12.971 72.225" />
+            <path d="M183.775 12.97c-1.575 59.275 10.939 93.788 62.724 149.272C186.898 161 130.768 72.664 183.775 12.971" />
+            <path d="M243.029 183.775c-59.274-1.575-93.787 10.939-149.271 62.725 1.242-59.602 89.578-115.732 149.271-62.725" />
+            <path d="M72.225 243.029C73.8 183.755 61.286 149.242 9.5 93.758 69.102 95 125.232 183.336 72.225 243.029" />
+          </g>
+        </g>
+        <path
+          ref={blushRef}
+          d="m417 412.5 21-34.5m8 34.5 21-34.5m8 34.5 21-34.5m-380 34.5 21-34.5m8 34.5 21-34.5m8 34.5 21-34.5"
+          opacity="0"
+          pointerEvents="none"
+          stroke="#e42933"
+          strokeLinecap="round"
+          strokeWidth="11"
+        />
       </g>
 
       <g ref={eyesRef} fill="var(--background)">
