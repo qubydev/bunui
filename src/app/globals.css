@@ -133,3 +133,84 @@
 }
 
 /* Fumadocs UI overrides */
+@media (width >= 48rem) {
+  #nd-notebook-layout {
+    --fd-sidebar-width: 15rem;
+  }
+}
+
+#nd-sidebar {
+  @apply border-e-0 bg-transparent;
+}
+
+#nd-subnav [data-header-body] {
+  @apply border-b-0;
+}
+
+#nd-page {
+  @apply px-4! py-0! md:px-4! md:py-0! xl:px-4! xl:py-0!;
+}
+
+#nd-sidebar a[data-active] {
+  @apply h-10 px-3! text-sm font-normal text-muted-foreground;
+}
+
+#nd-sidebar a[data-active="true"] {
+  @apply bg-muted text-foreground font-medium;
+}
+
+#nd-sidebar a[data-active="false"]:hover {
+  @apply bg-muted/60 text-foreground;
+}
+
+#nd-sidebar p {
+  @apply text-[0.6875rem] font-medium text-muted-foreground/70 uppercase;
+}
+
+/* Prose inline code */
+.bunui-inline-code,
+.prose :not(pre) > code {
+  @apply rounded-md border px-1.5 py-0.5 text-[0.86em] font-medium text-amber-900 dark:text-amber-200;
+
+  border-color: color-mix(in oklab, oklch(0.77 0.16 70) 28%, transparent);
+  background: color-mix(in oklab, oklch(0.77 0.16 70) 13%, transparent);
+}
+
+.bunui-inline-code {
+  @apply font-mono text-xs;
+}
+
+.prose :not(pre) > code::before,
+.prose :not(pre) > code::after {
+  content: none;
+}
+
+/* Shiki code block styles */
+.bunui-code-viewport {
+  @apply border-0! rounded-none! shadow-none!;
+}
+
+.bunui-code-viewport pre,
+.bunui-code-viewport code {
+  @apply m-0 block min-w-max border-0! bg-transparent! p-0 font-mono shadow-none!;
+}
+
+.bunui-code-viewport .line {
+  @apply hidden;
+}
+
+.bunui-code-line {
+  @apply flex min-h-6 whitespace-pre pr-4;
+}
+
+.bunui-code-line-number {
+  @apply w-10 shrink-0 select-none pr-4 text-right text-muted-foreground/45;
+}
+
+.bunui-code-line-content {
+  @apply min-w-0;
+}
+
+.dark .bunui-code-token {
+  color: var(--shiki-dark) !important;
+}

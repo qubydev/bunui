@@ -25,7 +25,7 @@ export function InstallCommand({item}: {item: string}) {
   }
 
   return (
-    <div className="my-5 overflow-hidden rounded-lg border bg-background">
+    <div className="not-prose my-5 overflow-hidden rounded-lg border bg-background">
       <div className="flex items-center gap-3 border-b px-3 py-2">
         <div className="flex flex-wrap items-center gap-1">
           {managers.map((manager) => (
@@ -52,8 +52,8 @@ export function InstallCommand({item}: {item: string}) {
           {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
         </Button>
       </div>
-      <pre className="overflow-x-auto bg-muted/40 p-4 text-sm">
-        <code>{command}</code>
+      <pre className="m-0 overflow-x-auto bg-muted/25 p-4 text-sm">
+        <code className="block w-max min-w-full bg-transparent p-0 font-mono">{command}</code>
       </pre>
     </div>
   );

@@ -112,25 +112,22 @@ export function Topbar() {
   return (
     <header className="sticky top-0 z-20 bg-background">
       <div className="flex h-14 w-full items-center gap-3 px-4 sm:px-6">
-        <div className="flex min-w-0 flex-1 items-center">
+        <div className="flex min-w-0 items-center">
           <Link href="/" className="inline-flex items-center gap-1.5" aria-label="Bun UI home">
             <BunUILogo size={26} />
             <BunUILogotype height={20} />
           </Link>
         </div>
 
-        <FullSearchTrigger hideIfDisabled className="hidden h-8 w-full max-w-80 md:flex" />
-
-        <div className="flex min-w-0 items-center justify-end gap-1">
+        <div className="ml-auto flex min-w-0 items-center justify-end gap-2">
           <div className="md:hidden">
             <MobileSearchTrigger />
           </div>
 
-          <div className="hidden items-center gap-1 md:flex">
-            <ThemeToggle />
-            <GitHubLink />
-          </div>
+          <FullSearchTrigger hideIfDisabled className="hidden h-8 w-68 shrink-0 md:flex rounded-full" />
 
+          <ThemeToggle />
+          <GitHubLink />
           <MobileSidebarTrigger />
         </div>
       </div>

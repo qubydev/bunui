@@ -1,39 +1,61 @@
-"use client";
+import path from "node:path";
+import type {CSSProperties} from "react";
 
-import {Check, Copy} from "lucide-react";
-import {useState} from "react";
+import {codeToTokens} from "shiki";
 
-import {Button} from "@/components/ui/button";
+import {CodeBlockClient} from "@/components/code-block-client";
 
-export function CodeBlock({code, title}: {code: string; title?: string}) {
-  const [copied, setCopied] = useState(false);
+function getLanguage(title?: string) {
+  const extension = title?.split(".").pop();
 
-  async function copyCode() {
-    await navigator.clipboard.writeText(code.trim());
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1200);
+  if (extension === "tsx" || extension === "ts" || extension === "jsx" || extension === "js" || extension === "css") {
+    return extension;
   }
 
+  return "text";
+}
+
+export async function CodeBlock({
+  code,
+  collapsible = true,
+  flushTop = false,
+  title,
+}: {
+  code: string;
+  collapsible?: boolean;
+  flushTop?: boolean;
+  title?: string;
+}) {
+  const trimmedCode = code
+    .trim()
+    .split("\n")
+    .filter((line) => line.trim().length > 0)
+    .join("\n");
+  const filename = title ? path.basename(title) : undefined;
+  const {tokens} = await codeToTokens(trimmedCode, {
+    lang: getLanguage(title),
+    themes: {
+      dark: "github-dark",
+      light: "github-light",
+    },
+  });
+
   return (
-    <div className="relative overflow-hidden rounded-lg border bg-background">
-      {title ? (
-        <div className="flex h-10 items-center border-b px-4 text-sm text-muted-foreground">
-          {title}
-        </div>
-      ) : null}
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon"
-        className="absolute right-2 top-2 size-8"
-        aria-label={copied ? "Copied code" : "Copy code"}
-        onClick={copyCode}
-      >
-        {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
-      </Button>
-      <pre className="overflow-x-auto bg-muted/40 p-4 pr-12 text-sm leading-6">
-        <code>{code.trim()}</code>
-      </pre>
-    </div>
+    <CodeBlockClient code={trimmedCode} collapsible={collapsible} filename={filename} flushTop={flushTop}>
+      {tokens.map((line, lineIndex) => (
+        <span className="bunui-code-line" key={lineIndex}>
+          <span className="bunui-code-line-number">{lineIndex + 1}</span>
+          <span className="bunui-code-line-content">
+            {line.length > 0
+              ? line.map((token, tokenIndex) => (
+                  <span className="bunui-code-token" key={tokenIndex} style={token.htmlStyle as CSSProperties}>
+                    {token.content}
+                  </span>
+                ))
+              : " "}
+          </span>
+        </span>
+      ))}
+    </CodeBlockClient>
   );
 }

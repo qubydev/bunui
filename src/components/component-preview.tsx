@@ -40,7 +40,7 @@ export async function ComponentPreview({
       </div>
       {!hideCode ? (
         <div className="border-t">
-          <CodeBlock code={code} title={demo.file} />
+          <CodeBlock code={code} title={demo.file} flushTop />
         </div>
       ) : null}
     </div>
