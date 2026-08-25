@@ -17,6 +17,22 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "A playful text input with soft springy focus and pointer interactions.",
+      "dependencies": [
+        "gsap",
+        "tailwind-variants"
+      ],
+      "files": [
+        {
+          "path": "registry/default/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

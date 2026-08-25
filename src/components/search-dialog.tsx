@@ -1,6 +1,6 @@
 "use client";
 
-import type { SharedProps, SearchItemType } from "fumadocs-ui/components/dialog/search";
+import type {SharedProps, SearchItemType} from "fumadocs-ui/components/dialog/search";
 import {
   SearchDialog,
   SearchDialogContent,
@@ -10,20 +10,37 @@ import {
   SearchDialogList,
   SearchDialogOverlay,
 } from "fumadocs-ui/components/dialog/search";
-import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import {useRouter} from "next/navigation";
+import {useMemo, useState} from "react";
 
 export default function BunSearchDialog(props: SharedProps) {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const items = useMemo<SearchItemType[]>(() => {
-    if (search && !"button".includes(search.toLowerCase())) return [];
-    return [{
-      id: "button",
-      type: "action",
-      node: <div><p className="font-medium">Button</p><p className="text-xs text-fd-muted-foreground">Displays a button or a component that looks like a button.</p></div>,
-      onSelect: () => router.push("/components/button"),
-    }];
+    const query = search.toLowerCase();
+    const entries = [
+      {
+        id: "button",
+        title: "Button",
+        description: "Displays a button or a component that looks like a button.",
+        href: "/components/button",
+      },
+      {
+        id: "input",
+        title: "Input",
+        description: "A playful text input with soft springy focus interactions.",
+        href: "/components/input",
+      },
+    ];
+
+    return entries
+      .filter((item) => !query || `${item.title} ${item.description}`.toLowerCase().includes(query))
+      .map((item) => ({
+        id: item.id,
+        type: "action" as const,
+        node: <div><p className="font-medium">{item.title}</p><p className="text-xs text-fd-muted-foreground">{item.description}</p></div>,
+        onSelect: () => router.push(item.href),
+      }));
   }, [router, search]);
 
   return (
