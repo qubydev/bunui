@@ -4,7 +4,7 @@ import {Button} from "@/components/ui/button";
 
 export function WithIcons() {
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="inline-flex max-w-full flex-wrap justify-center gap-3">
       <Button>
         <Rocket />
         Launch

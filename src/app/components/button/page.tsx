@@ -58,13 +58,13 @@ function ApiTable() {
           {props.map((prop) => (
             <tr key={prop.name}>
               <td className="p-3">
-                <code className="bunui-inline-code">{prop.name}</code>
+                <code>{prop.name}</code>
               </td>
               <td className="p-3 leading-6">
-                <code className="bunui-inline-code">{prop.type}</code>
+                <code>{prop.type}</code>
               </td>
               <td className="p-3">
-                <code className="bunui-inline-code">{prop.defaultValue}</code>
+                <code>{prop.defaultValue}</code>
               </td>
               <td className="p-3">{prop.description}</td>
             </tr>
@@ -78,14 +78,12 @@ function ApiTable() {
 export default function ButtonPage() {
   return (
     <DocsPage toc={toc} footer={{enabled: false}} tableOfContentPopover={{enabled: false}}>
-      <section className="flex flex-col gap-2">
-        <DocsTitle>Button</DocsTitle>
-        <DocsDescription className="text-md mt-2 mb-4">
-          A clickable button component with multiple variants and states.
-        </DocsDescription>
-      </section>
+      <DocsTitle>Button</DocsTitle>
+      <DocsDescription>
+        A clickable button component with multiple variants and states.
+      </DocsDescription>
 
-      <DocsBody className="prose-sm">
+      <DocsBody>
         <ComponentPreview name="button-basic" />
 
         <h2 id="installation">Installation</h2>
@@ -95,16 +93,16 @@ export default function ButtonPage() {
         <ComponentPreview name="button-variants" />
 
         <h2 id="sizes">Sizes</h2>
-        <ComponentPreview name="button-sizes" minHeight="10rem" />
+        <ComponentPreview name="button-sizes" />
 
         <h2 id="with-icons">With Icons</h2>
-        <ComponentPreview name="button-with-icons" minHeight="10rem" />
+        <ComponentPreview name="button-with-icons" />
 
         <h2 id="icon-only">Icon Only</h2>
-        <ComponentPreview name="button-icon-only" minHeight="10rem" />
+        <ComponentPreview name="button-icon-only" />
 
         <h2 id="disabled-state">Disabled State</h2>
-        <ComponentPreview name="button-disabled" minHeight="10rem" />
+        <ComponentPreview name="button-disabled" />
 
         <h2 id="customization">Customization</h2>
         <p>

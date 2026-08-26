@@ -10,10 +10,7 @@ import {GitHubLink, ThemeToggle} from "@/components/topbar";
 
 function DocsNavActions() {
   return (
-    <div
-      data-bunui-docs-actions=""
-      className="flex w-full items-center justify-between gap-2 md:w-auto md:justify-start"
-    >
+    <div className="flex w-full items-center justify-between gap-2 md:w-auto md:justify-start">
       <FullSearchTrigger hideIfDisabled className="hidden h-8 w-68 shrink-0 rounded-full md:flex" />
       <ThemeToggle />
       <GitHubLink />
@@ -24,7 +21,6 @@ function DocsNavActions() {
 function DocsSidebarBrand() {
   return (
     <Link
-      data-bunui-sidebar-brand=""
       href="/"
       className="inline-flex items-center gap-1.5"
       aria-label="Bun UI home"

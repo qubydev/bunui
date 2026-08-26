@@ -20,3 +20,13 @@ When changing Fumadocs UI, follow the official customization hierarchy and stick
 6. Treat old CSS preserved in `BACKUP.md` as reference only; never copy it into the fresh app unless explicitly requested.
 
 Reference: https://www.fumadocs.dev/docs/guides/customize-ui
+
+## Styling ownership rules
+
+Keep styling ownership clear:
+
+1. Custom app components should be styled with Tailwind classes in their own JSX. Do not add `bunui-*` classes or other one-off global classes in `globals.css` for app-owned components such as previews, code blocks, cards, and page-local UI.
+2. Fumadocs UI overrides belong in `src/app/globals.css`, but use smart selectors based on Fumadocs-owned stable IDs, attributes, and semantic element attributes, such as `#nd-page table code` or `#nd-sidebar-mobile button[aria-controls="nd-sidebar-mobile"]`.
+3. Avoid inventing custom data hooks or custom class hooks only to style Fumadocs output, unless there is no stable selector and no supported prop-based option.
+4. Components intended to be installed through shadcn-style distribution must be self-contained. They must not depend on `globals.css` or any external stylesheet. Use Tailwind classes in the component; if custom CSS is required, keep it inside the component file and scope it to that component only.
+5. Global CSS is for design tokens, base element behavior, Fumadocs overrides, and truly global browser behavior such as scrollbars. It is not a dumping ground for styling local custom components.

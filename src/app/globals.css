@@ -132,6 +132,33 @@
   }
 }
 
+@layer base {
+  * {
+    scrollbar-color: color-mix(in oklch, var(--muted-foreground) 35%, transparent) transparent;
+    scrollbar-width: thin;
+  }
+
+  *::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    border: 0.125rem solid transparent;
+    border-radius: 999px;
+    background-clip: content-box;
+    background-color: color-mix(in oklch, var(--muted-foreground) 35%, transparent);
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in oklch, var(--muted-foreground) 55%, transparent);
+  }
+}
+
 /* Fumadocs UI overrides */
 @media (width >= 48rem) {
   #nd-notebook-layout {
@@ -148,7 +175,23 @@
 }
 
 #nd-page {
+  width: 100% !important;
+  max-width: 56rem !important;
+  justify-self: center;
+
   @apply px-4! py-0! md:px-4! md:py-0! xl:px-4! xl:py-0!;
+}
+
+#nd-page > h1 {
+  @apply mb-0 text-3xl font-semibold tracking-normal;
+}
+
+#nd-page > p {
+  @apply mt-0 mb-2 text-base leading-7 text-muted-foreground;
+}
+
+#nd-page > .prose {
+  @apply max-w-none text-sm;
 }
 
 #nd-sidebar a[data-active],
@@ -171,15 +214,15 @@
   @apply text-[0.6875rem] font-medium text-muted-foreground/70 uppercase;
 }
 
-#nd-sidebar [data-bunui-sidebar-brand] {
+#nd-sidebar a[aria-label="Bun UI home"] {
   @apply hidden;
 }
 
-#nd-sidebar-mobile div:has(> [data-bunui-sidebar-brand]) {
+#nd-sidebar-mobile div:has(> a[aria-label="Bun UI home"]) {
   @apply flex-row items-center justify-between p-4 pb-2;
 }
 
-#nd-sidebar-mobile [data-bunui-sidebar-brand] {
+#nd-sidebar-mobile a[aria-label="Bun UI home"] {
   @apply order-first;
 }
 
@@ -191,13 +234,12 @@
   @apply size-5;
 }
 
-#nd-sidebar-mobile div:has(> [data-bunui-docs-actions]) {
+#nd-sidebar-mobile div:has(button[aria-label="Use light theme"]) {
   @apply border-t-0;
 }
 
 
 /* Prose inline code */
-.bunui-inline-code,
 .prose :not(pre) > code {
   @apply rounded-md border px-1.5 py-0.5 text-[0.86em] font-medium text-amber-900 dark:text-amber-200;
 
@@ -205,41 +247,11 @@
   background: color-mix(in oklab, oklch(0.77 0.16 70) 13%, transparent);
 }
 
-.bunui-inline-code {
-  @apply font-mono text-xs;
-}
-
 .prose :not(pre) > code::before,
 .prose :not(pre) > code::after {
   content: none;
 }
 
-/* Shiki code block styles */
-.bunui-code-viewport {
-  @apply border-0! rounded-none! shadow-none!;
-}
-
-.bunui-code-viewport pre,
-.bunui-code-viewport code {
-  @apply m-0 block min-w-max border-0! bg-transparent! p-0 font-mono shadow-none!;
-}
-
-.bunui-code-viewport .line {
-  @apply hidden;
-}
-
-.bunui-code-line {
-  @apply flex min-h-6 whitespace-pre pr-4;
-}
-
-.bunui-code-line-number {
-  @apply w-10 shrink-0 select-none pr-4 text-right text-muted-foreground/45;
-}
-
-.bunui-code-line-content {
-  @apply min-w-0;
-}
-
-.dark .bunui-code-token {
-  color: var(--shiki-dark) !important;
+#nd-page table code {
+  @apply rounded-md border border-border bg-muted/45 px-1.5 py-0.5 font-mono text-xs text-foreground;
 }

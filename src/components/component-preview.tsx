@@ -7,12 +7,10 @@ import {demos} from "@/demos";
 export async function ComponentPreview({
   align = "center",
   hideCode = false,
-  minHeight = "13rem",
   name,
 }: {
   align?: "center" | "start" | "end";
   hideCode?: boolean;
-  minHeight?: string;
   name: string;
 }) {
   const demo = demos[name];
@@ -35,7 +33,7 @@ export async function ComponentPreview({
 
   return (
     <div className="my-5 overflow-hidden rounded-lg border bg-background">
-      <div className={`flex p-6 ${alignment}`} style={{minHeight}}>
+      <div className={`flex min-h-72 sm:min-h-87 p-6 ${alignment}`}>
         <Demo />
       </div>
       {!hideCode ? (

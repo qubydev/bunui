@@ -19,7 +19,7 @@ export function CodeBlockClient({
   flushTop: boolean;
 }) {
   const [copied, setCopied] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(collapsible);
 
   async function copyCode() {
     await navigator.clipboard.writeText(code);
@@ -47,7 +47,7 @@ export function CodeBlockClient({
       </Button>
 
       <div className={`relative ${collapsed ? "max-h-48 overflow-hidden" : ""}`}>
-        <div className="bunui-code-viewport overflow-x-auto bg-muted/25 pt-4 pb-16 text-sm leading-6">
+        <div className="overflow-x-auto rounded-none! border-0! bg-muted/25 pt-4 pb-16 text-sm leading-6 shadow-none! [&_code]:m-0 [&_code]:block [&_code]:min-w-max [&_code]:border-0! [&_code]:bg-transparent! [&_code]:p-0 [&_code]:font-mono [&_code]:shadow-none! [&_pre]:m-0 [&_pre]:block [&_pre]:min-w-max [&_pre]:border-0! [&_pre]:bg-transparent! [&_pre]:p-0 [&_pre]:font-mono [&_pre]:shadow-none!">
           <pre>
             <code>{children}</code>
           </pre>

@@ -15,6 +15,19 @@ function getLanguage(title?: string) {
   return "text";
 }
 
+function getTokenStyle(style: CSSProperties) {
+  const tokenStyle = {...style} as CSSProperties & {
+    "--shiki-light"?: string;
+    "--shiki-dark"?: string;
+  };
+
+  tokenStyle["--shiki-light"] =
+    typeof style.color === "string" ? style.color : undefined;
+  delete tokenStyle.color;
+
+  return tokenStyle;
+}
+
 export async function CodeBlock({
   code,
   collapsible = true,
@@ -43,12 +56,16 @@ export async function CodeBlock({
   return (
     <CodeBlockClient code={trimmedCode} collapsible={collapsible} filename={filename} flushTop={flushTop}>
       {tokens.map((line, lineIndex) => (
-        <span className="bunui-code-line" key={lineIndex}>
-          <span className="bunui-code-line-number">{lineIndex + 1}</span>
-          <span className="bunui-code-line-content">
+        <span className="flex min-h-6 whitespace-pre pr-4" key={lineIndex}>
+          <span className="w-10 shrink-0 select-none pr-4 text-right text-muted-foreground/45">{lineIndex + 1}</span>
+          <span className="min-w-0">
             {line.length > 0
               ? line.map((token, tokenIndex) => (
-                  <span className="bunui-code-token" key={tokenIndex} style={token.htmlStyle as CSSProperties}>
+                  <span
+                    className="text-[var(--shiki-light)] dark:text-[var(--shiki-dark)]"
+                    key={tokenIndex}
+                    style={getTokenStyle(token.htmlStyle as CSSProperties)}
+                  >
                     {token.content}
                   </span>
                 ))
