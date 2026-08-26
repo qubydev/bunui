@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useSyncExternalStore } from "react";
-import { Moon, PanelRight, Search, Sun } from "lucide-react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { Moon, Search, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useSearchContext } from "fumadocs-ui/contexts/search";
 import { FullSearchTrigger } from "fumadocs-ui/layouts/shared/slots/search-trigger";
-import { useSidebar } from "fumadocs-ui/components/sidebar/base";
 
 import { BunUILogo } from "@/components/bunui-logo";
 import { BunUILogotype } from "@/components/bunui-logotype";
@@ -57,13 +56,81 @@ export function ThemeToggle() {
 }
 
 export function GitHubLink() {
+  const [stars, setStars] = useState<number | null>(null);
+
+  useEffect(() => {
+    let ignore = false;
+
+    async function loadStars() {
+      try {
+        const response = await fetch("/api/github-stars");
+
+        if (!response.ok) return;
+
+        const data = (await response.json()) as { stars?: unknown };
+
+        if (!ignore && typeof data.stars === "number") {
+          setStars(data.stars);
+        }
+      } catch {
+        // Keep the link usable if GitHub or the local endpoint is unavailable.
+      }
+    }
+
+    loadStars();
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  const starLabel =
+    stars === null
+      ? "..."
+      : Intl.NumberFormat("en", {
+        notation: "compact",
+        maximumFractionDigits: 1,
+      }).format(stars);
+
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      nativeButton={false}
+      render={
+        <a
+          href="https://github.com/qubydev/bunui"
+          target="_blank"
+          rel="noreferrer"
+          aria-label={
+            stars === null
+              ? "Bun UI on GitHub"
+              : `Bun UI on GitHub, ${stars.toLocaleString("en")} stars`
+          }
+        />
+      }
+    >
+      <GitHubCatIcon />
+      <span className="tabular-nums">{starLabel}</span>
+    </Button>
+  );
+}
+
+export function GitHubIconLink() {
   return (
     <Button
       variant="ghost"
       size="icon"
       className="size-8"
       nativeButton={false}
-      render={<a href="https://github.com/qubydev/bunui" target="_blank" rel="noreferrer" aria-label="Bun UI on GitHub" />}
+      render={
+        <a
+          href="https://github.com/qubydev/bunui"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Bun UI on GitHub"
+        />
+      }
     >
       <GitHubCatIcon />
     </Button>
@@ -89,25 +156,6 @@ function MobileSearchTrigger() {
   );
 }
 
-function MobileSidebarTrigger() {
-  const { open, setOpen } = useSidebar();
-
-  return (
-    <Button
-      type="button"
-      variant="ghost"
-      size="icon"
-      className="size-8 md:hidden"
-      aria-label={open ? "Close sidebar" : "Open sidebar"}
-      aria-expanded={open}
-      aria-controls="nd-sidebar-mobile"
-      onClick={() => setOpen((value) => !value)}
-    >
-      <PanelRight className="size-5" />
-    </Button>
-  );
-}
-
 export function Topbar() {
   return (
     <header className="sticky top-0 z-20 bg-background">
@@ -127,8 +175,13 @@ export function Topbar() {
           <FullSearchTrigger hideIfDisabled className="hidden h-8 w-68 shrink-0 md:flex rounded-full" />
 
           <ThemeToggle />
-          <GitHubLink />
-          <MobileSidebarTrigger />
+
+          <div className="md:hidden">
+            <GitHubIconLink />
+          </div>
+          <div className="hidden md:block">
+            <GitHubLink />
+          </div>
         </div>
       </div>
     </header>

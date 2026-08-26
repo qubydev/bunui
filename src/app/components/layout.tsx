@@ -1,4 +1,5 @@
 import type {ReactNode} from "react";
+import Link from "next/link";
 import {DocsLayout} from "fumadocs-ui/layouts/notebook";
 import {FullSearchTrigger} from "fumadocs-ui/layouts/shared/slots/search-trigger";
 
@@ -9,11 +10,28 @@ import {GitHubLink, ThemeToggle} from "@/components/topbar";
 
 function DocsNavActions() {
   return (
-    <div className="flex items-center gap-2">
+    <div
+      data-bunui-docs-actions=""
+      className="flex w-full items-center justify-between gap-2 md:w-auto md:justify-start"
+    >
       <FullSearchTrigger hideIfDisabled className="hidden h-8 w-68 shrink-0 rounded-full md:flex" />
       <ThemeToggle />
       <GitHubLink />
     </div>
+  );
+}
+
+function DocsSidebarBrand() {
+  return (
+    <Link
+      data-bunui-sidebar-brand=""
+      href="/"
+      className="inline-flex items-center gap-1.5"
+      aria-label="Bun UI home"
+    >
+      <BunUILogo size={24} />
+      <BunUILogotype height={18} />
+    </Link>
   );
 }
 
@@ -32,6 +50,7 @@ export default function ComponentsLayout({children}: {children: ReactNode}) {
         url: "/",
       }}
       sidebar={{
+        banner: <DocsSidebarBrand />,
         collapsible: false,
         defaultOpenLevel: 1,
       }}

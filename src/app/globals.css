@@ -151,21 +151,50 @@
   @apply px-4! py-0! md:px-4! md:py-0! xl:px-4! xl:py-0!;
 }
 
-#nd-sidebar a[data-active] {
-  @apply h-10 px-3! text-sm font-normal text-muted-foreground;
+#nd-sidebar a[data-active],
+#nd-sidebar-mobile a[data-active] {
+  @apply h-10 rounded-md px-3! text-sm font-normal text-muted-foreground;
 }
 
-#nd-sidebar a[data-active="true"] {
+#nd-sidebar a[data-active="true"],
+#nd-sidebar-mobile a[data-active="true"] {
   @apply bg-muted text-foreground font-medium;
 }
 
-#nd-sidebar a[data-active="false"]:hover {
+#nd-sidebar a[data-active="false"]:hover,
+#nd-sidebar-mobile a[data-active="false"]:hover {
   @apply bg-muted/60 text-foreground;
 }
 
-#nd-sidebar p {
+#nd-sidebar p,
+#nd-sidebar-mobile p {
   @apply text-[0.6875rem] font-medium text-muted-foreground/70 uppercase;
 }
+
+#nd-sidebar [data-bunui-sidebar-brand] {
+  @apply hidden;
+}
+
+#nd-sidebar-mobile div:has(> [data-bunui-sidebar-brand]) {
+  @apply flex-row items-center justify-between p-4 pb-2;
+}
+
+#nd-sidebar-mobile [data-bunui-sidebar-brand] {
+  @apply order-first;
+}
+
+#nd-sidebar-mobile button[aria-controls="nd-sidebar-mobile"] {
+  @apply order-last m-0 size-8 rounded-full p-0 text-foreground hover:bg-muted hover:text-foreground;
+}
+
+#nd-sidebar-mobile button[aria-controls="nd-sidebar-mobile"] svg {
+  @apply size-5;
+}
+
+#nd-sidebar-mobile div:has(> [data-bunui-docs-actions]) {
+  @apply border-t-0;
+}
+
 
 /* Prose inline code */
 .bunui-inline-code,
