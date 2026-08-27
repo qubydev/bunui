@@ -179,7 +179,7 @@
   max-width: 56rem !important;
   justify-self: center;
 
-  @apply px-4! py-0! md:px-4! md:py-0! xl:px-4! xl:py-0!;
+  @apply px-4! py-4! md:px-4! md:py-6!;
 }
 
 #nd-page > h1 {

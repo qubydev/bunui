@@ -1,7 +1,10 @@
 import Link from "next/link";
 import {DocsBody, DocsDescription, DocsPage, DocsTitle} from "fumadocs-ui/layouts/notebook/page";
 
-import {Button} from "@/components/ui/button";
+const components = [
+  {name: "Button", href: "/components/button"},
+  {name: "Input", href: "/components/input"},
+];
 
 export default function ComponentsPage() {
   return (
@@ -17,20 +20,16 @@ export default function ComponentsPage() {
       </DocsDescription>
 
       <DocsBody>
-        <div className="not-prose grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          <article className="flex flex-col gap-2">
+        <div className="not-prose grid max-w-xl grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2">
+          {components.map((component) => (
             <Link
-              href="/components/button"
-              className="order-1 flex aspect-[3/2] items-center justify-center overflow-hidden rounded-lg border bg-background p-5 transition-colors hover:bg-muted/40"
+              key={component.href}
+              href={component.href}
+              className="text-base font-medium text-foreground no-underline underline-offset-4 hover:underline"
             >
-              <Button>Button</Button>
+              {component.name}
             </Link>
-            <h2 className="order-2 m-0 text-sm font-medium">
-              <Link className="text-foreground no-underline hover:underline" href="/components/button">
-                Button
-              </Link>
-            </h2>
-          </article>
+          ))}
         </div>
       </DocsBody>
     </DocsPage>

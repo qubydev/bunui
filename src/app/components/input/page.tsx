@@ -5,40 +5,32 @@ import {InstallCommand} from "@/components/install-command";
 
 const toc = [
   {title: "Installation", url: "#installation", depth: 2},
-  {title: "Variants", url: "#variants", depth: 2},
-  {title: "Sizes", url: "#sizes", depth: 2},
-  {title: "With Icons", url: "#with-icons", depth: 2},
-  {title: "Icon Only", url: "#icon-only", depth: 2},
+  {title: "Types", url: "#types", depth: 2},
+  {title: "States", url: "#states", depth: 2},
+  {title: "File Input", url: "#file-input", depth: 2},
   {title: "Animation", url: "#animation", depth: 2},
-  {title: "Disabled State", url: "#disabled-state", depth: 2},
   {title: "API Reference", url: "#api-reference", depth: 2},
 ];
 
 function ApiTable() {
   const props = [
     {
-      name: "variant",
-      type: "'default' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link'",
-      defaultValue: "'default'",
-      description: "Controls the visual style.",
-    },
-    {
-      name: "size",
-      type: "'default' | 'xs' | 'sm' | 'lg' | 'icon' | 'icon-xs' | 'icon-sm' | 'icon-lg'",
-      defaultValue: "'default'",
-      description: "Controls button height, padding, text size, and icon-only dimensions.",
-    },
-    {
-      name: "className",
+      name: "type",
       type: "string",
-      defaultValue: "-",
-      description: "Adds custom classes to the button.",
+      defaultValue: "'text'",
+      description: "Sets the native input type.",
     },
     {
       name: "animated",
       type: "boolean",
       defaultValue: "true",
-      description: "Enables the press animation. Set to false for a static button.",
+      description: "Enables the focus animation. Set to false for a static input.",
+    },
+    {
+      name: "className",
+      type: "string",
+      defaultValue: "-",
+      description: "Adds custom classes to the input.",
     },
   ];
 
@@ -74,40 +66,34 @@ function ApiTable() {
   );
 }
 
-export default function ButtonPage() {
+export default function InputPage() {
   return (
     <DocsPage toc={toc} footer={{enabled: false}} tableOfContentPopover={{enabled: false}}>
-      <DocsTitle>Button</DocsTitle>
+      <DocsTitle>Input</DocsTitle>
       <DocsDescription>
-        A clickable button component with multiple variants and states.
+        A text input component for forms and user data entry.
       </DocsDescription>
 
       <DocsBody>
-        <ComponentPreview name="button-basic" />
+        <ComponentPreview name="input-basic" />
 
         <h2 id="installation">Installation</h2>
-        <InstallCommand item="https://bunui.xyz/r/button.json" />
+        <InstallCommand item="https://bunui.xyz/r/input.json" />
 
-        <h2 id="variants">Variants</h2>
-        <ComponentPreview name="button-variants" />
+        <h2 id="types">Types</h2>
+        <ComponentPreview name="input-types" />
 
-        <h2 id="sizes">Sizes</h2>
-        <ComponentPreview name="button-sizes" />
+        <h2 id="states">States</h2>
+        <ComponentPreview name="input-states" />
 
-        <h2 id="with-icons">With Icons</h2>
-        <ComponentPreview name="button-with-icons" />
-
-        <h2 id="icon-only">Icon Only</h2>
-        <ComponentPreview name="button-icon-only" />
+        <h2 id="file-input">File Input</h2>
+        <ComponentPreview name="input-file" />
 
         <h2 id="animation">Animation</h2>
-        <ComponentPreview name="button-animation" />
-
-        <h2 id="disabled-state">Disabled State</h2>
-        <ComponentPreview name="button-disabled" />
+        <ComponentPreview name="input-animation" />
 
         <h2 id="api-reference">API Reference</h2>
-        <h3>Button</h3>
+        <h3>Input</h3>
         <ApiTable />
       </DocsBody>
     </DocsPage>
