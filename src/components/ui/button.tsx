@@ -1,223 +1,156 @@
-import {Button as ButtonPrimitive} from "@base-ui/react/button";
-import {cva, type VariantProps} from "class-variance-authority";
+"use client"
 
-import {cn} from "@/lib/utils";
+import { Button as ButtonPrimitive } from "@base-ui/react/button"
+import { cva, type VariantProps } from "class-variance-authority"
+import {
+  motion,
+  type MotionProps,
+  useAnimationControls,
+  useReducedMotion,
+} from "motion/react"
+import type * as React from "react"
 
-const buttonStyles = `
-[data-bunui-button] {
-  --button-bg: var(--primary);
-  --button-bg-hover: color-mix(in oklch, var(--primary), var(--background) 14%);
-  --button-fg: var(--primary-foreground);
-  --button-focus: var(--ring);
-  transform: translateZ(0);
-  transform-origin: 50% 50%;
-  transition:
-    background-color 140ms ease,
-    border-color 140ms ease,
-    box-shadow 140ms ease,
-    color 140ms ease,
-    transform 120ms ease;
-}
+import { cn } from "@/lib/utils"
 
-[data-bunui-button][data-variant="primary"],
-[data-bunui-button][data-variant="default"] {
-  --button-bg: var(--primary);
-  --button-bg-hover: color-mix(in oklch, var(--primary), var(--background) 14%);
-  --button-fg: var(--primary-foreground);
-}
+const MotionButtonPrimitive = motion.create(ButtonPrimitive) as React.ComponentType<
+  Omit<ButtonPrimitive.Props, keyof MotionProps> & MotionProps
+>
 
-[data-bunui-button][data-variant="secondary"] {
-  --button-bg: var(--secondary);
-  --button-bg-hover: color-mix(in oklch, var(--secondary), var(--foreground) 5%);
-  --button-fg: var(--secondary-foreground);
-}
-
-[data-bunui-button][data-variant="outline"] {
-  --button-bg: var(--background);
-  --button-bg-hover: var(--muted);
-  --button-fg: var(--foreground);
-}
-
-.dark [data-bunui-button][data-variant="outline"] {
-  --button-bg: color-mix(in oklch, var(--input) 30%, transparent);
-  --button-bg-hover: color-mix(in oklch, var(--input) 50%, transparent);
-}
-
-[data-bunui-button][data-variant="ghost"] {
-  --button-bg: transparent;
-  --button-bg-hover: var(--muted);
-  --button-fg: var(--foreground);
-}
-
-[data-bunui-button][data-variant="destructive"],
-[data-bunui-button][data-variant="danger-soft"] {
-  --button-bg: color-mix(in oklch, var(--destructive) 12%, transparent);
-  --button-bg-hover: color-mix(in oklch, var(--destructive) 20%, transparent);
-  --button-fg: var(--destructive);
-  --button-focus: var(--destructive);
-}
-
-.dark [data-bunui-button][data-variant="destructive"] {
-  --button-bg: color-mix(in oklch, var(--destructive) 20%, transparent);
-  --button-bg-hover: color-mix(in oklch, var(--destructive) 30%, transparent);
-}
-
-[data-bunui-button][data-variant="danger"] {
-  --button-bg: var(--destructive);
-  --button-bg-hover: color-mix(in oklch, var(--destructive), var(--background) 16%);
-  --button-fg: white;
-  --button-focus: var(--destructive);
-}
-
-[data-bunui-button][data-variant="success"] {
-  --button-bg: oklch(0.55 0.16 145);
-  --button-bg-hover: oklch(0.5 0.16 145);
-  --button-fg: white;
-  --button-focus: oklch(0.55 0.16 145);
-}
-
-[data-bunui-button][data-variant="success-soft"] {
-  --button-bg: color-mix(in oklch, oklch(0.55 0.16 145) 13%, transparent);
-  --button-bg-hover: color-mix(in oklch, oklch(0.55 0.16 145) 21%, transparent);
-  --button-fg: oklch(0.42 0.14 145);
-  --button-focus: oklch(0.55 0.16 145);
-}
-
-.dark [data-bunui-button][data-variant="success-soft"] {
-  --button-fg: oklch(0.78 0.14 145);
-}
-
-[data-bunui-button][data-variant="link"] {
-  --button-bg: transparent;
-  --button-bg-hover: transparent;
-  --button-fg: var(--primary);
-}
-
-@media (hover: hover) {
-  [data-bunui-button]:not(:disabled):not([data-disabled="true"]):hover {
-    transform: scaleX(1.012) scaleY(1.012);
+type ButtonProps = Omit<ButtonPrimitive.Props, keyof MotionProps> &
+  MotionProps &
+  VariantProps<typeof buttonVariants> & {
+    animated?: boolean
   }
-}
-
-[data-bunui-button]:not(:disabled):not([data-disabled="true"]):active {
-  transform: scaleX(1.07) scaleY(0.91);
-  transition-duration: 70ms;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  [data-bunui-button],
-  [data-bunui-button]:hover,
-  [data-bunui-button]:active {
-    animation: none !important;
-    transform: none !important;
-    transition:
-      background-color 140ms ease,
-      border-color 140ms ease,
-      box-shadow 140ms ease,
-      color 140ms ease;
-  }
-}
-`;
 
 const buttonVariants = cva(
-  "group/button relative isolate inline-flex w-fit shrink-0 origin-center items-center justify-center gap-2 overflow-hidden rounded-full border border-transparent bg-[var(--button-bg)] bg-clip-padding text-sm font-medium whitespace-nowrap text-[var(--button-fg)] outline-none select-none hover:bg-[var(--button-bg-hover)] focus-visible:border-[var(--button-focus)] focus-visible:ring-3 focus-visible:ring-[var(--button-focus)]/35 disabled:pointer-events-none disabled:opacity-50 data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 items-center justify-center gap-2 rounded-md border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap outline-none select-none transition-colors will-change-transform focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        default:
-          "[--button-bg:var(--primary)] [--button-bg-hover:color-mix(in_oklch,var(--primary),var(--background)_14%)] [--button-fg:var(--primary-foreground)]",
-        primary:
-          "[--button-bg:var(--primary)] [--button-bg-hover:color-mix(in_oklch,var(--primary),var(--background)_14%)] [--button-fg:var(--primary-foreground)]",
+        default: "bg-primary text-primary-foreground hover:bg-primary/80",
         outline:
-          "border-border [--button-bg:var(--background)] [--button-bg-hover:var(--muted)] [--button-fg:var(--foreground)] aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:[--button-bg:color-mix(in_oklch,var(--input)_30%,transparent)] dark:[--button-bg-hover:color-mix(in_oklch,var(--input)_50%,transparent)]",
+          "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:
-          "[--button-bg:var(--secondary)] [--button-bg-hover:color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] [--button-fg:var(--secondary-foreground)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
+          "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:
-          "[--button-bg:transparent] [--button-bg-hover:var(--muted)] [--button-fg:var(--foreground)] aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
+          "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:
-          "[--button-bg:color-mix(in_oklch,var(--destructive)_12%,transparent)] [--button-bg-hover:color-mix(in_oklch,var(--destructive)_20%,transparent)] [--button-fg:var(--destructive)] [--button-focus:var(--destructive)] focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:[--button-bg:color-mix(in_oklch,var(--destructive)_20%,transparent)] dark:[--button-bg-hover:color-mix(in_oklch,var(--destructive)_30%,transparent)] dark:focus-visible:ring-destructive/40",
-        danger:
-          "[--button-bg:var(--destructive)] [--button-bg-hover:color-mix(in_oklch,var(--destructive),var(--background)_16%)] [--button-fg:white] [--button-focus:var(--destructive)]",
-        "danger-soft":
-          "[--button-bg:color-mix(in_oklch,var(--destructive)_12%,transparent)] [--button-bg-hover:color-mix(in_oklch,var(--destructive)_20%,transparent)] [--button-fg:var(--destructive)] [--button-focus:var(--destructive)]",
-        success:
-          "[--button-bg:oklch(0.55_0.16_145)] [--button-bg-hover:oklch(0.5_0.16_145)] [--button-fg:white] [--button-focus:oklch(0.55_0.16_145)]",
-        "success-soft":
-          "[--button-bg:color-mix(in_oklch,oklch(0.55_0.16_145)_13%,transparent)] [--button-bg-hover:color-mix(in_oklch,oklch(0.55_0.16_145)_21%,transparent)] [--button-fg:oklch(0.42_0.14_145)] [--button-focus:oklch(0.55_0.16_145)] dark:[--button-fg:oklch(0.78_0.14_145)]",
-        link: "rounded-sm [--button-bg:transparent] [--button-bg-hover:transparent] [--button-fg:var(--primary)] px-0 underline-offset-4 hover:underline",
+          "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default:
-          "h-10 px-4 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
-        xs: "h-7 gap-1 px-2.5 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-9 gap-1.5 px-3 text-sm in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 [&_svg:not([class*='size-'])]:size-3.5",
-        md: "h-10 px-4",
-        lg: "h-11 px-5 text-base has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
-        icon: "size-10 px-0",
-        "icon-xs":
-          "size-7 px-0 in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
-        "icon-sm": "size-9 px-0 in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3.5",
-        "icon-lg": "size-11 px-0 [&_svg:not([class*='size-'])]:size-5",
-      },
-      isIconOnly: {
-        true: "px-0",
-        false: null,
+        default: "h-9 px-4 py-2 has-[>svg]:px-3.5",
+        xs: "h-7 gap-1.5 px-2.5 text-xs has-[>svg]:px-2",
+        sm: "h-8 gap-1.5 px-3 text-sm has-[>svg]:px-2.5 [&_svg:not([class*='size-'])]:size-3.5",
+        lg: "h-10 px-5 text-sm has-[>svg]:px-4",
+        icon: "size-9",
+        "icon-xs": "size-7 [&_svg:not([class*='size-'])]:size-3.5",
+        "icon-sm": "size-8 [&_svg:not([class*='size-'])]:size-3.5",
+        "icon-lg": "size-10 [&_svg:not([class*='size-'])]:size-4.5",
       },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
-      isIconOnly: false,
     },
-    compoundVariants: [
-      {
-        isIconOnly: true,
-        size: "xs",
-        className: "size-7",
-      },
-      {
-        isIconOnly: true,
-        size: "sm",
-        className: "size-9",
-      },
-      {
-        isIconOnly: true,
-        size: "default",
-        className: "size-10",
-      },
-      {
-        isIconOnly: true,
-        size: "md",
-        className: "size-10",
-      },
-      {
-        isIconOnly: true,
-        size: "lg",
-        className: "size-11",
-      },
-    ],
-  },
-);
+  }
+)
 
 function Button({
   className,
   variant = "default",
   size = "default",
-  isIconOnly,
+  disabled,
+  animated = true,
+  onKeyDown,
+  onKeyUp,
+  onPointerCancel,
+  onPointerDown,
+  onPointerUp,
+  style,
   ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+}: ButtonProps) {
+  const controls = useAnimationControls()
+  const reduceMotion = useReducedMotion()
+
+  const press = () => {
+    if (!animated || disabled || reduceMotion) {
+      return
+    }
+
+    void controls.start({
+      scaleX: 1.08,
+      scaleY: 0.92,
+      transition: { type: "spring", stiffness: 620, damping: 22, mass: 0.5 },
+    })
+  }
+
+  const release = () => {
+    if (!animated || disabled || reduceMotion) {
+      return
+    }
+
+    void controls.start({
+      scaleX: [1.08, 0.97, 1.02, 1],
+      scaleY: [0.92, 1.04, 0.99, 1],
+      transition: {
+        duration: 0.36,
+        ease: [0.22, 1, 0.36, 1],
+        times: [0, 0.35, 0.7, 1],
+      },
+    })
+  }
+
+  const handlePointerDown: NonNullable<ButtonProps["onPointerDown"]> = (
+    event
+  ) => {
+    onPointerDown?.(event)
+    press()
+  }
+
+  const handlePointerUp: NonNullable<ButtonProps["onPointerUp"]> = (event) => {
+    onPointerUp?.(event)
+    release()
+  }
+
+  const handlePointerCancel: NonNullable<ButtonProps["onPointerCancel"]> = (
+    event
+  ) => {
+    onPointerCancel?.(event)
+    release()
+  }
+
+  const handleKeyDown: NonNullable<ButtonProps["onKeyDown"]> = (event) => {
+    onKeyDown?.(event)
+
+    if (event.key === " " || event.key === "Enter") {
+      press()
+    }
+  }
+
+  const handleKeyUp: NonNullable<ButtonProps["onKeyUp"]> = (event) => {
+    onKeyUp?.(event)
+
+    if (event.key === " " || event.key === "Enter") {
+      release()
+    }
+  }
+
   return (
-    <>
-      <style>{buttonStyles}</style>
-      <ButtonPrimitive
-        data-bunui-button=""
-        data-slot="button"
-        data-variant={variant}
-        className={cn(buttonVariants({variant, size, isIconOnly, className}))}
-        {...props}
-      />
-    </>
-  );
+    <MotionButtonPrimitive
+      animate={controls}
+      data-slot="button"
+      disabled={disabled}
+      className={cn(buttonVariants({ variant, size, className }))}
+      onKeyDown={handleKeyDown}
+      onKeyUp={handleKeyUp}
+      onPointerCancel={handlePointerCancel}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      style={{ transformOrigin: "center", ...style }}
+      {...props}
+    />
+  )
 }
 
-export {Button, buttonVariants};
+export { Button, buttonVariants }

@@ -1,5 +1,6 @@
 import type {ComponentType} from "react";
 
+import {Animation} from "@/demos/button/animation";
 import {Basic} from "@/demos/button/basic";
 import {Disabled} from "@/demos/button/disabled";
 import {IconOnly} from "@/demos/button/icon-only";
@@ -36,5 +37,9 @@ export const demos: Record<string, DemoItem> = {
   "button-disabled": {
     component: Disabled,
     file: "button/disabled.tsx",
+  },
+  "button-animation": {
+    component: Animation,
+    file: "button/animation.tsx",
   },
 };

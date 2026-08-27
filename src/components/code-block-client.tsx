@@ -8,14 +8,14 @@ import {Button} from "@/components/ui/button";
 export function CodeBlockClient({
   code,
   collapsible,
-  filename,
+  label,
   flushTop,
   children,
 }: {
   children: ReactNode;
   code: string;
   collapsible: boolean;
-  filename?: string;
+  label?: string;
   flushTop: boolean;
 }) {
   const [copied, setCopied] = useState(false);
@@ -29,9 +29,9 @@ export function CodeBlockClient({
 
   return (
     <div className={`not-prose relative overflow-hidden bg-background ${flushTop ? "rounded-b-lg" : "rounded-lg border"}`}>
-      {filename ? (
+      {label ? (
         <div className="flex h-10 items-center border-b px-4 text-sm text-muted-foreground">
-          <span className="truncate">{filename}</span>
+          <span className="truncate">{label}</span>
         </div>
       ) : null}
 

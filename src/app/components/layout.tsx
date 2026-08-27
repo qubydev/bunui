@@ -5,6 +5,10 @@ import {FullSearchTrigger} from "fumadocs-ui/layouts/shared/slots/search-trigger
 
 import {BunUILogo} from "@/components/bunui-logo";
 import {BunUILogotype} from "@/components/bunui-logotype";
+import {
+  componentsDocsSearchTriggerSlot,
+  componentsDocsSidebarSlot,
+} from "@/components/components-docs-slots";
 import {componentTree} from "@/components/component-tree";
 import {GitHubLink, ThemeToggle} from "@/components/topbar";
 
@@ -54,6 +58,10 @@ export default function ComponentsLayout({children}: {children: ReactNode}) {
         full: {
           className: "hidden!",
         },
+      }}
+      slots={{
+        searchTrigger: componentsDocsSearchTriggerSlot,
+        sidebar: componentsDocsSidebarSlot,
       }}
       themeSwitch={{
         component: <DocsNavActions />,

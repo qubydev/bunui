@@ -10,6 +10,7 @@ const toc = [
   {title: "Sizes", url: "#sizes", depth: 2},
   {title: "With Icons", url: "#with-icons", depth: 2},
   {title: "Icon Only", url: "#icon-only", depth: 2},
+  {title: "Animation", url: "#animation", depth: 2},
   {title: "Disabled State", url: "#disabled-state", depth: 2},
   {title: "Customization", url: "#customization", depth: 2},
   {title: "API Reference", url: "#api-reference", depth: 2},
@@ -19,27 +20,27 @@ function ApiTable() {
   const props = [
     {
       name: "variant",
-      type: "default | primary | secondary | outline | ghost | link | success | success-soft | danger | danger-soft | destructive",
-      defaultValue: "default",
+      type: "'default' | 'secondary' | 'outline' | 'ghost' | 'destructive' | 'link'",
+      defaultValue: "'default'",
       description: "Controls the visual style.",
     },
     {
       name: "size",
-      type: "default | xs | sm | md | lg | icon | icon-xs | icon-sm | icon-lg",
-      defaultValue: "default",
+      type: "'default' | 'xs' | 'sm' | 'lg' | 'icon' | 'icon-xs' | 'icon-sm' | 'icon-lg'",
+      defaultValue: "'default'",
       description: "Controls button height, padding, text size, and icon-only dimensions.",
-    },
-    {
-      name: "isIconOnly",
-      type: "boolean",
-      defaultValue: "false",
-      description: "Applies fixed square sizing for icon-only buttons.",
     },
     {
       name: "className",
       type: "string",
       defaultValue: "-",
       description: "Adds custom classes to the button.",
+    },
+    {
+      name: "animated",
+      type: "boolean",
+      defaultValue: "true",
+      description: "Enables the press animation. Set to false for a static button.",
     },
   ];
 
@@ -100,6 +101,9 @@ export default function ButtonPage() {
 
         <h2 id="icon-only">Icon Only</h2>
         <ComponentPreview name="button-icon-only" />
+
+        <h2 id="animation">Animation</h2>
+        <ComponentPreview name="button-animation" />
 
         <h2 id="disabled-state">Disabled State</h2>
         <ComponentPreview name="button-disabled" />

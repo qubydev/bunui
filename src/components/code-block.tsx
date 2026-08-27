@@ -1,4 +1,3 @@
-import path from "node:path";
 import type {CSSProperties} from "react";
 
 import {codeToTokens} from "shiki";
@@ -39,14 +38,10 @@ export async function CodeBlock({
   flushTop?: boolean;
   title?: string;
 }) {
-  const trimmedCode = code
-    .trim()
-    .split("\n")
-    .filter((line) => line.trim().length > 0)
-    .join("\n");
-  const filename = title ? path.basename(title) : undefined;
+  const trimmedCode = code.trim().replace(/\r\n/g, "\n");
+  const language = getLanguage(title);
   const {tokens} = await codeToTokens(trimmedCode, {
-    lang: getLanguage(title),
+    lang: language,
     themes: {
       dark: "github-dark",
       light: "github-light",
@@ -54,7 +49,7 @@ export async function CodeBlock({
   });
 
   return (
-    <CodeBlockClient code={trimmedCode} collapsible={collapsible} filename={filename} flushTop={flushTop}>
+    <CodeBlockClient code={trimmedCode} collapsible={collapsible} label={language} flushTop={flushTop}>
       {tokens.map((line, lineIndex) => (
         <span className="flex min-h-6 whitespace-pre pr-4" key={lineIndex}>
           <span className="w-10 shrink-0 select-none pr-4 text-right text-muted-foreground/45">{lineIndex + 1}</span>

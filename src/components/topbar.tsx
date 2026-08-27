@@ -96,6 +96,7 @@ export function GitHubLink() {
     <Button
       variant="ghost"
       size="sm"
+      className="text-foreground rounded-full"
       nativeButton={false}
       render={
         <a
@@ -121,7 +122,7 @@ export function GitHubIconLink() {
     <Button
       variant="ghost"
       size="icon"
-      className="size-8"
+      className="size-8 text-foreground"
       nativeButton={false}
       render={
         <a

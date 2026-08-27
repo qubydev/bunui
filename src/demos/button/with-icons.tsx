@@ -9,7 +9,7 @@ export function WithIcons() {
         <Rocket />
         Launch
       </Button>
-      <Button variant="danger">
+      <Button variant="destructive">
         <Trash2 />
         Delete
       </Button>
@@ -17,7 +17,7 @@ export function WithIcons() {
         <Send />
         Send
       </Button>
-      <Button variant="success">
+      <Button variant="secondary">
         <CircleCheck />
         Approve
       </Button>
