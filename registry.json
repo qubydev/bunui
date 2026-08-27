@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "bunui",
+  "homepage": "https://bunui.xyz",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "A clickable button component with multiple variants, sizes, and jelly press animation.",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "A text input component for forms and user data entry with jelly focus animation.",
+      "dependencies": [
+        "@base-ui/react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}

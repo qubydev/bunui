@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "bun run registry:build && next build",
+    "registry:build": "shadcn build",
+    "registry:validate": "shadcn registry validate",
     "start": "next start",
     "lint": "eslint"
   },

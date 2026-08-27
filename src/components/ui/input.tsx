@@ -1,6 +1,6 @@
 "use client"
 
-import {Input as InputPrimitive} from "@base-ui/react/input"
+import { Input as InputPrimitive } from "@base-ui/react/input"
 import {
   motion,
   type MotionProps,
@@ -9,7 +9,7 @@ import {
 } from "motion/react"
 import type * as React from "react"
 
-import {cn} from "@/lib/utils"
+import { cn } from "@/lib/utils"
 
 const MotionInputPrimitive = motion.create(InputPrimitive) as React.ComponentType<
   Omit<InputPrimitive.Props, keyof MotionProps> & MotionProps
@@ -57,7 +57,7 @@ function Input({
     void controls.start({
       scaleX: 1,
       scaleY: 1,
-      transition: {type: "spring", stiffness: 520, damping: 24, mass: 0.55},
+      transition: { type: "spring", stiffness: 520, damping: 24, mass: 0.55 },
     })
   }
 
@@ -83,10 +83,10 @@ function Input({
       )}
       onBlur={handleBlur}
       onFocus={handleFocus}
-      style={{transformOrigin: "center", ...style}}
+      style={{ transformOrigin: "center", ...style }}
       {...props}
     />
   )
 }
 
-export {Input}
+export { Input }
