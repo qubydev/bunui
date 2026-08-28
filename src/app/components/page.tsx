@@ -5,6 +5,7 @@ const components = [
   {name: "Button", href: "/components/button"},
   {name: "Input", href: "/components/input"},
   {name: "Input Group", href: "/components/input-group"},
+  {name: "Textarea", href: "/components/textarea"},
 ];
 
 export default function ComponentsPage() {
@@ -21,7 +22,7 @@ export default function ComponentsPage() {
       </DocsDescription>
 
       <DocsBody>
-        <div className="not-prose grid max-w-xl grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2">
+        <div className="not-prose grid w-full grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
           {components.map((component) => (
             <Link
               key={component.href}

@@ -83,9 +83,9 @@ function Button({
 
     isPressedRef.current = true
     void controls.start({
-      scaleX: 1.08,
-      scaleY: 0.92,
-      transition: { type: "spring", stiffness: 620, damping: 22, mass: 0.5 },
+      scaleX: 1.04,
+      scaleY: 0.96,
+      transition: { type: "spring", stiffness: 560, damping: 24, mass: 0.5 },
     })
   }
 
@@ -101,10 +101,10 @@ function Button({
     }
 
     void controls.start({
-      scaleX: [1.08, 0.97, 1.02, 1],
-      scaleY: [0.92, 1.04, 0.99, 1],
+      scaleX: [1.04, 0.985, 1.01, 1],
+      scaleY: [0.96, 1.02, 0.995, 1],
       transition: {
-        duration: 0.36,
+        duration: 0.32,
         ease: [0.22, 1, 0.36, 1],
         times: [0, 0.35, 0.7, 1],
       },

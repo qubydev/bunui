@@ -46,11 +46,27 @@
       ],
       "registryDependencies": [
         "button",
-        "input"
+        "input",
+        "textarea"
       ],
       "files": [
         {
           "path": "src/components/ui/input-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "A multiline text field with jelly focus, press, and paste animation.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "src/components/ui/textarea.tsx",
           "type": "registry:ui"
         }
       ]

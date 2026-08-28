@@ -8,6 +8,7 @@ const toc = [
   {title: "Text", url: "#text", depth: 2},
   {title: "Button", url: "#button", depth: 2},
   {title: "Kbd", url: "#kbd", depth: 2},
+  {title: "Textarea", url: "#textarea", depth: 2},
   {title: "States", url: "#states", depth: 2},
   {title: "Animation", url: "#animation", depth: 2},
   {title: "API Reference", url: "#api-reference", depth: 2},
@@ -49,6 +50,13 @@ function ApiTable() {
       type: "string",
       defaultValue: "-",
       description: "Squeezes the keycap while the matching key or key combination is pressed.",
+    },
+    {
+      component: "InputGroupTextarea",
+      prop: "className",
+      type: "string",
+      defaultValue: "-",
+      description: "Adds custom classes to the grouped textarea.",
     },
     {
       component: "InputGroupInput",
@@ -117,6 +125,9 @@ export default function InputGroupPage() {
 
         <h2 id="kbd">Kbd</h2>
         <ComponentPreview name="input-group-kbd" />
+
+        <h2 id="textarea">Textarea</h2>
+        <ComponentPreview name="textarea-input-group" />
 
         <h2 id="states">States</h2>
         <ComponentPreview name="input-group-states" />

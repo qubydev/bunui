@@ -9,5 +9,6 @@ export const componentTree = {
     {type: "page", name: "Button", url: "/components/button"},
     {type: "page", name: "Input", url: "/components/input"},
     {type: "page", name: "Input Group", url: "/components/input-group"},
+    {type: "page", name: "Textarea", url: "/components/textarea"},
   ],
 } as unknown as Root;

@@ -11,6 +11,7 @@ import type * as React from "react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
 const MotionDiv = motion.div as React.ComponentType<
@@ -201,7 +202,7 @@ function InputGroup({
         animate={controls}
         data-slot="input-group"
         className={cn(
-          "relative flex min-h-9 w-full min-w-0 items-center overflow-hidden rounded-md border border-input bg-transparent bg-clip-padding text-sm outline-none transition-colors will-change-transform focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50 has-[:disabled]:pointer-events-none has-[:disabled]:opacity-50 has-[[aria-invalid=true]]:border-destructive has-[[aria-invalid=true]]:ring-3 has-[[aria-invalid=true]]:ring-destructive/20 dark:bg-input/30 dark:has-[[aria-invalid=true]]:border-destructive/50 dark:has-[[aria-invalid=true]]:ring-destructive/40",
+          "relative flex min-h-9 w-full min-w-0 flex-wrap items-center overflow-hidden rounded-md border border-input bg-transparent bg-clip-padding text-sm outline-none transition-colors will-change-transform focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50 has-[:disabled]:pointer-events-none has-[:disabled]:opacity-50 has-[[aria-invalid=true]]:border-destructive has-[[aria-invalid=true]]:ring-3 has-[[aria-invalid=true]]:ring-destructive/20 dark:bg-input/30 dark:has-[[aria-invalid=true]]:border-destructive/50 dark:has-[[aria-invalid=true]]:ring-destructive/40",
           className
         )}
         style={{ transformOrigin: "center", ...style }}
@@ -280,6 +281,94 @@ function InputGroupInput({
       data-slot="input-group-control"
       className={cn(
         "order-2 h-8 flex-1 border-0 bg-transparent px-3 shadow-none focus-visible:border-transparent focus-visible:ring-0 aria-invalid:border-transparent aria-invalid:ring-0 disabled:bg-transparent disabled:opacity-100 dark:bg-transparent dark:disabled:bg-transparent dark:aria-invalid:border-transparent dark:aria-invalid:ring-0",
+        className
+      )}
+      onBlur={handleBlur}
+      onFocus={handleFocus}
+      onPaste={handlePaste}
+      onPointerCancel={handlePointerCancel}
+      onPointerDown={handlePointerDown}
+      onPointerLeave={handlePointerLeave}
+      onPointerUp={handlePointerUp}
+    />
+  )
+}
+
+type InputGroupTextareaProps = React.ComponentProps<typeof Textarea>
+
+function InputGroupTextarea({
+  animated,
+  className,
+  onBlur,
+  onFocus,
+  onPaste,
+  onPointerCancel,
+  onPointerDown,
+  onPointerLeave,
+  onPointerUp,
+  ...props
+}: InputGroupTextareaProps) {
+  const inputGroup = useContext(InputGroupAnimationContext)
+
+  const handleFocus: NonNullable<InputGroupTextareaProps["onFocus"]> = (
+    event
+  ) => {
+    onFocus?.(event)
+    inputGroup?.focus()
+  }
+
+  const handleBlur: NonNullable<InputGroupTextareaProps["onBlur"]> = (
+    event
+  ) => {
+    onBlur?.(event)
+    inputGroup?.blur()
+  }
+
+  const handlePaste: NonNullable<InputGroupTextareaProps["onPaste"]> = (
+    event
+  ) => {
+    onPaste?.(event)
+
+    if (!event.defaultPrevented) {
+      inputGroup?.paste()
+    }
+  }
+
+  const handlePointerDown: NonNullable<
+    InputGroupTextareaProps["onPointerDown"]
+  > = (event) => {
+    onPointerDown?.(event)
+    inputGroup?.press()
+  }
+
+  const handlePointerUp: NonNullable<InputGroupTextareaProps["onPointerUp"]> = (
+    event
+  ) => {
+    onPointerUp?.(event)
+    inputGroup?.release()
+  }
+
+  const handlePointerCancel: NonNullable<
+    InputGroupTextareaProps["onPointerCancel"]
+  > = (event) => {
+    onPointerCancel?.(event)
+    inputGroup?.release()
+  }
+
+  const handlePointerLeave: NonNullable<
+    InputGroupTextareaProps["onPointerLeave"]
+  > = (event) => {
+    onPointerLeave?.(event)
+    inputGroup?.release()
+  }
+
+  return (
+    <Textarea
+      {...props}
+      animated={inputGroup ? false : animated}
+      data-slot="input-group-control"
+      className={cn(
+        "order-2 min-h-16 flex-1 resize-none border-0 bg-transparent px-3 py-2 shadow-none focus-visible:border-transparent focus-visible:ring-0 aria-invalid:border-transparent aria-invalid:ring-0 disabled:bg-transparent disabled:opacity-100 dark:bg-transparent dark:disabled:bg-transparent dark:aria-invalid:border-transparent dark:aria-invalid:ring-0",
         className
       )}
       onBlur={handleBlur}
@@ -477,5 +566,6 @@ export {
   InputGroupButton,
   InputGroupInput,
   InputGroupKbd,
+  InputGroupTextarea,
   InputGroupText,
 }

@@ -18,6 +18,11 @@ import {Button as InputGroupButton} from "@/demos/input-group/button";
 import {Kbd as InputGroupKbd} from "@/demos/input-group/kbd";
 import {States as InputGroupStates} from "@/demos/input-group/states";
 import {Text as InputGroupText} from "@/demos/input-group/text";
+import {Animation as TextareaAnimation} from "@/demos/textarea/animation";
+import {Basic as TextareaBasic} from "@/demos/textarea/basic";
+import {WithButton as TextareaButton} from "@/demos/textarea/button";
+import {WithInputGroup as TextareaInputGroup} from "@/demos/textarea/input-group";
+import {States as TextareaStates} from "@/demos/textarea/states";
 
 export interface DemoItem {
   component: ComponentType;
@@ -96,5 +101,25 @@ export const demos: Record<string, DemoItem> = {
   "input-group-animation": {
     component: InputGroupAnimation,
     file: "input-group/animation.tsx",
+  },
+  "textarea-basic": {
+    component: TextareaBasic,
+    file: "textarea/basic.tsx",
+  },
+  "textarea-states": {
+    component: TextareaStates,
+    file: "textarea/states.tsx",
+  },
+  "textarea-button": {
+    component: TextareaButton,
+    file: "textarea/button.tsx",
+  },
+  "textarea-input-group": {
+    component: TextareaInputGroup,
+    file: "textarea/input-group.tsx",
+  },
+  "textarea-animation": {
+    component: TextareaAnimation,
+    file: "textarea/animation.tsx",
   },
 };
