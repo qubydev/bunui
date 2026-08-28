@@ -23,6 +23,10 @@ import {Basic as TextareaBasic} from "@/demos/textarea/basic";
 import {WithButton as TextareaButton} from "@/demos/textarea/button";
 import {WithInputGroup as TextareaInputGroup} from "@/demos/textarea/input-group";
 import {States as TextareaStates} from "@/demos/textarea/states";
+import {Basic as LabelBasic} from "@/demos/label/basic";
+import {Disabled as LabelDisabled} from "@/demos/label/disabled";
+import {Required as LabelRequired} from "@/demos/label/required";
+import {WithTextarea as LabelTextarea} from "@/demos/label/textarea";
 
 export interface DemoItem {
   component: ComponentType;
@@ -121,5 +125,21 @@ export const demos: Record<string, DemoItem> = {
   "textarea-animation": {
     component: TextareaAnimation,
     file: "textarea/animation.tsx",
+  },
+  "label-basic": {
+    component: LabelBasic,
+    file: "label/basic.tsx",
+  },
+  "label-required": {
+    component: LabelRequired,
+    file: "label/required.tsx",
+  },
+  "label-textarea": {
+    component: LabelTextarea,
+    file: "label/textarea.tsx",
+  },
+  "label-disabled": {
+    component: LabelDisabled,
+    file: "label/disabled.tsx",
   },
 };

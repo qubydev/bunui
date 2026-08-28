@@ -5,6 +5,7 @@ const components = [
   {name: "Button", href: "/components/button"},
   {name: "Input", href: "/components/input"},
   {name: "Input Group", href: "/components/input-group"},
+  {name: "Label", href: "/components/label"},
   {name: "Textarea", href: "/components/textarea"},
 ];
 
