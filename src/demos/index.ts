@@ -7,6 +7,12 @@ import {IconOnly} from "@/demos/button/icon-only";
 import {Sizes} from "@/demos/button/sizes";
 import {Variants} from "@/demos/button/variants";
 import {WithIcons} from "@/demos/button/with-icons";
+import {Animation as CheckboxAnimation} from "@/demos/checkbox/animation";
+import {Basic as CheckboxBasic} from "@/demos/checkbox/basic";
+import {Checked as CheckboxChecked} from "@/demos/checkbox/checked";
+import {Description as CheckboxDescription} from "@/demos/checkbox/description";
+import {Disabled as CheckboxDisabled} from "@/demos/checkbox/disabled";
+import {Indeterminate as CheckboxIndeterminate} from "@/demos/checkbox/indeterminate";
 import {Animation as InputAnimation} from "@/demos/input/animation";
 import {Basic as InputBasic} from "@/demos/input/basic";
 import {FileInput} from "@/demos/input/file";
@@ -61,6 +67,30 @@ export const demos: Record<string, DemoItem> = {
   "button-animation": {
     component: Animation,
     file: "button/animation.tsx",
+  },
+  "checkbox-basic": {
+    component: CheckboxBasic,
+    file: "checkbox/basic.tsx",
+  },
+  "checkbox-checked": {
+    component: CheckboxChecked,
+    file: "checkbox/checked.tsx",
+  },
+  "checkbox-indeterminate": {
+    component: CheckboxIndeterminate,
+    file: "checkbox/indeterminate.tsx",
+  },
+  "checkbox-description": {
+    component: CheckboxDescription,
+    file: "checkbox/description.tsx",
+  },
+  "checkbox-disabled": {
+    component: CheckboxDisabled,
+    file: "checkbox/disabled.tsx",
+  },
+  "checkbox-animation": {
+    component: CheckboxAnimation,
+    file: "checkbox/animation.tsx",
   },
   "input-basic": {
     component: InputBasic,

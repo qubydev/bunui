@@ -3,6 +3,7 @@ import {DocsBody, DocsDescription, DocsPage, DocsTitle} from "fumadocs-ui/layout
 
 const components = [
   {name: "Button", href: "/components/button"},
+  {name: "Checkbox", href: "/components/checkbox"},
   {name: "Input", href: "/components/input"},
   {name: "Input Group", href: "/components/input-group"},
   {name: "Label", href: "/components/label"},

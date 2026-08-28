@@ -7,6 +7,7 @@ export const componentTree = {
     {type: "page", name: "All Components", url: "/components"},
     {type: "separator", name: "Components"},
     {type: "page", name: "Button", url: "/components/button"},
+    {type: "page", name: "Checkbox", url: "/components/checkbox"},
     {type: "page", name: "Input", url: "/components/input"},
     {type: "page", name: "Input Group", url: "/components/input-group"},
     {type: "page", name: "Label", url: "/components/label"},
