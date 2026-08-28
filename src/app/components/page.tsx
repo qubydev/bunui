@@ -4,6 +4,7 @@ import {DocsBody, DocsDescription, DocsPage, DocsTitle} from "fumadocs-ui/layout
 const components = [
   {name: "Button", href: "/components/button"},
   {name: "Input", href: "/components/input"},
+  {name: "Input Group", href: "/components/input-group"},
 ];
 
 export default function ComponentsPage() {

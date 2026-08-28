@@ -12,6 +12,12 @@ import {Basic as InputBasic} from "@/demos/input/basic";
 import {FileInput} from "@/demos/input/file";
 import {States as InputStates} from "@/demos/input/states";
 import {Types as InputTypes} from "@/demos/input/types";
+import {Animation as InputGroupAnimation} from "@/demos/input-group/animation";
+import {Basic as InputGroupBasic} from "@/demos/input-group/basic";
+import {Button as InputGroupButton} from "@/demos/input-group/button";
+import {Kbd as InputGroupKbd} from "@/demos/input-group/kbd";
+import {States as InputGroupStates} from "@/demos/input-group/states";
+import {Text as InputGroupText} from "@/demos/input-group/text";
 
 export interface DemoItem {
   component: ComponentType;
@@ -66,5 +72,29 @@ export const demos: Record<string, DemoItem> = {
   "input-file": {
     component: FileInput,
     file: "input/file.tsx",
+  },
+  "input-group-basic": {
+    component: InputGroupBasic,
+    file: "input-group/basic.tsx",
+  },
+  "input-group-text": {
+    component: InputGroupText,
+    file: "input-group/text.tsx",
+  },
+  "input-group-button": {
+    component: InputGroupButton,
+    file: "input-group/button.tsx",
+  },
+  "input-group-kbd": {
+    component: InputGroupKbd,
+    file: "input-group/kbd.tsx",
+  },
+  "input-group-states": {
+    component: InputGroupStates,
+    file: "input-group/states.tsx",
+  },
+  "input-group-animation": {
+    component: InputGroupAnimation,
+    file: "input-group/animation.tsx",
   },
 };

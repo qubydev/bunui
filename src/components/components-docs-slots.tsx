@@ -4,10 +4,7 @@ import type {ComponentProps, ReactNode} from "react";
 import {cloneElement, isValidElement} from "react";
 import {Search, SidebarIcon} from "lucide-react";
 import {useSearchContext} from "fumadocs-ui/contexts/search";
-import {
-  FullSearchTrigger,
-  type SearchTriggerProps,
-} from "fumadocs-ui/layouts/shared/slots/search-trigger";
+import type {SearchTriggerProps} from "fumadocs-ui/layouts/shared/slots/search-trigger";
 import {
   Sidebar,
   SidebarCollapseTrigger,
@@ -54,6 +51,10 @@ function AnimatedSearchTrigger({
   );
 }
 
+function HiddenSearchTrigger() {
+  return null;
+}
+
 function AnimatedSidebarTrigger({
   className,
   children,
@@ -87,7 +88,7 @@ function AnimatedSidebarTrigger({
 
 export const componentsDocsSearchTriggerSlot = {
   sm: AnimatedSearchTrigger,
-  full: FullSearchTrigger,
+  full: HiddenSearchTrigger,
 } satisfies NonNullable<DocsSlots["searchTrigger"]>;
 
 export const componentsDocsSidebarSlot = {

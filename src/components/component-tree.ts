@@ -8,5 +8,6 @@ export const componentTree = {
     {type: "separator", name: "Components"},
     {type: "page", name: "Button", url: "/components/button"},
     {type: "page", name: "Input", url: "/components/input"},
+    {type: "page", name: "Input Group", url: "/components/input-group"},
   ],
 } as unknown as Root;
