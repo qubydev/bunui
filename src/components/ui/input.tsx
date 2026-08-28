@@ -7,6 +7,7 @@ import {
   useAnimationControls,
   useReducedMotion,
 } from "motion/react"
+import { useRef } from "react"
 import type * as React from "react"
 
 import { cn } from "@/lib/utils"
@@ -27,13 +28,23 @@ function Input({
   animated = true,
   onBlur,
   onFocus,
+  onPaste,
+  onPointerCancel,
+  onPointerDown,
+  onPointerLeave,
+  onPointerUp,
   style,
   ...props
 }: InputProps) {
   const controls = useAnimationControls()
   const reduceMotion = useReducedMotion()
+  const isPressedRef = useRef(false)
 
   const focus = () => {
+    if (isPressedRef.current) {
+      return
+    }
+
     if (!animated || disabled || reduceMotion) {
       return
     }
@@ -50,6 +61,8 @@ function Input({
   }
 
   const blur = () => {
+    isPressedRef.current = false
+
     if (!animated || disabled || reduceMotion) {
       return
     }
@@ -61,6 +74,57 @@ function Input({
     })
   }
 
+  const press = () => {
+    if (!animated || disabled || reduceMotion) {
+      return
+    }
+
+    isPressedRef.current = true
+    void controls.start({
+      scaleX: 1.012,
+      scaleY: 0.985,
+      transition: { type: "spring", stiffness: 560, damping: 24, mass: 0.5 },
+    })
+  }
+
+  const release = () => {
+    if (!isPressedRef.current) {
+      return
+    }
+
+    isPressedRef.current = false
+
+    if (!animated || disabled || reduceMotion) {
+      return
+    }
+
+    void controls.start({
+      scaleX: [1.012, 0.998, 1.004, 1],
+      scaleY: [0.985, 1.006, 0.998, 1],
+      transition: {
+        duration: 0.34,
+        ease: [0.22, 1, 0.36, 1],
+        times: [0, 0.38, 0.72, 1],
+      },
+    })
+  }
+
+  const paste = () => {
+    if (!animated || disabled || reduceMotion) {
+      return
+    }
+
+    void controls.start({
+      scaleX: [1, 1.012, 0.998, 1.004, 1],
+      scaleY: [1, 0.985, 1.006, 0.998, 1],
+      transition: {
+        duration: 0.34,
+        ease: [0.22, 1, 0.36, 1],
+        times: [0, 0.28, 0.58, 0.82, 1],
+      },
+    })
+  }
+
   const handleFocus: NonNullable<InputProps["onFocus"]> = (event) => {
     onFocus?.(event)
     focus()
@@ -69,6 +133,40 @@ function Input({
   const handleBlur: NonNullable<InputProps["onBlur"]> = (event) => {
     onBlur?.(event)
     blur()
+  }
+
+  const handlePaste: NonNullable<InputProps["onPaste"]> = (event) => {
+    onPaste?.(event)
+
+    if (!event.defaultPrevented) {
+      paste()
+    }
+  }
+
+  const handlePointerDown: NonNullable<InputProps["onPointerDown"]> = (
+    event
+  ) => {
+    onPointerDown?.(event)
+    press()
+  }
+
+  const handlePointerUp: NonNullable<InputProps["onPointerUp"]> = (event) => {
+    onPointerUp?.(event)
+    release()
+  }
+
+  const handlePointerCancel: NonNullable<InputProps["onPointerCancel"]> = (
+    event
+  ) => {
+    onPointerCancel?.(event)
+    release()
+  }
+
+  const handlePointerLeave: NonNullable<InputProps["onPointerLeave"]> = (
+    event
+  ) => {
+    onPointerLeave?.(event)
+    release()
   }
 
   return (
@@ -83,6 +181,11 @@ function Input({
       )}
       onBlur={handleBlur}
       onFocus={handleFocus}
+      onPaste={handlePaste}
+      onPointerCancel={handlePointerCancel}
+      onPointerDown={handlePointerDown}
+      onPointerLeave={handlePointerLeave}
+      onPointerUp={handlePointerUp}
       style={{ transformOrigin: "center", ...style }}
       {...props}
     />

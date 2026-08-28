@@ -8,6 +8,7 @@ import {
   useAnimationControls,
   useReducedMotion,
 } from "motion/react"
+import { useRef } from "react"
 import type * as React from "react"
 
 import { cn } from "@/lib/utils"
@@ -66,18 +67,21 @@ function Button({
   onKeyUp,
   onPointerCancel,
   onPointerDown,
+  onPointerLeave,
   onPointerUp,
   style,
   ...props
 }: ButtonProps) {
   const controls = useAnimationControls()
   const reduceMotion = useReducedMotion()
+  const isPressedRef = useRef(false)
 
   const press = () => {
     if (!animated || disabled || reduceMotion) {
       return
     }
 
+    isPressedRef.current = true
     void controls.start({
       scaleX: 1.08,
       scaleY: 0.92,
@@ -86,6 +90,12 @@ function Button({
   }
 
   const release = () => {
+    if (!isPressedRef.current) {
+      return
+    }
+
+    isPressedRef.current = false
+
     if (!animated || disabled || reduceMotion) {
       return
     }
@@ -120,6 +130,13 @@ function Button({
     release()
   }
 
+  const handlePointerLeave: NonNullable<ButtonProps["onPointerLeave"]> = (
+    event
+  ) => {
+    onPointerLeave?.(event)
+    release()
+  }
+
   const handleKeyDown: NonNullable<ButtonProps["onKeyDown"]> = (event) => {
     onKeyDown?.(event)
 
@@ -146,6 +163,7 @@ function Button({
       onKeyUp={handleKeyUp}
       onPointerCancel={handlePointerCancel}
       onPointerDown={handlePointerDown}
+      onPointerLeave={handlePointerLeave}
       onPointerUp={handlePointerUp}
       style={{ transformOrigin: "center", ...style }}
       {...props}
