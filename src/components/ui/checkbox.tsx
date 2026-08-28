@@ -1,7 +1,6 @@
 "use client"
 
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox"
-import { Check, Minus } from "lucide-react"
 import {
   motion,
   type MotionProps,
@@ -139,12 +138,99 @@ function Checkbox({
       {...props}
     >
       <CheckboxPrimitive.Indicator
+        keepMounted
         data-slot="checkbox-indicator"
-        className="group/checkbox-indicator grid size-full place-content-center text-current transition-none"
-      >
-        <Check className="size-3.5 group-data-[indeterminate]/checkbox-indicator:hidden" />
-        <Minus className="hidden size-3.5 group-data-[indeterminate]/checkbox-indicator:block" />
-      </CheckboxPrimitive.Indicator>
+        render={(indicatorProps, state) => {
+          const shouldAnimate = animated && !disabled && !reduceMotion
+          const checkTransition = shouldAnimate
+            ? {
+                pathLength: {
+                  type: "spring",
+                  stiffness: 520,
+                  damping: 32,
+                  mass: 0.42,
+                },
+                opacity: { duration: 0.08 },
+                scale: {
+                  type: "spring",
+                  stiffness: 620,
+                  damping: 24,
+                  mass: 0.36,
+                },
+              }
+            : { duration: 0 }
+          const minusTransition = shouldAnimate
+            ? {
+                pathLength: {
+                  type: "spring",
+                  stiffness: 560,
+                  damping: 34,
+                  mass: 0.38,
+                },
+                opacity: { duration: 0.08 },
+                scaleX: {
+                  type: "spring",
+                  stiffness: 680,
+                  damping: 25,
+                  mass: 0.34,
+                },
+              }
+            : { duration: 0 }
+
+          return (
+            <span
+              {...indicatorProps}
+              className={cn(
+                "relative grid size-full place-content-center text-primary-foreground",
+                indicatorProps.className
+              )}
+            >
+              <motion.svg
+                aria-hidden="true"
+                className="absolute left-1/2 top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2"
+                fill="none"
+                viewBox="0 0 16 16"
+              >
+                <motion.path
+                  animate={{
+                    opacity: state.checked && !state.indeterminate ? 1 : 0,
+                    pathLength:
+                      state.checked && !state.indeterminate ? 1 : 0,
+                    scale: state.checked && !state.indeterminate ? 1 : 0.92,
+                  }}
+                  d="M3.75 8.25 6.75 11.25 12.25 5.25"
+                  initial={false}
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  transition={checkTransition}
+                />
+              </motion.svg>
+              <motion.svg
+                aria-hidden="true"
+                className="absolute left-1/2 top-1/2 size-3.5 -translate-x-1/2 -translate-y-1/2"
+                fill="none"
+                viewBox="0 0 16 16"
+              >
+                <motion.path
+                  animate={{
+                    opacity: state.indeterminate ? 1 : 0,
+                    pathLength: state.indeterminate ? 1 : 0,
+                    scaleX: state.indeterminate ? 1 : 0.5,
+                  }}
+                  d="M4 8H12"
+                  initial={false}
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                  transition={minusTransition}
+                />
+              </motion.svg>
+            </span>
+          )
+        }}
+      />
     </MotionCheckboxRoot>
   )
 }

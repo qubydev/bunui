@@ -11,6 +11,7 @@ export const componentTree = {
     {type: "page", name: "Input", url: "/components/input"},
     {type: "page", name: "Input Group", url: "/components/input-group"},
     {type: "page", name: "Label", url: "/components/label"},
+    {type: "page", name: "Switch", url: "/components/switch"},
     {type: "page", name: "Textarea", url: "/components/textarea"},
   ],
 } as unknown as Root;

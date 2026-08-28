@@ -33,6 +33,12 @@ import {Basic as LabelBasic} from "@/demos/label/basic";
 import {Disabled as LabelDisabled} from "@/demos/label/disabled";
 import {Required as LabelRequired} from "@/demos/label/required";
 import {WithTextarea as LabelTextarea} from "@/demos/label/textarea";
+import {Animation as SwitchAnimation} from "@/demos/switch/animation";
+import {Basic as SwitchBasic} from "@/demos/switch/basic";
+import {Controlled as SwitchControlled} from "@/demos/switch/controlled";
+import {Description as SwitchDescription} from "@/demos/switch/description";
+import {Size as SwitchSize} from "@/demos/switch/size";
+import {States as SwitchStates} from "@/demos/switch/states";
 
 export interface DemoItem {
   component: ComponentType;
@@ -171,5 +177,29 @@ export const demos: Record<string, DemoItem> = {
   "label-disabled": {
     component: LabelDisabled,
     file: "label/disabled.tsx",
+  },
+  "switch-basic": {
+    component: SwitchBasic,
+    file: "switch/basic.tsx",
+  },
+  "switch-description": {
+    component: SwitchDescription,
+    file: "switch/description.tsx",
+  },
+  "switch-controlled": {
+    component: SwitchControlled,
+    file: "switch/controlled.tsx",
+  },
+  "switch-size": {
+    component: SwitchSize,
+    file: "switch/size.tsx",
+  },
+  "switch-states": {
+    component: SwitchStates,
+    file: "switch/states.tsx",
+  },
+  "switch-animation": {
+    component: SwitchAnimation,
+    file: "switch/animation.tsx",
   },
 };
