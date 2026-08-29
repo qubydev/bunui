@@ -25,12 +25,12 @@ export default function ComponentsPage() {
       </DocsDescription>
 
       <DocsBody>
-        <div className="not-prose grid w-full grid-cols-1 gap-x-10 gap-y-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+        <div className="not-prose grid w-full max-w-[56rem] grid-cols-2 gap-x-10 gap-y-3 sm:grid-cols-3 xl:grid-cols-4">
           {components.map((component) => (
             <Link
               key={component.href}
               href={component.href}
-              className="text-base font-medium text-foreground no-underline underline-offset-4 hover:underline"
+              className="text-base font-medium text-foreground no-underline underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               {component.name}
             </Link>

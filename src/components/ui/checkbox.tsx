@@ -7,7 +7,6 @@ import {
   useAnimationControls,
   useReducedMotion,
 } from "motion/react"
-import { useRef } from "react"
 import type * as React from "react"
 
 import { cn } from "@/lib/utils"
@@ -27,96 +26,35 @@ function Checkbox({
   animated = true,
   className,
   disabled,
-  onKeyDown,
-  onKeyUp,
-  onPointerCancel,
-  onPointerDown,
-  onPointerLeave,
-  onPointerUp,
+  onCheckedChange,
   style,
   ...props
 }: CheckboxProps) {
   const controls = useAnimationControls()
   const reduceMotion = useReducedMotion()
-  const isPressedRef = useRef(false)
 
-  const press = () => {
-    if (!animated || disabled || reduceMotion) {
-      return
-    }
-
-    isPressedRef.current = true
-    void controls.start({
-      scaleX: 1.06,
-      scaleY: 0.94,
-      transition: { type: "spring", stiffness: 560, damping: 24, mass: 0.45 },
-    })
-  }
-
-  const release = () => {
-    if (!isPressedRef.current) {
-      return
-    }
-
-    isPressedRef.current = false
-
+  const squeeze = () => {
     if (!animated || disabled || reduceMotion) {
       return
     }
 
     void controls.start({
-      scaleX: [1.06, 0.96, 1.02, 1],
-      scaleY: [0.94, 1.05, 0.99, 1],
+      scaleX: [1, 1.07, 0.96, 1.02, 1],
+      scaleY: [1, 0.93, 1.05, 0.99, 1],
       transition: {
-        duration: 0.3,
+        duration: 0.34,
         ease: [0.22, 1, 0.36, 1],
-        times: [0, 0.35, 0.72, 1],
+        times: [0, 0.28, 0.58, 0.82, 1],
       },
     })
   }
 
-  const handlePointerDown: NonNullable<CheckboxProps["onPointerDown"]> = (
-    event
+  const handleCheckedChange: NonNullable<CheckboxProps["onCheckedChange"]> = (
+    checked,
+    eventDetails
   ) => {
-    onPointerDown?.(event)
-    press()
-  }
-
-  const handlePointerUp: NonNullable<CheckboxProps["onPointerUp"]> = (
-    event
-  ) => {
-    onPointerUp?.(event)
-    release()
-  }
-
-  const handlePointerCancel: NonNullable<CheckboxProps["onPointerCancel"]> = (
-    event
-  ) => {
-    onPointerCancel?.(event)
-    release()
-  }
-
-  const handlePointerLeave: NonNullable<CheckboxProps["onPointerLeave"]> = (
-    event
-  ) => {
-    onPointerLeave?.(event)
-    release()
-  }
-
-  const handleKeyDown: NonNullable<CheckboxProps["onKeyDown"]> = (event) => {
-    onKeyDown?.(event)
-
-    if (event.key === " " || event.key === "Enter") {
-      press()
-    }
-  }
-
-  const handleKeyUp: NonNullable<CheckboxProps["onKeyUp"]> = (event) => {
-    onKeyUp?.(event)
-
-    if (event.key === " " || event.key === "Enter") {
-      release()
-    }
+    onCheckedChange?.(checked, eventDetails)
+    squeeze()
   }
 
   return (
@@ -128,12 +66,7 @@ function Checkbox({
         "peer group/checkbox relative size-4 shrink-0 rounded border border-input bg-transparent bg-clip-padding outline-none transition-colors will-change-transform after:absolute after:-inset-x-3 after:-inset-y-2 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 data-[checked]:border-primary data-[checked]:bg-primary data-[checked]:text-primary-foreground data-[indeterminate]:border-primary data-[indeterminate]:bg-primary data-[indeterminate]:text-primary-foreground aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:bg-input/30 dark:data-[checked]:bg-primary dark:data-[indeterminate]:bg-primary dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
         className
       )}
-      onKeyDown={handleKeyDown}
-      onKeyUp={handleKeyUp}
-      onPointerCancel={handlePointerCancel}
-      onPointerDown={handlePointerDown}
-      onPointerLeave={handlePointerLeave}
-      onPointerUp={handlePointerUp}
+      onCheckedChange={handleCheckedChange}
       style={{ transformOrigin: "center", ...style }}
       {...props}
     >
