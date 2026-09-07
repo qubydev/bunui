@@ -1,118 +1,18 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "bunui",
-  "homepage": "https://bunui.xyz",
+  "name": "bun-ui",
+  "homepage": "https://github.com/qubydev/bunui",
   "items": [
     {
-      "name": "button",
-      "type": "registry:ui",
-      "title": "Button",
-      "description": "A clickable button component with multiple variants, sizes, and jelly press animation.",
-      "dependencies": [
-        "@base-ui/react",
-        "class-variance-authority",
-        "motion"
-      ],
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Utils",
+      "description": "The cn helper for merging Tailwind classes.",
+      "dependencies": ["clsx", "tailwind-merge"],
       "files": [
         {
-          "path": "src/components/ui/button.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "checkbox",
-      "type": "registry:ui",
-      "title": "Checkbox",
-      "description": "A checkbox control with checked, indeterminate, disabled, and jelly press states.",
-      "dependencies": [
-        "@base-ui/react",
-        "lucide-react",
-        "motion"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/checkbox.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "input",
-      "type": "registry:ui",
-      "title": "Input",
-      "description": "A text input component for forms and user data entry with jelly focus animation.",
-      "dependencies": [
-        "@base-ui/react",
-        "motion"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/input.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "input-group",
-      "type": "registry:ui",
-      "title": "Input Group",
-      "description": "A composable input group for icons, text, keyboard hints, and inline actions with jelly animation.",
-      "dependencies": [
-        "motion"
-      ],
-      "registryDependencies": [
-        "button",
-        "input",
-        "textarea"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/input-group.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "label",
-      "type": "registry:ui",
-      "title": "Label",
-      "description": "An accessible label associated with form controls.",
-      "files": [
-        {
-          "path": "src/components/ui/label.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "switch",
-      "type": "registry:ui",
-      "title": "Switch",
-      "description": "A switch control with size, disabled, invalid, and jelly press states.",
-      "dependencies": [
-        "@base-ui/react",
-        "motion"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/switch.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
-      "name": "textarea",
-      "type": "registry:ui",
-      "title": "Textarea",
-      "description": "A multiline text field with jelly focus, press, and paste animation.",
-      "dependencies": [
-        "motion"
-      ],
-      "files": [
-        {
-          "path": "src/components/ui/textarea.tsx",
-          "type": "registry:ui"
+          "path": "lib/utils.ts",
+          "type": "registry:lib"
         }
       ]
     }
