@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
+import GooeyNavbar from "@/components/GooeyNavbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import {
   SITE_DESCRIPTION,
@@ -115,6 +116,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <GooeyNavbar />
           <div className="flex flex-1 flex-col">{children}</div>
         </ThemeProvider>
       </body>

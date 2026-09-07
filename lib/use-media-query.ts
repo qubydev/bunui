@@ -2,7 +2,7 @@
 
 import { useCallback, useSyncExternalStore } from "react";
 
-const MOBILE_QUERY = "(max-width: 767px)";
+const MOBILE_QUERY = "(width < 48rem)";
 
 const lists = new Map<string, MediaQueryList>();
 

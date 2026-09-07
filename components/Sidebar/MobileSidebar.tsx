@@ -38,7 +38,7 @@ export default function MobileSidebar() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 z-50 touch-none bg-black/50 backdrop-blur-sm"
+              className="fixed inset-0 z-50 touch-none bg-foreground/50 backdrop-blur-sm"
             />
 
             <motion.div

@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "motion/react";
 import Sidebar from "./Sidebar";
 import { DescriptionPanel } from "../Description/DescriptionPanel";
-
-const NAV_SPACE = 308;
-const INFO_SPACE = 576;
+import { cn } from "@/lib/utils";
 
 export default function DesktopShell({
   children,
@@ -21,22 +18,20 @@ export default function DesktopShell({
       <Sidebar open={navOpen} setOpen={setNavOpen} />
       <DescriptionPanel open={infoOpen} setOpen={setInfoOpen} />
 
-      <motion.div
-        initial={false}
-        animate={{
-          paddingLeft: navOpen ? NAV_SPACE : 0,
-          paddingRight: infoOpen ? INFO_SPACE : 0,
-        }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="h-full"
+      <div
+        className={cn(
+          "h-full transition-[padding] duration-300 ease-out",
+          navOpen ? "pl-72" : "pl-0",
+          infoOpen ? "pr-144" : "pr-0",
+        )}
       >
         <div
-          className="relative z-0 h-full rounded-[45px] bg-card p-4"
+          className="relative z-0 h-full rounded-4xl bg-card p-4"
           style={{ cornerShape: "squircle" } as React.CSSProperties}
         >
           {children}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

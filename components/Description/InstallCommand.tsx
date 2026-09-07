@@ -12,13 +12,6 @@ import { LOGOS } from "../logos";
 import CopyButton from "../CopyButton";
 import Tooltip from "../Tooltip";
 
-const ACTIVE_COLOR: Record<PackageManager, string> = {
-  npm: "#CB3837",
-  pnpm: "#F9AD00",
-  yarn: "#38BDF8",
-  bun: "#FF9557",
-};
-
 export default function InstallCommand({ item }: { item: ComponentItem }) {
   const [pm, setPm] = useState<PackageManager>("npm");
   const command = installCommand(item, pm);
@@ -36,11 +29,10 @@ export default function InstallCommand({ item }: { item: ComponentItem }) {
               type="button"
               onClick={() => setPm(manager)}
               data-active={active}
-              style={active ? { color: ACTIVE_COLOR[manager] } : undefined}
               className={cn(
                 "flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-colors",
                 active
-                  ? "bg-muted"
+                  ? "bg-muted text-primary"
                   : "text-foreground/40 hover:text-foreground/70",
               )}
             >

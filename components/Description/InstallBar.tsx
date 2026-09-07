@@ -34,12 +34,10 @@ const barVariants: Variants = {
 const contentVariants: Variants = {
   hidden: {
     opacity: 0,
-    filter: "blur(4px)",
     transition: { duration: 0.13, ease: "easeIn" },
   },
   shown: {
     opacity: 1,
-    filter: "blur(0px)",
     transition: { duration: 0.24, ease: "easeOut" },
   },
 };
@@ -119,7 +117,7 @@ export default function InstallBar({ item }: { item: ComponentItem }) {
         transition={{
           layout: { duration: 0.24, ease: EASE, delay: open ? 0 : 0.1 },
         }}
-        className="flex h-7 shrink-0 cursor-pointer items-center justify-center rounded-[10px] bg-popover px-2.5 text-xs font-medium"
+        className="flex h-7 shrink-0 cursor-pointer items-center justify-center rounded-xl bg-popover px-2.5 text-xs font-medium"
       >
         {/* an invisible copy of the active label sizes the pill, so layout can animate the width while both labels crossfade in place */}
         <span aria-hidden className="grid place-items-center">
@@ -130,17 +128,15 @@ export default function InstallBar({ item }: { item: ComponentItem }) {
             className="col-start-1 row-start-1"
             animate={{
               opacity: open ? 0 : 1,
-              filter: open ? "blur(2.5px)" : "blur(0px)",
             }}
             transition={installTransition}
           >
             Install
           </motion.span>
           <motion.span
-            className="col-start-1 row-start-1 text-white"
+            className="col-start-1 row-start-1 text-foreground"
             animate={{
               opacity: open ? 1 : 0,
-              filter: open ? "blur(0px)" : "blur(2.5px)",
             }}
             transition={crossTransition}
           >
@@ -170,7 +166,7 @@ export default function InstallBar({ item }: { item: ComponentItem }) {
                   onClick={() => setMenuOpen((v) => !v)}
                   aria-expanded={menuOpen}
                   aria-label="Change package manager"
-                  className="flex h-7 cursor-pointer items-center gap-1.5 rounded-[10px] bg-popover px-2.5 text-xs font-medium"
+                  className="flex h-7 cursor-pointer items-center gap-1.5 rounded-xl bg-popover px-2.5 text-xs font-medium"
                 >
                   {pm}
                   <ChevronsUpDown className="size-3 opacity-45" />
@@ -211,7 +207,7 @@ export default function InstallBar({ item }: { item: ComponentItem }) {
 
               <span aria-hidden className="h-4 w-px bg-foreground/12" />
 
-              <code className="max-w-[34vw] truncate font-mono text-xs tracking-tight text-foreground/45">
+              <code className="max-w-xs truncate font-mono text-xs tracking-tight text-foreground/45">
                 {prefix}
                 <span className="font-semibold text-foreground">{suffix}</span>
               </code>

@@ -15,7 +15,7 @@ const blurLayers = (side: "top" | "bottom") =>
     const end = (100 * (LAYERS - index)) / LAYERS;
     const mask = `linear-gradient(to ${
       side === "top" ? "bottom" : "top"
-    }, #000 0, #000 ${end / 2}%, transparent ${end}%)`;
+    }, var(--foreground) 0, var(--foreground) ${end / 2}%, transparent ${end}%)`;
 
     return { blur, mask };
   });
@@ -32,9 +32,9 @@ const BlurEdge = ({
 }) => (
   <div
     aria-hidden
-    style={{ height: SCROLL_FADE, opacity: visible ? 1 : 0 }}
+    style={{ opacity: visible ? 1 : 0 }}
     className={cn(
-      "pointer-events-none absolute inset-x-0 transition-opacity duration-200 motion-reduce:transition-none",
+      "pointer-events-none absolute inset-x-0 h-12 transition-opacity duration-200 motion-reduce:transition-none",
       side === "top" ? "top-0" : "bottom-0",
     )}
   >
@@ -42,8 +42,8 @@ const BlurEdge = ({
       <div
         key={blur}
         style={{
-          backdropFilter: `blur(${blur}px)`,
-          WebkitBackdropFilter: `blur(${blur}px)`,
+          backdropFilter: `blur(calc(var(--spacing) * ${blur}))`,
+          WebkitBackdropFilter: `blur(calc(var(--spacing) * ${blur}))`,
           maskImage: mask,
           WebkitMaskImage: mask,
         }}
@@ -88,9 +88,11 @@ const SidebarScroll = ({
     };
   }, []);
 
-  const mask = `linear-gradient(to bottom, transparent 0, #000 ${
-    fadeTop ? SCROLL_FADE : 0
-  }px, #000 calc(100% - ${fadeBottom ? SCROLL_FADE : 0}px), transparent 100%)`;
+  const mask = `linear-gradient(to bottom, transparent 0, var(--foreground) ${
+    fadeTop ? "calc(var(--spacing) * 12)" : 0
+  }, var(--foreground) calc(100% - ${
+    fadeBottom ? "calc(var(--spacing) * 12)" : 0
+  }), transparent 100%)`;
 
   return (
     <div className={cn("relative", className)}>

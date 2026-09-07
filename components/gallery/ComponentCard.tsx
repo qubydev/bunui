@@ -44,7 +44,7 @@ export default function ComponentCard({
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
       className={cn(
-        "group flex flex-col rounded-[32px] border border-black/[0.04] bg-[#F5F5F7] p-2 transition-colors duration-200 ease-out dark:border-transparent dark:border-apple dark:bg-[#121212] dark:hover:bg-muted",
+        "group flex flex-col rounded-4xl border bg-muted p-2 shadow-lg transition-[background-color,box-shadow] duration-200 ease-out hover:shadow-xl dark:border-transparent dark:border-apple dark:bg-card dark:hover:bg-muted",
         large && "lg:h-full",
         className,
       )}
@@ -52,7 +52,7 @@ export default function ComponentCard({
     >
       <div
         className={cn(
-          "relative aspect-4/3 w-full overflow-hidden rounded-3xl border border-black/[0.06] bg-white dark:border-neutral-500/15 dark:bg-neutral-950",
+          "relative aspect-4/3 w-full overflow-hidden rounded-3xl border bg-popover shadow-inner dark:bg-muted",
           large && "lg:aspect-auto lg:flex-1",
         )}
         style={{ cornerShape: "squircle" } as React.CSSProperties}
@@ -73,7 +73,7 @@ export default function ComponentCard({
           <h3 className="flex items-center gap-2 font-runde text-base font-semibold tracking-tight">
             {item.name}
             {item.isNew && (
-              <span className="rounded-full bg-[#FC4C01]/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-[#FC4C01]">
+              <span className="rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium uppercase tracking-wide text-primary">
                 New
               </span>
             )}
@@ -84,7 +84,7 @@ export default function ComponentCard({
             </p>
           )} */}
         </div>
-        <span className="flex shrink-0 items-center justify-center text-[#FC4C01]">
+        <span className="flex shrink-0 items-center justify-center text-primary">
           <ArrowIcon />
         </span>
       </div>

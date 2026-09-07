@@ -64,16 +64,16 @@ export default function HeroCta() {
       >
         <StretchSquircleBg
           hovered={hovered === "pill"}
-          bgClassName="bg-neutral-900"
+          bgClassName="bg-foreground"
         />
         <CopyButton
           value={INSTALL_COMMAND}
           label="Copy command"
-          className="relative h-12 w-full max-w-full flex-row-reverse gap-2 pl-4 pr-4 text-white/50 hover:text-white sm:w-auto sm:pl-5"
+          className="relative h-12 w-full max-w-full flex-row-reverse gap-2 pl-4 pr-4 text-background/50 hover:text-background sm:w-auto sm:pl-5"
         >
-          <code className="min-w-0 flex-1 truncate font-mono text-xs font-semibold text-white sm:flex-none sm:text-sm">
+          <code className="min-w-0 flex-1 truncate font-mono text-xs font-semibold text-background sm:flex-none sm:text-sm">
             npx shadcn@latest add {REGISTRY_REPO}
-            <span className="font-normal text-white/50">
+            <span className="font-normal text-background/50">
               /&lt;component-name&gt;
             </span>
           </code>
@@ -90,11 +90,11 @@ export default function HeroCta() {
       >
         <StretchSquircleBg
           hovered={hovered === "cta"}
-          bgClassName="bg-[#FC4C01] transition-colors duration-150 ease-out group-hover:bg-[#e64500]"
+          bgClassName="bg-primary transition-colors duration-150 ease-out group-hover:bg-primary/90"
         />
         <Link
           href="/components"
-          className="relative flex h-12 items-center px-6 text-sm font-semibold font-runde text-white"
+          className="relative flex h-12 items-center px-6 text-sm font-semibold font-runde text-primary-foreground"
         >
           Quick Start
         </Link>

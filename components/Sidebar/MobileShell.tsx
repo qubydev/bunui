@@ -7,7 +7,7 @@ import MobileSidebar from "./MobileSidebar";
 import DescriptionContent from "../Description/DescriptionContent";
 import SourceSection from "../Description/SourceSection";
 
-const CARD = "rounded-[32px] bg-card";
+const CARD = "rounded-4xl bg-card";
 
 export default function MobileShell({
   children,

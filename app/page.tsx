@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import GooeyNavbar from "@/components/GooeyNavbar";
-import { fetchStarCount } from "@/lib/github";
-import HeroCta from "@/components/HeroCta";
-import HeroIntro from "@/components/HeroIntro";
-import ComponentsShowcase from "@/components/ComponentsShowcase";
-import Footer from "@/components/Footer";
+import { JellyBun } from "@/components/JellyBun";
+import CopyButton from "@/components/CopyButton";
+import { REGISTRY_REPO } from "@/lib/components";
 
 export const metadata: Metadata = {
   alternates: {
@@ -13,40 +9,46 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Home() {
-  const stars = await fetchStarCount();
+const INSTALL_COMMAND = `npx shadcn@latest add ${REGISTRY_REPO}/<component-name>`;
 
+export default function Home() {
   return (
-    <>
-      <section className="relative w-full p-1.5 md:p-2.5">
-        <div
-          className="relative flex min-h-[min(100svh_-_0.75rem,60rem)] w-full items-center justify-center overflow-hidden rounded-[45px] border border-black/[0.04] bg-[#F5F5F7] dark:border-transparent dark:border-apple dark:bg-[#121212] md:min-h-[min(100svh_-_1.25rem,60rem)]"
-          style={{ cornerShape: "squircle" } as React.CSSProperties}
-        >
-          <GooeyNavbar stars={stars} />
+      <main className="min-h-screen overflow-x-hidden px-5 pt-28 md:pt-32 sm:px-6 md:px-8">
+        <section className="mx-auto flex max-w-5xl flex-col items-center pb-16 text-center">
+          <div className="flex w-full flex-col items-center">
+            <h1 className="max-w-4xl font-runde text-4xl font-bold leading-tight sm:text-5xl md:text-6xl lg:text-7xl">
+              <span className="block">Components with</span>
+              <span className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1 sm:gap-x-3">
+                <span>a little</span>{" "}
+                <JellyBun
+                  variant="primary"
+                  className="size-10 shrink-0 sm:size-16 md:size-20 lg:size-24"
+                />
+                <span>cuteness</span>
+              </span>
+            </h1>
 
-          <Image
-            src="/logos/Bunui.svg"
-            alt=""
-            aria-hidden="true"
-            width={860}
-            height={824}
-            className="pointer-events-none absolute left-1/2 top-[68%] w-[860px] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.05] [filter:brightness(0)] dark:opacity-[0.07] dark:[filter:brightness(0)_invert(1)]"
-          />
-          <div className="pointer-events-none absolute inset-0 hidden bg-[radial-gradient(120%_75%_at_50%_-5%,rgba(255,255,255,0.07),transparent_60%)] dark:block" />
+            <p className="mt-5 max-w-md md:text-lg font-medium">
+              A set of unique and animated React components you can install with one command.
+            </p>
 
-          <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-3 px-4 pb-20 pt-28 text-center sm:gap-4 sm:px-6">
-            <HeroIntro
-              headline="Tasteful Components, Made to Stand Out."
-              sub="Bun UI is a free, open-source collection of animated React components. Browse them in action below and install any component with the shadcn CLI."
-            >
-              <HeroCta />
-            </HeroIntro>
+            <div className="mt-7 flex w-full justify-center">
+              <CopyButton
+                value={INSTALL_COMMAND}
+                label="Copy install command"
+                className="h-12 w-full max-w-sm flex-row-reverse justify-between gap-3 rounded-full border bg-popover px-4 text-foreground hover:text-foreground sm:w-fit sm:max-w-full sm:justify-start sm:px-5"
+                iconClassName="size-4"
+              >
+                <code className="min-w-0 truncate whitespace-nowrap text-left font-mono text-xs font-semibold sm:text-sm">
+                  npx shadcn@latest add {REGISTRY_REPO}
+                  <span className="font-normal text-muted-foreground">
+                    /&lt;component-name&gt;
+                  </span>
+                </code>
+              </CopyButton>
+            </div>
           </div>
-        </div>
-      </section>
-      <ComponentsShowcase />
-      <Footer />
-    </>
+        </section>
+      </main>
   );
 }

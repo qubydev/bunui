@@ -13,10 +13,10 @@ import {
 import { cn } from "@/lib/utils";
 import { SCROLL_FADE, SCROLL_SELECTOR } from "./SidebarScroll";
 
-const ACTIVE_COLOR = "#FC4C01";
+const ACTIVE_COLOR = "var(--primary)";
 const CORNER = 6;
 const DASH =
-  "repeating-linear-gradient(to top, transparent 0 2px, currentColor 2px 4px)";
+  "repeating-linear-gradient(to top, transparent 0 0.5rem, currentColor 0.5rem 1rem)";
 
 const Rail = ({
   from = 0,
@@ -149,7 +149,7 @@ const SidebarGroup = ({
 
   return (
     <div className="flex flex-col">
-      <span className="pb-2 pl-0.5 pr-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground/40">
+      <span className="pb-2 pl-0.5 pr-2 text-xs font-semibold uppercase tracking-widest text-foreground/40">
         {label}
       </span>
 

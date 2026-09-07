@@ -51,7 +51,7 @@ function TooltipArrow({ className }: { className?: string }) {
     <svg
       aria-hidden
       viewBox="0 0 16 9"
-      className={cn("absolute -top-2 h-[9px] w-4", className)}
+      className={cn("absolute -top-2 h-2.5 w-4", className)}
     >
       <path d="M0 9L5.6 2.2Q8 0 10.4 2.2L16 9Z" className="fill-popover" />
     </svg>

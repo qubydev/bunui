@@ -19,7 +19,7 @@ export default function PropsTable({ props }: PropsTableProps) {
       {["Prop", "Type", "Description"].map((label) => (
         <div
           key={label}
-          className="border-b border-border/50 px-1 pb-2.5 pr-4 text-[10px] font-medium uppercase tracking-wider text-foreground/45"
+          className="border-b border-border/50 px-1 pb-2.5 pr-4 text-xs font-medium uppercase tracking-wider text-foreground/45"
         >
           {label}
         </div>
@@ -30,7 +30,7 @@ export default function PropsTable({ props }: PropsTableProps) {
           <div className="border-b border-border/40 py-4 pl-1 pr-4">
             <code className="inline-flex items-center whitespace-nowrap rounded-md bg-muted px-2 py-1 font-mono text-xs text-foreground/75">
               {prop.name}
-              {prop.required && <span className="text-[#FC4C01]">*</span>}
+              {prop.required && <span className="text-primary">*</span>}
             </code>
           </div>
 
