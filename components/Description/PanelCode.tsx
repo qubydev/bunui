@@ -1,5 +1,7 @@
 "use client";
 
+import { Highlight, themes } from "prism-react-renderer";
+import { useTheme } from "next-themes";
 import { useIsMobile } from "@/lib/use-media-query";
 import { cn } from "@/lib/utils";
 
@@ -10,7 +12,6 @@ type PanelCodeProps = {
   className?: string;
 };
 
-// shared code surface for the panel + drawer
 export default function PanelCode({
   code,
   language = "tsx",
@@ -18,6 +19,8 @@ export default function PanelCode({
   className,
 }: PanelCodeProps) {
   const isMobile = useIsMobile();
+  const { resolvedTheme } = useTheme();
+  const theme = resolvedTheme === "dark" ? themes.oneDark : themes.github;
 
   return (
     <div
@@ -28,25 +31,32 @@ export default function PanelCode({
         isMobile && "p-0",
       )}
     >
-      <pre
-        data-language={language}
-        className={cn(
-          "min-h-0 w-full flex-1 overflow-auto rounded-lg bg-background p-4 font-mono text-xs leading-6 text-foreground",
-          isMobile && "rounded-xl border border-border",
+      <Highlight theme={theme} code={code} language={language}>
+        {({ className: prismClassName, style, tokens, getLineProps, getTokenProps }) => (
+          <pre
+            data-language={language}
+            className={cn(
+              prismClassName,
+              "min-h-0 w-full flex-1 overflow-auto rounded-lg p-4 font-mono text-xs leading-6",
+              isMobile && "rounded-xl border border-border",
+            )}
+            style={{ ...style, margin: 0, background: "var(--background)" }}
+          >
+            {tokens.map((line, index) => (
+              <div key={index} {...getLineProps({ line })}>
+                {showLineNumbers && (
+                  <span className="mr-4 inline-block w-5 select-none text-right text-muted-foreground/60">
+                    {index + 1}
+                  </span>
+                )}
+                {line.map((token, tokenIndex) => (
+                  <span key={tokenIndex} {...getTokenProps({ token })} />
+                ))}
+              </div>
+            ))}
+          </pre>
         )}
-      >
-        <code>
-          {showLineNumbers
-            ? code
-                .split("\n")
-                .map(
-                  (line, index) =>
-                    `${String(index + 1).padStart(2, " ")}  ${line}`,
-                )
-                .join("\n")
-            : code}
-        </code>
-      </pre>
+      </Highlight>
     </div>
   );
 }

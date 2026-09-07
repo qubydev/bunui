@@ -44,7 +44,7 @@ export default function ComponentCard({
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
       className={cn(
-        "group flex flex-col rounded-4xl border bg-muted p-2 shadow-lg transition-[background-color,box-shadow] duration-200 ease-out hover:shadow-xl dark:border-transparent dark:border-apple dark:bg-card dark:hover:bg-muted",
+        "group flex flex-col rounded-4xl border bg-muted p-2 transition-colors duration-200 ease-out dark:border-transparent dark:border-apple dark:bg-card dark:hover:bg-muted",
         large && "lg:h-full",
         className,
       )}
@@ -52,7 +52,7 @@ export default function ComponentCard({
     >
       <div
         className={cn(
-          "relative aspect-4/3 w-full overflow-hidden rounded-3xl border bg-popover shadow-inner dark:bg-muted",
+          "relative aspect-4/3 w-full overflow-hidden rounded-3xl border bg-popover dark:bg-muted",
           large && "lg:aspect-auto lg:flex-1",
         )}
         style={{ cornerShape: "squircle" } as React.CSSProperties}

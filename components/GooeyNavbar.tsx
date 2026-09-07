@@ -102,7 +102,10 @@ export default function GooeyNavbar({ className }: { className?: string }) {
 
         <div className="flex min-w-0 shrink items-center gap-1 whitespace-nowrap text-sm font-medium sm:shrink-0">
           {LINKS.map((link) => {
-            const active = pathname === link.href;
+            const active =
+              link.href === "/components"
+                ? pathname === "/components" || pathname.startsWith("/components/")
+                : pathname === link.href;
 
             return (
               <Link

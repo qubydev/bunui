@@ -15,6 +15,19 @@
           "type": "registry:lib"
         }
       ]
+    },
+    {
+      "name": "vinyl-player",
+      "type": "registry:ui",
+      "title": "Vinyl Player",
+      "description": "A compact music player built around a detailed vinyl record and tonearm.",
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/vinyl-player.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

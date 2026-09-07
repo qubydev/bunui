@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ComponentCard from "@/components/gallery/ComponentCard";
-import { components, gallerySections } from "@/lib/components";
-import { SITE_KEYWORDS, componentsJsonLd } from "@/lib/seo";
+import { components } from "@/lib/components";
+import { SITE_KEYWORDS } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Components",
@@ -15,14 +15,8 @@ export const metadata: Metadata = {
 
 export default function ComponentsIndexPage() {
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(componentsJsonLd()) }}
-      />
-
-      <main className="mx-auto w-full max-w-6xl flex-1 px-5 pb-16 pt-32 sm:px-6 md:pt-40">
-        {gallerySections.length === 0 ? (
+    <main className="mx-auto w-full max-w-6xl flex-1 px-5 pb-16 pt-32 sm:px-6 md:pt-40">
+        {components.length === 0 ? (
           <div className="mx-auto flex min-h-[50vh] max-w-lg flex-col items-center justify-center text-center">
             <h1 className="font-runde text-2xl font-bold tracking-tight sm:text-3xl">
               Components are coming soon.
@@ -33,38 +27,18 @@ export default function ComponentsIndexPage() {
             </p>
           </div>
         ) : (
-          <>
-            <header className="flex flex-col items-center gap-3 text-center">
-              <h1 className="max-w-2xl text-balance font-runde text-2xl font-bold tracking-tight sm:text-3xl md:text-4xl">
-                {components.length} components
-              </h1>
-            </header>
+          <section className="mt-2">
+            <h1 className="font-runde text-2xl font-semibold tracking-tight sm:text-3xl">
+              All components
+            </h1>
 
-            {gallerySections.map((section) => (
-              <section
-                key={section.id}
-                id={section.id}
-                className="mt-14 scroll-mt-28 first:mt-10"
-              >
-                <h2 className="font-runde text-lg font-semibold tracking-tight sm:text-xl">
-                  {section.label}{" "}
-                  <span className="text-muted-foreground">
-                    <span className="text-primary">[</span>
-                    {section.items.length}
-                    <span className="text-primary">]</span>
-                  </span>
-                </h2>
-
-                <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {section.items.map((item) => (
-                    <ComponentCard key={item.href} item={item} />
-                  ))}
-                </div>
-              </section>
-            ))}
-          </>
+            <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {components.map((item) => (
+                <ComponentCard key={item.href} item={item} />
+              ))}
+            </div>
+          </section>
         )}
-      </main>
-    </>
+    </main>
   );
 }

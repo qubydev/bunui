@@ -32,8 +32,8 @@ export default function InstallCommand({ item }: { item: ComponentItem }) {
               className={cn(
                 "flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-colors",
                 active
-                  ? "bg-muted text-primary"
-                  : "text-foreground/40 hover:text-foreground/70",
+                  ? "bg-foreground text-background"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               <Logo className="size-3.5" />
@@ -44,7 +44,7 @@ export default function InstallCommand({ item }: { item: ComponentItem }) {
       </div>
 
       <div className="flex items-center gap-2 rounded-lg bg-muted p-2 pl-3">
-        <code className="flex-1 truncate text-xs text-foreground/80">
+        <code className="flex-1 truncate text-xs text-foreground">
           {command}
         </code>
         <Tooltip label="Copy command" align="end">

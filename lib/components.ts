@@ -64,7 +64,8 @@ export const PANEL_INFO = {
     "Click the code icon in the top-right corner to view the source code.",
   keepInMind:
     "Bun UI components are copied into your project through the shadcn CLI. Review and adapt them before shipping.",
-  contactEmail: "hello@bun-ui.com",
+  contactEmail: "maay77patra@gmail.com",
+  issuesUrl: `${REGISTRY_HOMEPAGE}/issues`,
   contactNote: "Found a bug or issue? Open an issue or send a note.",
   license: [
     "Free to use and modify in personal and commercial projects.",
@@ -73,7 +74,73 @@ export const PANEL_INFO = {
   ],
 } as const;
 
-export const components: ComponentItem[] = [];
+export const components: ComponentItem[] = [
+  {
+    name: "Vinyl player",
+    href: "/components/vinyl-player",
+    category: "display",
+    isNew: true,
+    featured: true,
+    registry: "vinyl-player",
+    description:
+      "A compact music player built around a detailed vinyl record and tonearm.",
+    source: `${REGISTRY_HOMEPAGE}/blob/main/components/ui/vinyl-player.tsx`,
+    interaction:
+      "Press play to drop the arm onto the record and start the spin. Press again to stop the record and park the arm.",
+    props: [
+      {
+        name: "title",
+        type: "ReactNode",
+        required: true,
+        description: "Track title shown below the record.",
+      },
+      {
+        name: "artist",
+        type: "ReactNode",
+        description: "Optional artist or secondary track text.",
+      },
+      {
+        name: "playing",
+        type: "boolean",
+        description:
+          "Play state for controlled usage. Leave it out to let the component manage itself.",
+      },
+      {
+        name: "defaultPlaying",
+        type: "boolean",
+        default: "false",
+        description: "Initial play state when the component is uncontrolled.",
+      },
+      {
+        name: "onPlayingChange",
+        type: "(playing: boolean) => void",
+        description: "Called whenever the play button changes the play state.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        default: "false",
+        description: "Disables the play control and dims the player.",
+      },
+      {
+        name: "spinDuration",
+        type: "number",
+        default: "3000",
+        description: "Milliseconds for one full record rotation.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Extra classes merged onto the player root.",
+      },
+    ],
+    usage: `import { VinylPlayer } from "@/components/ui/vinyl-player"
+
+export function Demo() {
+  return <VinylPlayer title="Afterglow" artist="Bun Radio" />
+}`,
+  },
+];
 
 export type PackageManager = "npm" | "pnpm" | "yarn" | "bun";
 

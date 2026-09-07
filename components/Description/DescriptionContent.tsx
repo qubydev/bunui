@@ -24,7 +24,7 @@ function SectionLabel({
   children: React.ReactNode;
 }) {
   return (
-    <Tag className="text-xs font-medium uppercase tracking-normal text-foreground/40">
+    <Tag className="text-xs font-medium uppercase tracking-normal text-muted-foreground">
       {children}
     </Tag>
   );
@@ -39,7 +39,7 @@ export default function DescriptionContent({
     <div className={cn("flex flex-col gap-12 text-left", className)}>
       <div className="flex flex-col gap-4">
         <SectionLabel as="h1">{item?.name ?? "Component"}</SectionLabel>
-        <p className="text-2xl font-semibold leading-relaxed font-sans text-foreground/90">
+        <p className="font-sans text-2xl font-semibold leading-relaxed text-foreground">
           {item?.description ?? "This component is not available yet."}
         </p>
       </div>
@@ -58,7 +58,7 @@ export default function DescriptionContent({
       {item?.interaction && (
         <div className="flex flex-col gap-3">
           <SectionLabel as="h2">Interaction Type</SectionLabel>
-          <p className="text-sm leading-relaxed text-foreground/70">
+          <p className="text-sm leading-relaxed text-foreground">
             {item.interaction}
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function DescriptionContent({
       {item?.props && item.props.length > 0 && (
         <div className="flex flex-col gap-3">
           <SectionLabel as="h2">Props</SectionLabel>
-          <p className="-mt-1 text-sm leading-relaxed text-foreground/70">
+          <p className="-mt-1 text-sm leading-relaxed text-foreground">
             Options you can pass to customize this component.
           </p>
           <PropsTable props={item.props} />
@@ -91,7 +91,7 @@ export default function DescriptionContent({
       {item?.registry && showSourceHint && (
         <div className="flex flex-col gap-3">
           <SectionLabel as="h2">Source Code</SectionLabel>
-          <p className="text-sm leading-relaxed text-foreground/70">
+          <p className="text-sm leading-relaxed text-foreground">
             {PANEL_INFO.sourceHint}
           </p>
         </div>
@@ -99,7 +99,7 @@ export default function DescriptionContent({
 
       <div className="flex flex-col gap-3">
         <SectionLabel as="h2">Keep in mind</SectionLabel>
-        <p className="text-sm leading-relaxed text-foreground/70">
+        <p className="text-sm leading-relaxed text-foreground">
           {PANEL_INFO.keepInMind}
         </p>
       </div>
@@ -108,10 +108,10 @@ export default function DescriptionContent({
         <div className="flex flex-col gap-3">
           <SectionLabel as="h2">Credits</SectionLabel>
 
-          <ul className="flex flex-col gap-2 text-sm leading-relaxed text-foreground/70">
+          <ul className="flex flex-col gap-2 text-sm leading-relaxed text-foreground">
             {item.credits.map((credit) => (
               <li key={credit} className="flex gap-2">
-                <span className="text-foreground/40">•</span>
+                <span className="text-muted-foreground">•</span>
                 <span>{credit}</span>
               </li>
             ))}
@@ -121,8 +121,17 @@ export default function DescriptionContent({
 
       <div className="flex flex-col gap-3">
         <SectionLabel as="h2">Contact</SectionLabel>
-        <p className="text-sm leading-relaxed text-foreground/70">
-          {PANEL_INFO.contactNote}
+        <p className="text-sm leading-relaxed text-foreground">
+          Found a bug or issue?{" "}
+          <a
+            href={PANEL_INFO.issuesUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium underline underline-offset-4 hover:no-underline"
+          >
+            Open an issue
+          </a>{" "}
+          or send a note.
         </p>
         <div className="flex items-center gap-2">
           <Tooltip label={PANEL_INFO.contactEmail} align="start">
@@ -141,7 +150,7 @@ export default function DescriptionContent({
               target="_blank"
               rel="noreferrer"
               aria-label="X - @qubydev"
-              className="inline-flex size-8 items-center justify-center text-foreground/60 transition-colors hover:text-foreground"
+              className="inline-flex size-8 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
             >
               <XIcon className="size-5" />
             </a>
@@ -151,7 +160,7 @@ export default function DescriptionContent({
 
       <div className="flex flex-col gap-3">
         <SectionLabel as="h2">License &amp; Usage</SectionLabel>
-        <ul className="flex flex-col gap-2 text-sm leading-relaxed text-foreground/70">
+        <ul className="flex flex-col gap-2 text-sm leading-relaxed text-foreground">
           {PANEL_INFO.license.map((line) => (
             <li key={line} className="flex gap-2">
               <span className="text-foreground/40">•</span>
