@@ -10,7 +10,6 @@ import {
 import { cn } from "@/lib/utils";
 import { LOGOS } from "../logos";
 import CopyButton from "../CopyButton";
-import Tooltip from "../Tooltip";
 
 export default function InstallCommand({ item }: { item: ComponentItem }) {
   const [pm, setPm] = useState<PackageManager>("npm");
@@ -47,9 +46,7 @@ export default function InstallCommand({ item }: { item: ComponentItem }) {
         <code className="flex-1 truncate text-xs text-foreground">
           {command}
         </code>
-        <Tooltip label="Copy command" align="end">
-          <CopyButton value={command} title="" />
-        </Tooltip>
+        <CopyButton value={command} title="" />
       </div>
     </div>
   );

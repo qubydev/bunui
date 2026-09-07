@@ -24,7 +24,7 @@ export default function PanelCode({
 
   return (
     <div
-      className={cn("flex overflow-hidden", className)}
+      className={cn("flex overflow-hidden bg-popover", className)}
     >
       <Highlight theme={theme} code={code} language={language}>
         {({ className: prismClassName, style, tokens, getLineProps, getTokenProps }) => (

@@ -48,12 +48,12 @@ export default function SidebarShell({
   }, [item?.registry, mode]);
 
   return (
-    <div className="relative h-full min-h-0 overflow-hidden bg-card">
+    <div className="relative h-full min-h-0 overflow-hidden bg-background">
       <main className="no-scrollbar h-full min-h-0 overflow-y-auto pb-24 pt-24">
         {mode === "preview" ? (
-          <div className="mx-auto flex w-full max-w-5xl flex-col">
-            <div className="h-[420px] w-full overflow-hidden">{children}</div>
-            <section className="p-4 sm:px-8 sm:py-6">
+          <div className="mx-auto flex w-full max-w-5xl flex-col px-4 sm:px-8">
+            <div className="h-72 w-full overflow-hidden sm:h-80 lg:h-[360px]">{children}</div>
+            <section className="py-6">
               <DescriptionContent
                 item={item}
                 showSourceHint={false}
@@ -62,10 +62,10 @@ export default function SidebarShell({
             </section>
           </div>
         ) : (
-          <div className="mx-auto flex min-h-full w-full max-w-5xl items-start">
+          <div className="mx-auto flex min-h-full w-full max-w-5xl items-start px-4 sm:px-8">
             {item?.registry ? (
-              <div className="w-full overflow-hidden rounded-xl border border-border bg-transparent">
-                <div className="flex h-11 items-center justify-between border-b border-border px-4">
+              <div className="w-full overflow-hidden rounded-xl border border-border bg-popover">
+                <div className="flex h-11 items-center justify-between border-b border-border bg-popover px-4">
                   <span className="font-mono text-xs text-muted-foreground">
                     {item.registry}.tsx
                   </span>
@@ -79,8 +79,7 @@ export default function SidebarShell({
                 <PanelCode
                   code={source ?? SOURCE_LOADING}
                   showLineNumbers
-                  className="w-full rounded-none bg-transparent"
-                  contentClassName="p-0"
+                  className="w-full rounded-none"
                 />
               </div>
             ) : (

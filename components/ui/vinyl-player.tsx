@@ -4,7 +4,6 @@ import {
   useId,
   useState,
   type ComponentProps,
-  type ReactNode,
   type SVGProps,
 } from "react";
 import { cn } from "@/lib/utils";
@@ -220,9 +219,7 @@ export function VinylDisk({
   );
 }
 
-export type VinylPlayerProps = Omit<ComponentProps<"div">, "title"> & {
-  title: ReactNode;
-  artist?: ReactNode;
+export type VinylPlayerProps = ComponentProps<"div"> & {
   playing?: boolean;
   defaultPlaying?: boolean;
   onPlayingChange?: (playing: boolean) => void;
@@ -246,8 +243,6 @@ function PlayPauseIcon({ playing }: { playing: boolean }) {
 }
 
 export function VinylPlayer({
-  title,
-  artist,
   playing,
   defaultPlaying = false,
   onPlayingChange,
@@ -282,14 +277,7 @@ export function VinylPlayer({
         <VinylDisk isPlaying={isPlaying} spinDuration={spinDuration} />
       </div>
 
-      <div className="mt-3 flex min-w-0 items-center gap-4">
-        <div data-slot="vinyl-player-details" className="min-w-0 flex-1">
-          <div className="truncate text-sm font-semibold">{title}</div>
-          {artist ? (
-            <div className="mt-0.5 truncate text-xs text-muted-foreground">{artist}</div>
-          ) : null}
-        </div>
-
+      <div className="mt-3 flex justify-end">
         <button
           data-slot="vinyl-player-control"
           type="button"

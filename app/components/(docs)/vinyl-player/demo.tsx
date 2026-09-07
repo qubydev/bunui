@@ -15,7 +15,7 @@ export default function VinylPlayerDemo() {
         aria-pressed={isPlaying}
         className="cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
-        <VinylDisk isPlaying={isPlaying} className="w-24 sm:w-28" />
+        <VinylDisk isPlaying={isPlaying} className="w-24" />
       </button>
     </div>
   );

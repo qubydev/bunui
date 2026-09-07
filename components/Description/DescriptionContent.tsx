@@ -56,8 +56,7 @@ export default function DescriptionContent({
           <SectionLabel as="h2">How to use</SectionLabel>
           <PanelCode
             code={item.usage}
-            className="rounded-lg bg-transparent"
-            contentClassName="p-0"
+            className="rounded-lg"
           />
         </div>
       )}

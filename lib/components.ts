@@ -90,17 +90,6 @@ export const components: ComponentItem[] = [
       "Press play to drop the arm onto the record and start the spin. Press again to stop the record and park the arm.",
     props: [
       {
-        name: "title",
-        type: "ReactNode",
-        required: true,
-        description: "Track title shown below the record.",
-      },
-      {
-        name: "artist",
-        type: "ReactNode",
-        description: "Optional artist or secondary track text.",
-      },
-      {
         name: "playing",
         type: "boolean",
         description:
@@ -138,7 +127,7 @@ export const components: ComponentItem[] = [
     usage: `import { VinylPlayer } from "@/components/ui/vinyl-player"
 
 export function Demo() {
-  return <VinylPlayer title="Afterglow" artist="Bun Radio" />
+  return <VinylPlayer />
 }`,
   },
 ];
