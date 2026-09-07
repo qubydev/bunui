@@ -44,23 +44,21 @@ export default function DescriptionContent({
         </p>
       </div>
 
-      {item?.dependencies && item.dependencies.length > 0 && (
+      {item?.registry && (
         <div className="flex flex-col gap-3">
-          <SectionLabel as="h2">Dependencies</SectionLabel>
-          <div className="flex flex-wrap gap-2">
-            {item.dependencies.map((dep) => (
-              <DependencyPill key={dep.name} name={dep.name} icon={dep.icon} />
-            ))}
-          </div>
+          <SectionLabel as="h2">Installation</SectionLabel>
+          <InstallCommand item={item} />
         </div>
       )}
 
-      {item?.interaction && (
+      {item?.usage && (
         <div className="flex flex-col gap-3">
-          <SectionLabel as="h2">Interaction Type</SectionLabel>
-          <p className="text-sm leading-relaxed text-foreground">
-            {item.interaction}
-          </p>
+          <SectionLabel as="h2">How to use</SectionLabel>
+          <PanelCode
+            code={item.usage}
+            className="rounded-lg bg-transparent"
+            contentClassName="p-0"
+          />
         </div>
       )}
 
@@ -74,17 +72,14 @@ export default function DescriptionContent({
         </div>
       )}
 
-      {item?.registry && (
+      {item?.dependencies && item.dependencies.length > 0 && (
         <div className="flex flex-col gap-3">
-          <SectionLabel as="h2">Installation</SectionLabel>
-          <InstallCommand item={item} />
-        </div>
-      )}
-
-      {item?.usage && (
-        <div className="flex flex-col gap-3">
-          <SectionLabel as="h2">How to use</SectionLabel>
-          <PanelCode code={item.usage} className="rounded-lg p-4" />
+          <SectionLabel as="h2">Dependencies</SectionLabel>
+          <div className="flex flex-wrap gap-2">
+            {item.dependencies.map((dep) => (
+              <DependencyPill key={dep.name} name={dep.name} icon={dep.icon} />
+            ))}
+          </div>
         </div>
       )}
 
@@ -96,13 +91,6 @@ export default function DescriptionContent({
           </p>
         </div>
       )}
-
-      <div className="flex flex-col gap-3">
-        <SectionLabel as="h2">Keep in mind</SectionLabel>
-        <p className="text-sm leading-relaxed text-foreground">
-          {PANEL_INFO.keepInMind}
-        </p>
-      </div>
 
       {item?.credits && item.credits.length > 0 && (
         <div className="flex flex-col gap-3">

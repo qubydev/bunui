@@ -43,7 +43,7 @@ export default function InstallCommand({ item }: { item: ComponentItem }) {
         })}
       </div>
 
-      <div className="flex items-center gap-2 rounded-lg bg-muted p-2 pl-3">
+      <div className="flex items-center gap-2 rounded-lg bg-popover p-2 pl-3">
         <code className="flex-1 truncate text-xs text-foreground">
           {command}
         </code>

@@ -2,7 +2,6 @@
 
 import { Highlight, themes } from "prism-react-renderer";
 import { useTheme } from "next-themes";
-import { useIsMobile } from "@/lib/use-media-query";
 import { cn } from "@/lib/utils";
 
 type PanelCodeProps = {
@@ -10,6 +9,7 @@ type PanelCodeProps = {
   language?: string;
   showLineNumbers?: boolean;
   className?: string;
+  contentClassName?: string;
 };
 
 export default function PanelCode({
@@ -17,19 +17,14 @@ export default function PanelCode({
   language = "tsx",
   showLineNumbers = false,
   className,
+  contentClassName,
 }: PanelCodeProps) {
-  const isMobile = useIsMobile();
   const { resolvedTheme } = useTheme();
   const theme = resolvedTheme === "dark" ? themes.oneDark : themes.github;
 
   return (
     <div
-      className={cn(
-        "flex overflow-hidden",
-        !isMobile && "rounded-xl bg-muted p-3",
-        className,
-        isMobile && "p-0",
-      )}
+      className={cn("flex overflow-hidden", className)}
     >
       <Highlight theme={theme} code={code} language={language}>
         {({ className: prismClassName, style, tokens, getLineProps, getTokenProps }) => (
@@ -37,10 +32,10 @@ export default function PanelCode({
             data-language={language}
             className={cn(
               prismClassName,
-              "min-h-0 w-full flex-1 overflow-auto rounded-lg p-4 font-mono text-xs leading-6",
-              isMobile && "rounded-xl border border-border",
+              "min-h-0 w-full flex-1 overflow-auto p-4 font-mono text-xs leading-6",
+              contentClassName,
             )}
-            style={{ ...style, margin: 0, background: "var(--background)" }}
+            style={{ ...style, margin: 0, background: "transparent" }}
           >
             {tokens.map((line, index) => (
               <div key={index} {...getLineProps({ line })}>

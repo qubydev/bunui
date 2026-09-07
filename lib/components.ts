@@ -82,6 +82,7 @@ export const components: ComponentItem[] = [
     isNew: true,
     featured: true,
     registry: "vinyl-player",
+    preview: "/recordings/vinyl-player-preview.mp4",
     description:
       "A compact music player built around a detailed vinyl record and tonearm.",
     source: `${REGISTRY_HOMEPAGE}/blob/main/components/ui/vinyl-player.tsx`,

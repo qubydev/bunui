@@ -53,7 +53,7 @@ export default function SidebarShell({
         {mode === "preview" ? (
           <div className="mx-auto flex w-full max-w-5xl flex-col">
             <div className="h-[420px] w-full overflow-hidden">{children}</div>
-            <section className="px-5 pb-28 pt-4 sm:px-8 sm:pb-32 sm:pt-6">
+            <section className="p-4 sm:px-8 sm:py-6">
               <DescriptionContent
                 item={item}
                 showSourceHint={false}
@@ -62,9 +62,9 @@ export default function SidebarShell({
             </section>
           </div>
         ) : (
-          <div className="mx-auto flex min-h-full w-full max-w-5xl items-start px-5 pb-28 pt-4 sm:px-8 sm:pb-32 sm:pt-6">
+          <div className="mx-auto flex min-h-full w-full max-w-5xl items-start">
             {item?.registry ? (
-              <div className="w-full overflow-hidden rounded-xl border border-border bg-background">
+              <div className="w-full overflow-hidden rounded-xl border border-border bg-transparent">
                 <div className="flex h-11 items-center justify-between border-b border-border px-4">
                   <span className="font-mono text-xs text-muted-foreground">
                     {item.registry}.tsx
@@ -79,7 +79,8 @@ export default function SidebarShell({
                 <PanelCode
                   code={source ?? SOURCE_LOADING}
                   showLineNumbers
-                  className="w-full rounded-none bg-transparent p-0"
+                  className="w-full rounded-none bg-transparent"
+                  contentClassName="p-0"
                 />
               </div>
             ) : (

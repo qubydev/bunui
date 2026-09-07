@@ -19,7 +19,7 @@ export default function PropsTable({ props }: PropsTableProps) {
       {["Prop", "Type", "Description"].map((label) => (
         <div
           key={label}
-          className="border-b border-border/50 px-1 pb-2.5 pr-4 text-xs font-medium uppercase tracking-wider text-foreground/45"
+          className="border-b border-border/50 px-1 pb-2.5 pr-4 text-xs font-medium uppercase tracking-wider text-muted-foreground"
         >
           {label}
         </div>
@@ -28,7 +28,7 @@ export default function PropsTable({ props }: PropsTableProps) {
       {props.map((prop) => (
         <Fragment key={prop.name}>
           <div className="border-b border-border/40 py-4 pl-1 pr-4">
-            <code className="inline-flex items-center whitespace-nowrap rounded-md bg-muted px-2 py-1 font-mono text-xs text-foreground/75">
+            <code className="inline-flex items-center whitespace-nowrap rounded-md bg-muted px-2 py-1 font-mono text-xs text-foreground">
               {prop.name}
               {prop.required && <span className="text-primary">*</span>}
             </code>
@@ -38,7 +38,7 @@ export default function PropsTable({ props }: PropsTableProps) {
             {typeLines(prop).map((value) => (
               <code
                 key={value}
-                className="font-mono text-xs leading-relaxed text-foreground/55"
+                className="font-mono text-xs leading-relaxed text-muted-foreground"
               >
                 {value}
               </code>
@@ -46,7 +46,7 @@ export default function PropsTable({ props }: PropsTableProps) {
           </div>
 
           <div className="border-b border-border/40 px-1 py-4">
-            <p className="pt-0.5 text-sm leading-relaxed text-foreground/90">
+            <p className="pt-0.5 text-sm leading-relaxed text-foreground">
               {prop.description}
             </p>
           </div>

@@ -34,7 +34,7 @@ export default function ComponentsIndexPage() {
 
             <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {components.map((item) => (
-                <ComponentCard key={item.href} item={item} />
+                <ComponentCard key={item.href} item={item} autoPlay />
               ))}
             </div>
           </section>
