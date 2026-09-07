@@ -10,10 +10,16 @@ import {
 import gsap from "gsap";
 import { cn } from "@/lib/utils";
 
+export type JellyBunMood = "happy" | "love" | "sleepy" | "angry";
+
 type JellyBunProps = {
   className?: string;
   size?: number;
   variant?: "default" | "primary";
+  mood?: JellyBunMood;
+  interactive?: boolean;
+  followCursor?: boolean;
+  pressable?: boolean;
 };
 
 const bodyStyle = {
@@ -56,7 +62,13 @@ export function JellyBun({
   className,
   size = 160,
   variant = "default",
+  mood = "happy",
+  interactive = true,
+  followCursor,
+  pressable,
 }: JellyBunProps) {
+  const shouldFollowCursor = followCursor ?? interactive;
+  const shouldPress = pressable ?? interactive;
   const shadowId = useId().replace(/:/g, "");
   const clipId = `${shadowId}-body-clip`;
   const blurId = `${shadowId}-inner-shadow-blur`;
@@ -243,9 +255,12 @@ export function JellyBun({
       );
     };
 
-    if (!reduceMotion) {
+    if (interactive && !reduceMotion) {
       scheduleBlink();
       scheduleLook();
+    }
+
+    if (shouldFollowCursor && !reduceMotion) {
       window.addEventListener("pointermove", followPointer);
     }
 
@@ -280,7 +295,77 @@ export function JellyBun({
 
       window.removeEventListener("pointermove", followPointer);
     };
-  }, []);
+  }, [interactive, shouldFollowCursor]);
+
+  useEffect(() => {
+    if (interactive) return;
+
+    const eyes = eyesRef.current;
+    const angryMark = angryMarkRef.current;
+    const blush = blushRef.current;
+    const leftEye = leftEyeRef.current;
+    const rightEye = rightEyeRef.current;
+
+    if (!eyes || !angryMark || !blush || !leftEye || !rightEye) return;
+
+    gsap.killTweensOf([eyes, angryMark, blush, leftEye, rightEye]);
+    gsap.set(eyes, { x: 0, y: 0, scale: 1 });
+    gsap.set([leftEye, rightEye], {
+      attr: eyeData.left,
+      rotate: 0,
+      scaleX: 1,
+      scaleY: 1,
+      transformOrigin: "50% 50%",
+    });
+    gsap.set(angryMark, { opacity: 0, scale: 0.72 });
+    gsap.set(blush, { opacity: 0, scale: 0.9 });
+
+    const common = {
+      duration: 0.48,
+      ease: "back.out(1.8)",
+      overwrite: "auto" as const,
+    };
+
+    if (mood === "happy") {
+      gsap.to([leftEye, rightEye], {
+        ...common,
+        scaleX: 1.05,
+        scaleY: 0.72,
+        y: -4,
+      });
+    }
+
+    if (mood === "love") {
+      gsap.to([leftEye, rightEye], {
+        ...common,
+        scaleX: 1.08,
+        scaleY: 0.36,
+        y: 4,
+        rotate: (index) => (index === 0 ? -8 : 8),
+      });
+      gsap.to(blush, { duration: 0.35, ease: "power2.out", opacity: 1, scale: 1 });
+    }
+
+    if (mood === "sleepy") {
+      gsap.to([leftEye, rightEye], {
+        ...common,
+        scaleX: 1.1,
+        scaleY: 0.14,
+        y: 10,
+      });
+    }
+
+    if (mood === "angry") {
+      gsap.to([leftEye, rightEye], {
+        ...common,
+        scaleX: 1.24,
+        scaleY: 0.3,
+        y: 1,
+        rotate: (index) => (index === 0 ? 13 : -13),
+      });
+      gsap.to(angryMark, { duration: 0.35, ease: "back.out(2)", opacity: 1, scale: 1 });
+    }
+  }, [interactive, mood]);
 
   const clearBlinking = () => {
     if (blinkTimerRef.current) clearTimeout(blinkTimerRef.current);
@@ -600,6 +685,54 @@ export function JellyBun({
     });
   };
 
+  const pressMascotOnly = () => {
+    const bun = bunRef.current;
+    if (!bun) return;
+
+    isPressedRef.current = true;
+    activeTweenRef.current?.kill();
+    activeTweenRef.current = gsap.to(bun, {
+      duration: 0.18,
+      ease: "power2.out",
+      scaleX: 1.08,
+      scaleY: 0.9,
+    });
+  };
+
+  const releaseMascotOnly = () => {
+    const bun = bunRef.current;
+    if (!bun || !isPressedRef.current) return;
+
+    isPressedRef.current = false;
+    activeTweenRef.current?.kill();
+    activeTweenRef.current = gsap
+      .timeline({ onComplete: () => (activeTweenRef.current = null) })
+      .to(bun, {
+        duration: 0.18,
+        ease: "power2.out",
+        scaleX: 0.94,
+        scaleY: 1.08,
+      })
+      .to(bun, {
+        duration: 0.16,
+        ease: "power2.out",
+        scaleX: 1.045,
+        scaleY: 0.97,
+      })
+      .to(bun, {
+        duration: 0.14,
+        ease: "power2.out",
+        scaleX: 0.985,
+        scaleY: 1.02,
+      })
+      .to(bun, {
+        duration: 0.2,
+        ease: "elastic.out(1, 0.5)",
+        scaleX: 1,
+        scaleY: 1,
+      });
+  };
+
   const release = () => {
     const bun = bunRef.current;
     const leftEye = leftEyeRef.current;
@@ -660,7 +793,8 @@ export function JellyBun({
       ref={bunRef}
       aria-label="Animated Bunui mascot"
       className={cn(
-        "jelly-bun-mascot group cursor-grab touch-none select-none overflow-visible active:cursor-grabbing",
+        "jelly-bun-mascot group touch-none select-none overflow-visible",
+        shouldPress ? "cursor-grab active:cursor-grabbing" : "cursor-default",
         className,
       )}
       fill="none"
@@ -669,38 +803,72 @@ export function JellyBun({
       viewBox="0 0 612 612"
       width={size}
       xmlns="http://www.w3.org/2000/svg"
-      onLostPointerCapture={() => {
-        if (isPressedRef.current) release();
-      }}
-      onPointerCancel={release}
-      onPointerDown={(event) => {
-        event.preventDefault();
-        event.currentTarget.setPointerCapture(event.pointerId);
-        trackTapRate();
-        resetPatGesture(event.clientX);
-        press();
-      }}
-      onPointerEnter={() => {
-        isHoveringRef.current = true;
-        stopLook();
-        enterHover();
-      }}
-      onPointerLeave={() => {
-        isHoveringRef.current = false;
-        patGestureRef.current = null;
-        leaveHover();
-        resumeLook();
-      }}
-      onPointerMove={trackPat}
-      onPointerUp={(event) => {
-        event.preventDefault();
-        patGestureRef.current = null;
-        release();
+      onLostPointerCapture={
+        shouldPress
+          ? () => {
+              if (!isPressedRef.current) return;
+              if (interactive) release();
+              else releaseMascotOnly();
+            }
+          : undefined
+      }
+      onPointerCancel={
+        shouldPress ? (interactive ? release : releaseMascotOnly) : undefined
+      }
+      onPointerDown={
+        shouldPress
+          ? (event) => {
+              event.preventDefault();
+              event.currentTarget.setPointerCapture(event.pointerId);
 
-        if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-          event.currentTarget.releasePointerCapture(event.pointerId);
-        }
-      }}
+              if (interactive) {
+                trackTapRate();
+                resetPatGesture(event.clientX);
+                press();
+              } else {
+                pressMascotOnly();
+              }
+            }
+          : undefined
+      }
+      onPointerEnter={
+        interactive
+          ? () => {
+              isHoveringRef.current = true;
+              stopLook();
+              enterHover();
+            }
+          : undefined
+      }
+      onPointerLeave={
+        interactive
+          ? () => {
+              isHoveringRef.current = false;
+              patGestureRef.current = null;
+              leaveHover();
+              resumeLook();
+            }
+          : undefined
+      }
+      onPointerMove={interactive ? trackPat : undefined}
+      onPointerUp={
+        shouldPress
+          ? (event) => {
+              event.preventDefault();
+
+              if (interactive) {
+                patGestureRef.current = null;
+                release();
+              } else {
+                releaseMascotOnly();
+              }
+
+              if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+                event.currentTarget.releasePointerCapture(event.pointerId);
+              }
+            }
+          : undefined
+      }
     >
       <defs>
         <clipPath id={clipId}>
@@ -723,7 +891,10 @@ export function JellyBun({
       </defs>
 
       <g
-        className="transition-transform duration-300 ease-in-out group-hover:scale-y-[1.2]"
+        className={cn(
+          "transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+          (interactive || shouldFollowCursor) && "group-hover:scale-y-[1.2]",
+        )}
         style={bodyStyle}
       >
         <path d={bunBodyPath} fill={bodyFill} />
@@ -795,6 +966,14 @@ export function JellyBun({
           rx="27.295"
         />
       </g>
+
+
+      {!interactive && mood === "sleepy" && (
+        <g fill={eyeFill} opacity="0.75">
+          <text x="430" y="198" fontFamily="sans-serif" fontSize="66" fontWeight="700">z</text>
+          <text x="486" y="142" fontFamily="sans-serif" fontSize="46" fontWeight="700">z</text>
+        </g>
+      )}
     </svg>
   );
 }

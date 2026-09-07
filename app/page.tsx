@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { JellyBun } from "@/components/JellyBun";
 import CopyButton from "@/components/CopyButton";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import { REGISTRY_REPO } from "@/lib/components";
 
 export const metadata: Metadata = {
@@ -49,6 +50,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        <TestimonialsSection />
       </main>
   );
 }

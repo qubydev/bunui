@@ -5,6 +5,11 @@ import { usePathname } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 import { Star } from "lucide-react";
 import { GithubLogo } from "@/components/logos";
+import {
+  formatStars,
+  getCachedGithubStars,
+  getGithubStars,
+} from "@/lib/github-stars-client";
 import { cn } from "@/lib/utils";
 
 const GITHUB_URL = "https://github.com/qubydev/bunui";
@@ -15,14 +20,6 @@ const LINKS = [
   { label: "Home", href: "/" },
   { label: "Components", href: "/components" },
 ];
-
-let cachedStars: number | null = null;
-let starsRequest: Promise<number | null> | null = null;
-
-function formatStars(stars: number) {
-  if (stars < 1000) return String(stars);
-  return `${(stars / 1000).toFixed(stars < 10000 ? 1 : 0)}k`;
-}
 
 function TopbarBunLogo({ className }: { className?: string }) {
   const shadowId = useId().replace(/:/g, "");
@@ -73,20 +70,12 @@ function TopbarBunLogo({ className }: { className?: string }) {
 
 export default function GooeyNavbar({ className }: { className?: string }) {
   const pathname = usePathname();
-  const [stars, setStars] = useState<number | null>(cachedStars);
+  const [stars, setStars] = useState<number | null>(getCachedGithubStars());
 
   useEffect(() => {
     let cancelled = false;
 
-    starsRequest ??= fetch("/api/github-stars", { cache: "force-cache" })
-      .then((response) => (response.ok ? response.json() : null))
-      .then((data) => {
-        cachedStars = typeof data?.stars === "number" ? data.stars : null;
-        return cachedStars;
-      })
-      .catch(() => null);
-
-    starsRequest.then((value) => {
+    getGithubStars().then((value) => {
       if (!cancelled) setStars(value);
     });
 
@@ -102,7 +91,7 @@ export default function GooeyNavbar({ className }: { className?: string }) {
         className,
       )}
     >
-      <nav className="pointer-events-auto mx-auto flex min-h-13 w-full max-w-3xl items-center justify-between gap-2 overflow-hidden rounded-full border border-border bg-popover/92 py-2 pl-3 pr-2 text-foreground backdrop-blur-xl sm:min-h-14 sm:pl-4">
+      <nav className="pointer-events-auto mx-auto flex min-h-13 w-full max-w-navbar items-center justify-between gap-2 overflow-hidden rounded-full border border-border bg-popover/92 py-2 pl-3 pr-2 text-foreground backdrop-blur-xl transition-[max-width] duration-300 ease-out hover:max-w-navbar-hover motion-reduce:transition-none sm:min-h-14 sm:pl-4">
         <Link
           href="/"
           aria-label="Bun UI home"
