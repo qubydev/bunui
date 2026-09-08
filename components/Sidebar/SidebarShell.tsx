@@ -62,12 +62,12 @@ function SidebarShellContent({
     <div className="relative h-full min-h-0 overflow-hidden bg-background">
       <main
         className={cn(
-          "no-scrollbar h-full min-h-0 overflow-y-auto",
+          "no-scrollbar h-full min-h-0 min-w-0 overflow-x-hidden overflow-y-auto",
           pagePaddingClassName,
         )}
       >
         {mode === "preview" ? (
-          <div className={cn(pageContentClassName, "flex flex-col")}>
+          <div className={cn(pageContentClassName, "flex min-w-0 flex-col")}>
             <div className="h-72 w-full overflow-hidden sm:h-80 lg:h-[360px]">
               {children}
             </div>

@@ -84,7 +84,7 @@ export const components: ComponentItem[] = [
     registry: "vinyl-player",
     preview: "/recordings/vinyl-player-preview.mp4",
     description:
-      "A compact music player built around a detailed vinyl record and tonearm.",
+      "A vinyl-inspired audio player with tactile playback controls.",
     source: `${REGISTRY_HOMEPAGE}/blob/main/components/ui/vinyl-player.tsx`,
     interaction:
       "Press play to drop the arm onto the record and start the spin. Press again to stop the record and park the arm.",
@@ -137,6 +137,7 @@ export function Demo() {
     isNew: true,
     featured: true,
     registry: "streak-grid",
+    preview: "/recordings/streak-grid-preview.mp4",
     dependencies: [{ name: "tooltip" }],
     description:
       "A yearly activity grid for visualizing streaks and daily progress.",

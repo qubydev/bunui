@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "vinyl-player",
   "title": "Vinyl Player",
-  "description": "A compact music player built around a detailed vinyl record and tonearm.",
+  "description": "A vinyl-inspired audio player with tactile playback controls.",
   "registryDependencies": [
     "utils"
   ],

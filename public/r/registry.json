@@ -20,7 +20,7 @@
       "name": "vinyl-player",
       "type": "registry:ui",
       "title": "Vinyl Player",
-      "description": "A compact music player built around a detailed vinyl record and tonearm.",
+      "description": "A vinyl-inspired audio player with tactile playback controls.",
       "registryDependencies": ["utils"],
       "files": [
         {
