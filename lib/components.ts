@@ -130,6 +130,103 @@ export function Demo() {
   return <VinylPlayer />
 }`,
   },
+  {
+    name: "Streak grid",
+    href: "/components/streak-grid",
+    category: "display",
+    isNew: true,
+    featured: true,
+    registry: "streak-grid",
+    dependencies: [{ name: "tooltip" }],
+    description:
+      "A yearly activity grid for visualizing streaks and daily progress.",
+    source: `${REGISTRY_HOMEPAGE}/blob/main/components/ui/streak-grid.tsx`,
+    interaction:
+      "Hover or focus a day to inspect it in a tooltip. Click or tap a day to temporarily show its details in the summary for three seconds.",
+    props: [
+      {
+        name: "data",
+        type: "StreakGridDay[]",
+        required: true,
+        description: "Daily activity entries with a date, count, and optional label or explicit intensity level.",
+      },
+      {
+        name: "weekStartsOn",
+        type: "0 | 1",
+        default: "0",
+        options: ["0", "1"],
+        description: "Choose Sunday (0) or Monday (1) as the first day of the week.",
+      },
+      {
+        name: "itemLabel",
+        type: "string",
+        default: "\"activities\"",
+        description: "Text shown after the total count in the summary.",
+      },
+      {
+        name: "showLegend",
+        type: "boolean",
+        default: "true",
+        description: "Shows the Less-to-More intensity legend.",
+      },
+      {
+        name: "showSummary",
+        type: "boolean",
+        default: "true",
+        description: "Shows the total activity count beneath the grid.",
+      },
+      {
+        name: "showMonthLabels",
+        type: "boolean",
+        default: "true",
+        description: "Shows month labels above multi-week views.",
+      },
+      {
+        name: "cellSize",
+        type: "number",
+        default: "12",
+        description: "Cell size in pixels. Values are clamped between 8 and 28.",
+      },
+      {
+        name: "gap",
+        type: "number",
+        default: "3",
+        description: "Gap between cells in pixels. Values are clamped between 1 and 12.",
+      },
+      {
+        name: "formatTooltip",
+        type: "(day: StreakGridResolvedDay) => React.ReactNode",
+        description: "Optional custom tooltip renderer for pointer and keyboard users.",
+      },
+      {
+        name: "formatSelection",
+        type: "(day: StreakGridResolvedDay) => React.ReactNode",
+        description: "Optional custom summary content shown for three seconds after clicking or tapping a day.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Extra classes merged onto the component root.",
+      },
+    ],
+    usage: `import { StreakGrid } from "@/components/ui/streak-grid"
+
+const activity = [
+  { date: "2026-09-01", count: 2 },
+  { date: "2026-09-02", count: 6 },
+  { date: "2026-09-03", count: 0 },
+]
+
+export function Demo() {
+  return (
+    <StreakGrid
+      data={activity}
+      itemLabel="activities"
+      weekStartsOn={1}
+    />
+  )
+}`,
+  },
 ];
 
 export type PackageManager = "npm" | "pnpm" | "yarn" | "bun";

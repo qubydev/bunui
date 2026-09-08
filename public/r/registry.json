@@ -28,6 +28,19 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "streak-grid",
+      "type": "registry:ui",
+      "title": "Streak Grid",
+      "description": "A yearly activity grid for visualizing streaks and daily progress.",
+      "registryDependencies": ["utils", "tooltip"],
+      "files": [
+        {
+          "path": "components/ui/streak-grid.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
