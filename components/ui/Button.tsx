@@ -1,5 +1,9 @@
 import Link from "next/link";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  ReactNode,
+} from "react";
 import { cn } from "@/lib/utils";
 
 export type ButtonVariant =
@@ -11,20 +15,32 @@ export type ButtonVariant =
 
 export type ButtonSize = "sm" | "md" | "lg" | "icon";
 
-type ButtonProps = {
+type ButtonBaseProps = {
   children: ReactNode;
   className?: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
+};
+
+type ButtonAsLinkProps = ButtonBaseProps & {
   href?: string;
+} & Omit<
+    AnchorHTMLAttributes<HTMLAnchorElement>,
+    "className" | "children" | "href"
+  >;
+
+type ButtonAsButtonProps = ButtonBaseProps & {
+  href?: undefined;
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children">;
 
+type ButtonProps = ButtonAsLinkProps | ButtonAsButtonProps;
+
 const baseClassName =
-  "inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 rounded-full border text-sm font-semibold whitespace-nowrap transition-[background-color,border-color,color,box-shadow,opacity] duration-150 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-45 [&_svg]:shrink-0";
+  "inline-flex shrink-0 cursor-pointer select-none items-center justify-center gap-2 rounded-full border text-sm font-semibold whitespace-nowrap transition-[background-color,border-color,color,opacity] duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-45 [&_svg]:shrink-0";
 
 const variantClassNames: Record<ButtonVariant, string> = {
   primary:
-    "border-primary bg-primary text-primary-foreground shadow-lg shadow-primary/30 hover:border-primary/90 hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30",
+    "border-primary bg-primary text-primary-foreground shadow-primary-inset hover:border-primary/90 hover:bg-primary/80",
   secondary:
     "border-border bg-popover text-foreground shadow-sm hover:border-ring hover:bg-muted hover:shadow-md dark:bg-muted dark:hover:bg-popover/10",
   outline:
@@ -60,7 +76,7 @@ export function Button({
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} {...props}>
         {children}
       </Link>
     );

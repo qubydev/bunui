@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 import { Star } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 import { GithubLogo } from "@/components/logos";
 import {
   formatStars,
@@ -37,8 +38,17 @@ function TopbarBunLogo({ className }: { className?: string }) {
         <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
           <feOffset dy="4" in="SourceAlpha" result="offset" />
           <feGaussianBlur stdDeviation="4" in="offset" result="blur" />
-          <feComposite in="SourceAlpha" in2="blur" operator="out" result="inner" />
-          <feFlood floodColor="var(--popover)" floodOpacity="1" result="color" />
+          <feComposite
+            in="SourceAlpha"
+            in2="blur"
+            operator="out"
+            result="inner"
+          />
+          <feFlood
+            floodColor="var(--popover)"
+            floodOpacity="1"
+            result="color"
+          />
           <feComposite in="color" in2="inner" operator="in" result="shadow" />
           <feComposite in="shadow" in2="SourceGraphic" operator="over" />
         </filter>
@@ -104,7 +114,8 @@ export default function GooeyNavbar({ className }: { className?: string }) {
           {LINKS.map((link) => {
             const active =
               link.href === "/components"
-                ? pathname === "/components" || pathname.startsWith("/components/")
+                ? pathname === "/components" ||
+                  pathname.startsWith("/components/")
                 : pathname === link.href;
 
             return (
@@ -124,12 +135,13 @@ export default function GooeyNavbar({ className }: { className?: string }) {
           })}
         </div>
 
-        <a
+        <Button
           href={GITHUB_URL}
           target="_blank"
           rel="noreferrer"
           aria-label="GitHub repository"
-          className="group relative flex h-10 shrink-0 items-center justify-center gap-1.5 overflow-hidden rounded-full bg-primary px-3 text-sm font-medium leading-none tabular-nums text-primary-foreground shadow-primary-inset transition-colors hover:bg-primary/90 sm:px-4"
+          size="sm"
+          className="group h-10 gap-1.5 overflow-hidden px-3 font-medium leading-none tabular-nums sm:px-4"
         >
           <span
             className="relative flex size-4.5 shrink-0 items-center justify-center"
@@ -139,7 +151,7 @@ export default function GooeyNavbar({ className }: { className?: string }) {
             <Star className="absolute size-4.5 scale-75 fill-primary-foreground text-primary-foreground opacity-0 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100" />
           </span>
           {stars != null && <span>{formatStars(stars)}</span>}
-        </a>
+        </Button>
       </nav>
     </header>
   );

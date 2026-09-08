@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Star } from "lucide-react";
-import { JellyBun, type JellyBunMood } from "@/components/JellyBun";
+import { Button } from "@/components/ui/Button";
 import { GithubLogo, XLogo } from "@/components/logos";
 import { REGISTRY_HOMEPAGE } from "@/lib/components";
 import {
@@ -13,13 +14,32 @@ import {
 } from "@/lib/github-stars-client";
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const cardSpring = {
-  type: "spring" as const,
-  stiffness: 170,
-  damping: 23,
-  mass: 0.78,
+const darkCardSurface = "bg-foreground text-background shadow-sm";
+const tweetCardVariants = {
+  initial: { opacity: 0, y: 12, filter: "blur(8px)" },
+  animate: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.38,
+      ease,
+      staggerChildren: 0.05,
+      delayChildren: 0.04,
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -10,
+    filter: "blur(8px)",
+    transition: { duration: 0.24, ease },
+  },
 };
-
+const tweetItemVariants = {
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.32, ease } },
+  exit: { opacity: 0, y: -6, transition: { duration: 0.18, ease } },
+};
 const testimonials = [
   {
     name: "Giorgio",
@@ -59,61 +79,21 @@ function HoverCard({
   className: string;
 }) {
   return (
-    <motion.div className={`relative ${className}`}>
-      {children}
-    </motion.div>
+    <motion.div className={`relative ${className}`}>{children}</motion.div>
   );
 }
 
-const bunMoods: { id: JellyBunMood; label: string }[] = [
-  { id: "happy", label: "Happy" },
-  { id: "love", label: "Loved" },
-  { id: "sleepy", label: "Sleepy" },
-  { id: "angry", label: "Grumpy" },
-];
-
-function BunPlayCard() {
-  const [mood, setMood] = useState<JellyBunMood>("happy");
-
+function CoverImageCard() {
   return (
-    <HoverCard className="flex min-h-[340px] min-w-0 flex-col overflow-hidden rounded-2xl bg-card/75 p-4 sm:min-h-[420px] sm:p-6 md:col-span-7 md:row-span-2">
-      <div className="grid flex-1 place-items-center">
-        <JellyBun
-          variant="primary"
-          mood={mood}
-          interactive={false}
-          followCursor
-          pressable
-          className="size-44 sm:size-60 md:size-64"
-        />
-      </div>
-
-      <div className="mx-auto grid w-full max-w-xs grid-cols-2 gap-1 rounded-2xl bg-background/70 p-1 sm:flex sm:w-fit sm:max-w-none sm:rounded-full">
-        {bunMoods.map((item) => {
-          const active = mood === item.id;
-
-          return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => setMood(item.id)}
-              aria-pressed={active}
-              className="relative isolate rounded-full px-3 py-2 text-xs font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-4"
-            >
-              {active && (
-                <motion.span
-                  layoutId="bun-mood-active"
-                  transition={cardSpring}
-                  className="absolute inset-0 -z-10 rounded-full bg-primary"
-                />
-              )}
-              <span className={active ? "text-primary-foreground" : "text-muted-foreground"}>
-                {item.label}
-              </span>
-            </button>
-          );
-        })}
-      </div>
+    <HoverCard className="group relative min-h-[340px] min-w-0 overflow-hidden rounded-2xl bg-card/75 shadow-sm ring-1 ring-foreground/[0.03] sm:min-h-[420px] md:col-span-7 md:row-span-2">
+      <Image
+        src="/cover_image1.png"
+        alt="Bun UI cover preview"
+        fill
+        sizes="(min-width: 768px) 58vw, 100vw"
+        className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.025]"
+        priority
+      />
     </HoverCard>
   );
 }
@@ -123,16 +103,18 @@ function NewsletterCard() {
   const [subscribed, setSubscribed] = useState(false);
 
   return (
-    <HoverCard className="flex min-h-[202px] min-w-0 flex-col justify-between rounded-2xl bg-card/75 p-4 sm:p-6 md:col-span-5">
+    <HoverCard className="flex min-h-[202px] min-w-0 flex-col justify-between rounded-2xl bg-card/75 p-4 shadow-sm ring-1 ring-foreground/[0.03] sm:p-6 md:col-span-5">
       <div>
-        <p className="font-runde text-2xl font-semibold tracking-tight sm:text-3xl">Get the good stuff.</p>
+        <p className="font-runde text-2xl font-semibold tracking-tight sm:text-3xl">
+          Get the good stuff.
+        </p>
         <p className="mt-1 max-w-sm text-sm leading-relaxed text-muted-foreground">
           New components, tiny experiments, and Bun UI updates — occasionally.
         </p>
       </div>
 
       <form
-        className="mt-5 flex flex-col gap-2 sm:flex-row"
+        className="mt-5 flex flex-col gap-2 rounded-[1.75rem] bg-background p-1.5 ring-1 ring-border/80 sm:flex-row sm:items-center"
         onSubmit={(event) => {
           event.preventDefault();
           if (!email.trim()) return;
@@ -148,14 +130,11 @@ function NewsletterCard() {
           }}
           placeholder="you@example.com"
           aria-label="Email address"
-          className="min-w-0 flex-1 rounded-full bg-background px-4 py-2.5 text-sm outline-none ring-1 ring-border transition focus:ring-2 focus:ring-ring"
+          className="min-w-0 flex-1 rounded-full bg-transparent px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground/75 sm:px-4"
         />
-        <button
-          type="submit"
-          className="w-full shrink-0 rounded-full bg-foreground px-4 py-2.5 text-sm font-semibold text-background transition-opacity hover:opacity-85 sm:w-auto"
-        >
+        <Button type="submit" size="sm" className="h-10 w-full px-5 sm:w-auto">
           {subscribed ? "Subscribed" : "Subscribe"}
-        </button>
+        </Button>
       </form>
     </HoverCard>
   );
@@ -176,64 +155,67 @@ function RotatingTestimonialCard() {
 
   return (
     <motion.figure
-      className="relative flex min-h-[202px] min-w-0 flex-col rounded-2xl bg-foreground p-4 text-background sm:p-6 md:col-span-5"
+      className={`relative flex min-h-[202px] min-w-0 flex-col rounded-2xl p-4 sm:p-6 md:col-span-5 ${darkCardSurface}`}
     >
-      <div className="flex min-w-0 items-start justify-between gap-3">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.a
-            key={testimonial.handle}
-            href={testimonial.url.replace(/\/status\/.*/, "")}
-            target="_blank"
-            rel="noreferrer"
-            initial={{ opacity: 0, y: 6, filter: "blur(4px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -6, filter: "blur(4px)" }}
-            transition={{ duration: 0.32, ease }}
-            className="group/profile min-w-0"
-          >
-            <motion.img
-              src={testimonial.avatarUrl}
-              alt={`${testimonial.name} avatar`}
-              className="size-9 rounded-full bg-white object-cover"
-            />
-            <div className="mt-2 min-w-0 text-xs leading-tight">
-              <div className="truncate font-semibold group-hover/profile:underline">
-                {testimonial.name}
-              </div>
-              <div className="mt-0.5 truncate text-background/50">
-                {testimonial.handle}
-              </div>
-            </div>
-          </motion.a>
-        </AnimatePresence>
-
-        <div aria-hidden="true" className="text-background/60">
-          <XLogo className="size-5" />
-        </div>
-      </div>
-
-      <div className="relative mt-5 flex flex-1 items-center">
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={testimonial.handle}
-            initial={{ opacity: 0, y: 6, filter: "blur(4px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -6, filter: "blur(4px)" }}
-            transition={{ duration: 0.32, ease }}
-            className="origin-center"
-          >
-            <blockquote
-              cite={testimonial.url}
-              className="line-clamp-2 max-w-[34ch] font-runde text-base font-medium leading-relaxed sm:text-lg"
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={testimonial.handle}
+          variants={tweetCardVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          className="flex min-h-0 flex-1 flex-col"
+        >
+          <div className="flex min-w-0 items-start justify-between gap-3">
+            <motion.a
+              href={testimonial.url.replace(/\/status\/.*/, "")}
+              target="_blank"
+              rel="noreferrer"
+              variants={tweetItemVariants}
+              className="group/profile min-w-0"
             >
-              “{testimonial.text}”
-            </blockquote>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+              <motion.img
+                src={testimonial.avatarUrl}
+                alt={`${testimonial.name} avatar`}
+                className="size-9 rounded-full bg-white object-cover"
+              />
+              <div className="mt-2 min-w-0 text-xs leading-tight">
+                <div className="truncate font-semibold group-hover/profile:underline">
+                  {testimonial.name}
+                </div>
+                <div className="mt-0.5 truncate text-background/50">
+                  {testimonial.handle}
+                </div>
+              </div>
+            </motion.a>
+
+            <motion.div
+              variants={tweetItemVariants}
+              aria-hidden="true"
+              className="text-background/60"
+            >
+              <XLogo className="size-5" />
+            </motion.div>
+          </div>
+
+          <div className="relative mt-5 flex flex-1 items-center">
+            <motion.div variants={tweetItemVariants} className="origin-center">
+              <blockquote
+                cite={testimonial.url}
+                className="line-clamp-2 max-w-[34ch] font-runde text-base font-medium leading-relaxed sm:text-lg"
+              >
+                “{testimonial.text}”
+              </blockquote>
+            </motion.div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
 
       <div className="mt-4 flex min-w-0 justify-end">
-        <div className="flex items-center gap-2" aria-label="Testimonial selector">
+        <div
+          className="flex items-center gap-2"
+          aria-label="Testimonial selector"
+        >
           {testimonials.map((item, index) => {
             const isActive = index === active;
 
@@ -244,7 +226,7 @@ function RotatingTestimonialCard() {
                 onClick={() => setActive(index)}
                 aria-label={`Show testimonial from ${item.name}`}
                 aria-pressed={isActive}
-                className="relative h-2 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background/40"
+                className="relative h-2 cursor-pointer rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-background/40"
               >
                 {isActive ? (
                   <span className="relative block h-2 w-9 overflow-hidden rounded-full bg-background/15">
@@ -288,12 +270,14 @@ function GithubCard() {
       href={REGISTRY_HOMEPAGE}
       target="_blank"
       rel="noreferrer"
-      className="group relative flex min-w-0 flex-col justify-between rounded-2xl bg-foreground p-4 text-background sm:p-6 md:col-span-4"
+      className={`group relative flex min-w-0 flex-col justify-between rounded-2xl p-4 sm:p-6 md:col-span-4 ${darkCardSurface}`}
     >
       <div className="flex min-w-0 items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
           <GithubLogo className="size-7" />
-          <p className="min-w-0 truncate font-runde text-lg font-semibold sm:text-xl">qubydev/bunui</p>
+          <p className="min-w-0 truncate font-runde text-lg font-semibold sm:text-xl">
+            qubydev/bunui
+          </p>
         </div>
         <ArrowUpRight className="size-4 shrink-0 opacity-55 transition-opacity duration-200 group-hover:opacity-100" />
       </div>
@@ -310,7 +294,7 @@ function GithubCard() {
 
 function StatsCard() {
   const stats = [
-    { label: "COMPONENTS", value: "18" },
+    { label: "COMPONENTS", value: "1" },
     { label: "VISITORS", value: "12.8K" },
     { label: "VIEWS", value: "47.2K" },
   ];
@@ -320,7 +304,7 @@ function StatsCard() {
       {stats.map((stat) => (
         <div
           key={stat.label}
-          className="min-w-0 rounded-2xl bg-card/75 p-3 sm:flex sm:flex-col sm:justify-between sm:p-6"
+          className="min-w-0 rounded-2xl bg-card/75 p-3 shadow-sm ring-1 ring-foreground/[0.03] sm:flex sm:flex-col sm:justify-between sm:p-6"
         >
           <p className="font-runde text-2xl font-semibold tracking-tight min-[380px]:text-3xl sm:text-5xl">
             {stat.value}
@@ -334,14 +318,14 @@ function StatsCard() {
   );
 }
 
-export default function TestimonialsSection() {
+export default function BentoGrid() {
   return (
     <section
       aria-label="Bun UI highlights"
       className="mx-auto w-full max-w-5xl px-4 pb-20 pt-16 sm:px-6 sm:pb-24 sm:pt-24 lg:px-0 lg:pt-28"
     >
       <div className="grid min-w-0 gap-3 sm:gap-4 md:grid-cols-12">
-        <BunPlayCard />
+        <CoverImageCard />
         <NewsletterCard />
         <RotatingTestimonialCard />
         <GithubCard />
