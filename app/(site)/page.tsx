@@ -38,7 +38,7 @@ export default function Home() {
             <CopyButton
               value={INSTALL_COMMAND}
               label="Copy install command"
-              className="h-12 w-full max-w-sm flex-row-reverse justify-between gap-3 rounded-full border bg-popover px-4 text-foreground shadow-sm ring-1 ring-foreground/[0.03] hover:text-foreground sm:w-fit sm:max-w-full sm:justify-start sm:px-5"
+              className="h-12 w-full max-w-sm flex-row-reverse justify-between gap-3 rounded-2xl border-0 bg-card/75 px-4 text-foreground shadow-sm ring-1 ring-foreground/[0.03] hover:bg-card/75 hover:text-foreground sm:w-fit sm:max-w-full sm:justify-start sm:px-5"
               iconClassName="size-4"
             >
               <code className="min-w-0 truncate whitespace-nowrap text-left font-mono text-xs font-semibold sm:text-sm">

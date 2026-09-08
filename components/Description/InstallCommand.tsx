@@ -17,8 +17,8 @@ export default function InstallCommand({ item }: { item: ComponentItem }) {
   if (!command) return null;
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex items-center gap-1">
+    <div className="overflow-hidden rounded-lg bg-popover ring-1 ring-foreground/[0.04]">
+      <div className="flex items-center gap-1 border-b border-border/70 px-2 py-2">
         {PACKAGE_MANAGERS.map((manager) => {
           const Logo = LOGOS[manager];
           const active = pm === manager;
@@ -29,10 +29,10 @@ export default function InstallCommand({ item }: { item: ComponentItem }) {
               onClick={() => setPm(manager)}
               data-active={active}
               className={cn(
-                "flex cursor-pointer items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-colors",
+                "flex cursor-pointer items-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-xs font-medium transition-[background-color,border-color,color]",
                 active
-                  ? "bg-foreground text-background"
-                  : "text-muted-foreground hover:text-foreground",
+                  ? "border-primary bg-primary text-primary-foreground shadow-primary-inset"
+                  : "text-muted-foreground hover:border-border hover:bg-muted/70 hover:text-foreground",
               )}
             >
               <Logo className="size-3.5" />
@@ -42,11 +42,11 @@ export default function InstallCommand({ item }: { item: ComponentItem }) {
         })}
       </div>
 
-      <div className="flex items-center gap-2 rounded-lg bg-popover p-2 pl-3">
-        <code className="flex-1 truncate text-xs text-foreground">
+      <div className="flex min-h-12 items-center gap-3 px-3 py-2">
+        <code className="min-w-0 flex-1 truncate font-mono text-xs text-foreground">
           {command}
         </code>
-        <CopyButton value={command} title="" />
+        <CopyButton value={command} label="Copy install command" title="" />
       </div>
     </div>
   );

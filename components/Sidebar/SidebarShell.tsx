@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { activeComponent } from "@/lib/components";
 import { pageContentClassName, pagePaddingClassName } from "@/lib/page-layout";
 import { cn } from "@/lib/utils";
-import CopyButton from "../CopyButton";
 import DescriptionContent from "../Description/DescriptionContent";
 import PanelCode from "../Description/PanelCode";
 import { fetchSource, SOURCE_LOADING } from "../Description/fetchSource";
@@ -85,30 +84,15 @@ function SidebarShellContent({
             className={cn(pageContentClassName, "flex min-h-full items-start")}
           >
             {item?.registry ? (
-              <div className="w-full overflow-hidden rounded-xl border border-border bg-popover">
-                <div className="flex h-11 items-center justify-between border-b border-border bg-popover px-4">
-                  <span className="font-mono text-xs text-muted-foreground">
-                    {item.registry}.tsx
-                  </span>
-                  <CopyButton
-                    value={
-                      displayedSource && displayedSource !== SOURCE_LOADING
-                        ? displayedSource
-                        : ""
-                    }
-                    label="Copy code"
-                    disabled={
-                      !displayedSource || displayedSource === SOURCE_LOADING
-                    }
-                    className="h-8 rounded-md px-2.5 text-xs"
-                  />
-                </div>
-                <PanelCode
-                  code={displayedSource ?? SOURCE_LOADING}
-                  showLineNumbers
-                  className="w-full rounded-none"
-                />
-              </div>
+              <PanelCode
+                code={displayedSource ?? SOURCE_LOADING}
+                showLineNumbers
+                fileName={`${item.registry}.tsx`}
+                copyable={Boolean(
+                  displayedSource && displayedSource !== SOURCE_LOADING,
+                )}
+                className="w-full rounded-xl border border-border"
+              />
             ) : (
               <p className="text-sm text-muted-foreground">
                 Source is not available for this component.
