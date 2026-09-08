@@ -69,7 +69,7 @@ function SidebarShellContent({
       >
         {mode === "preview" ? (
           <div className={cn(pageContentClassName, "flex flex-col")}>
-            <div className="h-72 w-full overflow-hidden sm:h-80 lg:h-[360px]">
+            <div className="h-72 w-full overflow-hidden rounded-2xl border border-border bg-white sm:h-80 lg:h-[360px]">
               {children}
             </div>
             <section className="py-6">
