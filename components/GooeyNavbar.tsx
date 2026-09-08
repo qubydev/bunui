@@ -102,7 +102,7 @@ export default function GooeyNavbar({ className }: { className?: string }) {
         className,
       )}
     >
-      <nav className="pointer-events-auto mx-auto flex min-h-13 w-full max-w-navbar items-center justify-between gap-2 overflow-hidden rounded-full border border-border bg-popover/92 py-2 pl-3 pr-2 text-foreground backdrop-blur-xl transition-[max-width] duration-300 ease-out hover:max-w-navbar-hover motion-reduce:transition-none sm:min-h-14 sm:pl-4">
+      <nav className="pointer-events-auto relative mx-auto flex min-h-13 w-full max-w-navbar items-center justify-between gap-2 overflow-hidden rounded-full border border-border bg-popover/92 py-2 pl-3 pr-2 text-foreground backdrop-blur-xl transition-[max-width] duration-300 ease-out hover:max-w-navbar-hover motion-reduce:transition-none sm:min-h-14 sm:pl-4">
         <Link
           href="/"
           aria-label="Bun UI home"
@@ -111,7 +111,7 @@ export default function GooeyNavbar({ className }: { className?: string }) {
           <TopbarBunLogo className="h-7 w-9 sm:h-8 sm:w-10" />
         </Link>
 
-        <div className="flex min-w-0 shrink items-center gap-1 whitespace-nowrap text-sm font-medium sm:shrink-0">
+        <div className="absolute left-1/2 flex min-w-0 -translate-x-1/2 items-center gap-1 whitespace-nowrap text-sm font-medium">
           {LINKS.map((link) => {
             const active =
               link.href === "/components"

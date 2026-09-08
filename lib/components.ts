@@ -64,7 +64,7 @@ export const PANEL_INFO = {
     "Click the code icon in the top-right corner to view the source code.",
   keepInMind:
     "Bun UI components are copied into your project through the shadcn CLI. Review and adapt them before shipping.",
-  contactEmail: "maay77patra@gmail.com",
+  contactEmail: "malay77patra@gmail.com",
   issuesUrl: `${REGISTRY_HOMEPAGE}/issues`,
   contactNote: "Found a bug or issue? Open an issue or send a note.",
   license: [

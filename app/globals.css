@@ -158,7 +158,7 @@
   --font-runde: var(--font-open-runde), sans-serif;
 
   --container-navbar: 48rem;
-  --container-navbar-hover: 50rem;
+  --container-navbar-hover: 49rem;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

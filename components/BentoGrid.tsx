@@ -120,6 +120,8 @@ function CoverImageCard() {
 function NewsletterCard() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const resetTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -135,24 +137,46 @@ function NewsletterCard() {
           Get the good stuff.
         </p>
         <p className="mt-1 max-w-sm text-sm leading-relaxed text-muted-foreground">
-          New components, tiny experiments, and Bun UI updates — occasionally.
+          New components, tiny experiments, and Bun UI updates (we don't spam) into your inbox.
         </p>
       </div>
 
       <form
         className="mt-5 flex flex-col gap-2 rounded-[1.75rem] bg-background p-1.5 ring-1 ring-border/80 sm:flex-row sm:items-center"
-        onSubmit={(event) => {
+        onSubmit={async (event) => {
           event.preventDefault();
-          if (!email.trim()) return;
+          const value = email.trim();
+          if (!value || submitting) return;
 
-          if (resetTimerRef.current) window.clearTimeout(resetTimerRef.current);
+          setSubmitting(true);
+          setError(null);
 
-          setEmail("");
-          setSubscribed(true);
-          resetTimerRef.current = window.setTimeout(() => {
-            setSubscribed(false);
-            resetTimerRef.current = null;
-          }, 1500);
+          try {
+            const response = await fetch("/api/newsletter", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email: value }),
+            });
+            const result = (await response.json().catch(() => ({}))) as {
+              error?: string;
+            };
+
+            if (!response.ok) {
+              throw new Error(result.error || "Could not subscribe right now.");
+            }
+
+            if (resetTimerRef.current) window.clearTimeout(resetTimerRef.current);
+            setEmail("");
+            setSubscribed(true);
+            resetTimerRef.current = window.setTimeout(() => {
+              setSubscribed(false);
+              resetTimerRef.current = null;
+            }, 1800);
+          } catch (err) {
+            setError(err instanceof Error ? err.message : "Could not subscribe right now.");
+          } finally {
+            setSubmitting(false);
+          }
         }}
       >
         <input
@@ -166,15 +190,26 @@ function NewsletterCard() {
               resetTimerRef.current = null;
               setSubscribed(false);
             }
+            if (error) setError(null);
           }}
           placeholder="you@example.com"
           aria-label="Email address"
           className="min-w-0 flex-1 rounded-full bg-transparent px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground/75 sm:px-4"
         />
-        <Button type="submit" size="sm" className="h-10 w-full px-5 sm:w-auto">
-          {subscribed ? "Subscribed!" : "Subscribe"}
+        <Button
+          type="submit"
+          size="sm"
+          disabled={submitting}
+          className="h-10 w-full px-5 sm:w-auto"
+        >
+          {submitting ? "Subscribing…" : subscribed ? "Subscribed!" : "Subscribe"}
         </Button>
       </form>
+      {error && (
+        <p className="mt-2 text-xs text-destructive" role="status" aria-live="polite">
+          {error}
+        </p>
+      )}
     </HoverCard>
   );
 }
