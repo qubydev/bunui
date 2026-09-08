@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Inter, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import GooeyNavbar from "@/components/GooeyNavbar";
@@ -119,6 +120,7 @@ export default function RootLayout({
           <GooeyNavbar />
           <div className="flex flex-1 flex-col">{children}</div>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
