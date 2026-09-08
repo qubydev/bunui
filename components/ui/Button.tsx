@@ -23,14 +23,14 @@ type ButtonBaseProps = {
 };
 
 type ButtonAsLinkProps = ButtonBaseProps & {
-  href?: string;
+  href: string;
 } & Omit<
     AnchorHTMLAttributes<HTMLAnchorElement>,
     "className" | "children" | "href"
   >;
 
 type ButtonAsButtonProps = ButtonBaseProps & {
-  href?: undefined;
+  href?: never;
 } & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className" | "children">;
 
 type ButtonProps = ButtonAsLinkProps | ButtonAsButtonProps;
@@ -58,33 +58,53 @@ const sizeClassNames: Record<ButtonSize, string> = {
   icon: "h-10 w-10 p-0",
 };
 
-export function Button({
-  children,
-  className,
-  variant = "primary",
-  size = "md",
-  href,
-  type = "button",
-  ...props
-}: ButtonProps) {
+export function Button(props: ButtonProps) {
   const classes = cn(
     baseClassName,
-    variantClassNames[variant],
-    sizeClassNames[size],
-    className,
+    variantClassNames[props.variant ?? "primary"],
+    sizeClassNames[props.size ?? "md"],
+    props.className,
   );
 
-  if (href) {
+  if (typeof props.href === "string") {
+    const href = props.href;
+    const {
+      href: _href,
+      children,
+      className: _className,
+      variant: _variant,
+      size: _size,
+      ...linkProps
+    } = props;
+
+    void _className;
+    void _variant;
+    void _size;
+    void _href;
+
     return (
-      <Link href={href} className={classes} {...props}>
+      <Link href={href} className={classes} {...linkProps}>
         {children}
       </Link>
     );
   }
 
+  const {
+    children: buttonChildren,
+    className: _,
+    variant: __,
+    size: ___,
+    type = "button",
+    ...buttonProps
+  } = props;
+
+  void _;
+  void __;
+  void ___;
+
   return (
-    <button type={type} className={classes} {...props}>
-      {children}
+    <button type={type} className={classes} {...buttonProps}>
+      {buttonChildren}
     </button>
   );
 }

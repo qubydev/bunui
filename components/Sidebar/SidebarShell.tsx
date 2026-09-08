@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { activeComponent } from "@/lib/components";
+import { pageContentClassName, pagePaddingClassName } from "@/lib/page-layout";
 import { cn } from "@/lib/utils";
 import CopyButton from "../CopyButton";
 import DescriptionContent from "../Description/DescriptionContent";
@@ -23,20 +24,28 @@ export default function SidebarShell({
 }) {
   const pathname = usePathname();
   const item = activeComponent(pathname);
+
+  return (
+    <SidebarShellContent key={pathname} item={item}>
+      {children}
+    </SidebarShellContent>
+  );
+}
+
+function SidebarShellContent({
+  children,
+  item,
+}: {
+  children: React.ReactNode;
+  item: ReturnType<typeof activeComponent>;
+}) {
   const [mode, setMode] = useState<ViewMode>("preview");
   const [source, setSource] = useState<string | null>(null);
 
   useEffect(() => {
-    setMode("preview");
-    setSource(null);
-  }, [pathname]);
-
-  useEffect(() => {
     if (mode !== "code" || !item?.registry) return;
-    if (source && source !== SOURCE_LOADING) return;
 
     let cancelled = false;
-    setSource(SOURCE_LOADING);
 
     fetchSource(item.registry).then((value) => {
       if (!cancelled) setSource(value);
@@ -47,12 +56,22 @@ export default function SidebarShell({
     };
   }, [item?.registry, mode]);
 
+  const displayedSource =
+    mode === "code" && item?.registry && !source ? SOURCE_LOADING : source;
+
   return (
     <div className="relative h-full min-h-0 overflow-hidden bg-background">
-      <main className="no-scrollbar h-full min-h-0 overflow-y-auto pb-24 pt-24">
+      <main
+        className={cn(
+          "no-scrollbar h-full min-h-0 overflow-y-auto",
+          pagePaddingClassName,
+        )}
+      >
         {mode === "preview" ? (
-          <div className="mx-auto flex w-full max-w-5xl flex-col px-4 sm:px-8">
-            <div className="h-72 w-full overflow-hidden sm:h-80 lg:h-[360px]">{children}</div>
+          <div className={cn(pageContentClassName, "flex flex-col")}>
+            <div className="h-72 w-full overflow-hidden sm:h-80 lg:h-[360px]">
+              {children}
+            </div>
             <section className="py-6">
               <DescriptionContent
                 item={item}
@@ -62,7 +81,9 @@ export default function SidebarShell({
             </section>
           </div>
         ) : (
-          <div className="mx-auto flex min-h-full w-full max-w-5xl items-start px-4 sm:px-8">
+          <div
+            className={cn(pageContentClassName, "flex min-h-full items-start")}
+          >
             {item?.registry ? (
               <div className="w-full overflow-hidden rounded-xl border border-border bg-popover">
                 <div className="flex h-11 items-center justify-between border-b border-border bg-popover px-4">
@@ -70,14 +91,20 @@ export default function SidebarShell({
                     {item.registry}.tsx
                   </span>
                   <CopyButton
-                    value={source && source !== SOURCE_LOADING ? source : ""}
+                    value={
+                      displayedSource && displayedSource !== SOURCE_LOADING
+                        ? displayedSource
+                        : ""
+                    }
                     label="Copy code"
-                    disabled={!source || source === SOURCE_LOADING}
+                    disabled={
+                      !displayedSource || displayedSource === SOURCE_LOADING
+                    }
                     className="h-8 rounded-md px-2.5 text-xs"
                   />
                 </div>
                 <PanelCode
-                  code={source ?? SOURCE_LOADING}
+                  code={displayedSource ?? SOURCE_LOADING}
                   showLineNumbers
                   className="w-full rounded-none"
                 />

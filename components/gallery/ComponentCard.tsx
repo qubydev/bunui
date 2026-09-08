@@ -28,7 +28,7 @@ export default function ComponentCard({
       onFocus={() => setActive(true)}
       onBlur={() => setActive(false)}
       className={cn(
-        "group flex flex-col rounded-4xl border bg-muted p-2 transition-colors duration-200 ease-out dark:border-transparent dark:border-apple dark:bg-card dark:hover:bg-muted",
+        "group flex flex-col rounded-4xl border bg-muted p-2 shadow-sm ring-1 ring-foreground/[0.03] transition-colors duration-200 ease-out dark:border-transparent dark:border-apple dark:bg-card dark:hover:bg-muted",
         large && "lg:h-full",
         className,
       )}

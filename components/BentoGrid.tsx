@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Star } from "lucide-react";
@@ -101,6 +101,13 @@ function CoverImageCard() {
 function NewsletterCard() {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const resetTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (resetTimerRef.current) window.clearTimeout(resetTimerRef.current);
+    };
+  }, []);
 
   return (
     <HoverCard className="flex min-h-[202px] min-w-0 flex-col justify-between rounded-2xl bg-card/75 p-4 shadow-sm ring-1 ring-foreground/[0.03] sm:p-6 md:col-span-5">
@@ -118,7 +125,15 @@ function NewsletterCard() {
         onSubmit={(event) => {
           event.preventDefault();
           if (!email.trim()) return;
+
+          if (resetTimerRef.current) window.clearTimeout(resetTimerRef.current);
+
+          setEmail("");
           setSubscribed(true);
+          resetTimerRef.current = window.setTimeout(() => {
+            setSubscribed(false);
+            resetTimerRef.current = null;
+          }, 1500);
         }}
       >
         <input
@@ -126,14 +141,19 @@ function NewsletterCard() {
           value={email}
           onChange={(event) => {
             setEmail(event.target.value);
-            if (subscribed) setSubscribed(false);
+            if (subscribed) {
+              if (resetTimerRef.current)
+                window.clearTimeout(resetTimerRef.current);
+              resetTimerRef.current = null;
+              setSubscribed(false);
+            }
           }}
           placeholder="you@example.com"
           aria-label="Email address"
           className="min-w-0 flex-1 rounded-full bg-transparent px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground/75 sm:px-4"
         />
         <Button type="submit" size="sm" className="h-10 w-full px-5 sm:w-auto">
-          {subscribed ? "Subscribed" : "Subscribe"}
+          {subscribed ? "Subscribed!" : "Subscribe"}
         </Button>
       </form>
     </HoverCard>
@@ -322,7 +342,7 @@ export default function BentoGrid() {
   return (
     <section
       aria-label="Bun UI highlights"
-      className="mx-auto w-full max-w-5xl px-4 pb-20 pt-16 sm:px-6 sm:pb-24 sm:pt-24 lg:px-0 lg:pt-28"
+      className="w-full pt-16 sm:pt-20 lg:pt-24"
     >
       <div className="grid min-w-0 gap-3 sm:gap-4 md:grid-cols-12">
         <CoverImageCard />
