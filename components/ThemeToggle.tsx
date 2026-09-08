@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
 const ContrastIcon = ({ className }: { className?: string }) => (
@@ -30,19 +29,22 @@ export default function ThemeToggle({
 }: {
   className?: string;
 }) {
-  const { resolvedTheme, setTheme } = useTheme();
-
   return (
     <button
       type="button"
-      onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+      onClick={() => {
+        const nextIsDark = !document.documentElement.classList.contains("dark");
+
+        document.documentElement.classList.toggle("dark", nextIsDark);
+        localStorage.setItem("bunui-theme", nextIsDark ? "dark" : "light");
+      }}
       aria-label="Toggle theme"
       className={cn(
-        "cursor-pointer rounded-lg bg-secondary p-2 text-foreground/80 transition-colors hover:text-foreground",
+        "inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-transparent text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground/20 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         className,
       )}
     >
-      <ContrastIcon className="h-5 w-5" />
+      <ContrastIcon className="size-5" />
     </button>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { Highlight, themes } from "prism-react-renderer";
-import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
 type PanelCodeProps = {
@@ -19,14 +18,11 @@ export default function PanelCode({
   className,
   contentClassName,
 }: PanelCodeProps) {
-  const { resolvedTheme } = useTheme();
-  const theme = resolvedTheme === "dark" ? themes.oneDark : themes.github;
-
   return (
     <div
       className={cn("flex overflow-hidden bg-popover", className)}
     >
-      <Highlight theme={theme} code={code} language={language}>
+      <Highlight theme={themes.oneDark} code={code} language={language}>
         {({ className: prismClassName, style, tokens, getLineProps, getTokenProps }) => (
           <pre
             data-language={language}
@@ -35,7 +31,7 @@ export default function PanelCode({
               "min-h-0 w-full flex-1 overflow-auto p-4 font-mono text-xs leading-6",
               contentClassName,
             )}
-            style={{ ...style, margin: 0, background: "transparent" }}
+            style={{ ...style, margin: 0, backgroundColor: "transparent" }}
           >
             {tokens.map((line, index) => (
               <div key={index} {...getLineProps({ line })}>

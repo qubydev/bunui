@@ -54,27 +54,27 @@ export function VinylDisk({
             fillRule="evenodd"
             clipRule="evenodd"
             d="M129.27 20.18c-60.018 0-108.73 48.712-108.73 108.73.003 60.019 48.712 108.73 108.73 108.73S238 188.929 238 128.91c0-60.018-48.711-108.73-108.73-108.73m0 105.68a3.048 3.048 0 1 1 .005 6.097 3.048 3.048 0 0 1-.005-6.097"
-            fill="#000"
-            fillOpacity=".509"
+            fill="var(--foreground)"
+            fillOpacity=".22"
           />
         </g>
         <path
           fillRule="evenodd"
           clipRule="evenodd"
           d="M127.677 17.83c-60.018 0-108.73 48.71-108.73 108.73 0 60.018 48.712 108.729 108.73 108.729s108.73-48.711 108.73-108.729c0-60.02-48.711-108.73-108.73-108.73m0 105.679a3.05 3.05 0 0 1 3.051 3.051 3.05 3.05 0 0 1-3.051 3.05 3.05 3.05 0 0 1-3.05-3.05 3.05 3.05 0 0 1 3.05-3.051"
-          fill="#000"
+          fill="var(--foreground)"
         />
         <path
           fillRule="evenodd"
           clipRule="evenodd"
           d="M127.677 86.982c-21.84 0-39.577 17.738-39.577 39.578s17.737 39.577 39.577 39.577 39.578-17.737 39.578-39.577-17.738-39.578-39.578-39.578m0 36.968c1.44 0 2.61 1.17 2.61 2.61s-1.17 2.609-2.61 2.609a2.61 2.61 0 0 1 0-5.219"
-          fill="#333"
+          fill="var(--muted-foreground)"
         />
         <path
           fillRule="evenodd"
           clipRule="evenodd"
           d="M127.677 17.83c-60.018 0-108.73 48.71-108.73 108.73 0 60.018 48.712 108.729 108.73 108.729s108.73-48.711 108.73-108.729c0-60.02-48.711-108.73-108.73-108.73m0 2.112c58.861 0 106.638 47.757 106.638 106.62s-47.777 106.637-106.638 106.637c-58.86 0-106.637-47.776-106.637-106.637.002-58.861 47.777-106.62 106.637-106.62"
-          fill="#000"
+          fill="var(--foreground)"
         />
         <path
           fillRule="evenodd"
@@ -105,7 +105,7 @@ export function VinylDisk({
           fillRule="evenodd"
           clipRule="evenodd"
           d="M153.508 100.729a36.44 36.44 0 0 0-14.27-8.822l-.729 2.187a34.1 34.1 0 0 1 13.365 8.269 34.1 34.1 0 0 1 9.169 16.597l2.245-.505a36.3 36.3 0 0 0-9.78-17.726m-59.56 20.106-2.286-.394c-1.899 11.273 1.492 23.263 10.185 31.949 8.663 8.669 20.611 12.066 31.855 10.197l-.376-2.274c-10.533 1.751-21.723-1.44-29.845-9.557-8.14-8.146-11.314-19.365-9.533-29.921"
-          fill="#fff"
+          fill="var(--background)"
         />
       </g>
 
@@ -120,7 +120,7 @@ export function VinylDisk({
       >
         <path
           d="M206.145 165.152c6.367-6.438 9.444-8.059 15.366-17.041l33.938-66.264c-2.433-2.56-5.168-5.716-4.286-8.36l13.134-24.374c.987-1.497 5.2-1.658 8.655-1.441l3.485-6.805 5.182 3.018-3.337 6.675c2.68 2.689 3.933 5.954 3.344 7.716l-12.298 25.326c-.569.864-5.522 1.718-8.211 1.292l-33.588 67.186c-5.922 8.982-10.693 11.653-18.151 18.668l1.617 2.798-33.413 19.526-4.961-6.602 30.124-24.226z"
-          fill="#000"
+          fill="var(--foreground)"
         />
       </g>
 
@@ -133,8 +133,8 @@ export function VinylDisk({
           gradientUnits="userSpaceOnUse"
           gradientTransform="rotate(-45 398.653 -166.247)scale(66.8573 150.807)"
         >
-          <stop stopColor="#fff" />
-          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+          <stop stopColor="var(--background)" />
+          <stop offset="1" stopColor="var(--background)" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id={leftHighlightId}
@@ -144,8 +144,8 @@ export function VinylDisk({
           gradientUnits="userSpaceOnUse"
           gradientTransform="rotate(135 6.393 14.318)scale(66.8573 150.807)"
         >
-          <stop stopColor="#fff" />
-          <stop offset="1" stopColor="#fff" stopOpacity="0" />
+          <stop stopColor="var(--background)" />
+          <stop offset="1" stopColor="var(--background)" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id={innerRingId}
@@ -155,8 +155,8 @@ export function VinylDisk({
           gradientUnits="userSpaceOnUse"
           gradientTransform="matrix(0 112.41 -33.3354 0 127.679 126.553)"
         >
-          <stop stopColor="#6c6c6c" />
-          <stop offset="1" stopColor="#3e3e3e" />
+          <stop stopColor="var(--muted-foreground)" />
+          <stop offset="1" stopColor="var(--foreground)" />
         </radialGradient>
         <radialGradient
           id={labelId}
@@ -166,8 +166,8 @@ export function VinylDisk({
           gradientUnits="userSpaceOnUse"
           gradientTransform="matrix(0 90.6513 -31.5539 0 127.677 126.56)"
         >
-          <stop stopColor="#f7f7f7" />
-          <stop offset="1" stopColor="#e1e1e1" />
+          <stop stopColor="var(--background)" />
+          <stop offset="1" stopColor="var(--card)" />
         </radialGradient>
         <filter
           id={blurId}
@@ -191,28 +191,13 @@ export function VinylDisk({
           filterUnits="userSpaceOnUse"
           colorInterpolationFilters="sRGB"
         >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
+          <feDropShadow
+            dx="0"
+            dy="4"
+            stdDeviation="2"
+            floodColor="var(--foreground)"
+            floodOpacity=".2"
           />
-          <feOffset dy="4" />
-          <feGaussianBlur stdDeviation="2" />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-          <feBlend in2="BackgroundImageFix" result="effect1_dropShadow_22_63" />
-          <feBlend in="SourceGraphic" in2="effect1_dropShadow_22_63" result="shape" />
-          <feColorMatrix
-            in="SourceAlpha"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset />
-          <feGaussianBlur stdDeviation="1" />
-          <feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1" />
-          <feColorMatrix values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0" />
-          <feBlend in2="shape" result="effect2_innerShadow_22_63" />
         </filter>
       </defs>
     </svg>

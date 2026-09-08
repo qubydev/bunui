@@ -71,6 +71,25 @@ const testimonials = [
   },
 ];
 
+type AnalyticsStats = {
+  components: number;
+  visitors: number;
+  views: number;
+};
+
+function formatCompactCount(value: number) {
+  if (value >= 1000) {
+    return new Intl.NumberFormat("en", {
+      maximumFractionDigits: 1,
+      notation: "compact",
+    })
+      .format(value)
+      .toUpperCase();
+  }
+
+  return value.toLocaleString("en");
+}
+
 function HoverCard({
   children,
   className,
@@ -313,10 +332,47 @@ function GithubCard() {
 }
 
 function StatsCard() {
+  const recordedRef = useRef(false);
+  const [analyticsStats, setAnalyticsStats] =
+    useState<AnalyticsStats | null>(null);
+
+  useEffect(() => {
+    if (recordedRef.current) return;
+    recordedRef.current = true;
+
+    fetch("/api/analytics", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ path: window.location.pathname }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to load analytics stats.");
+
+        return response.json() as Promise<AnalyticsStats>;
+      })
+      .then(setAnalyticsStats)
+      .catch(() => {
+        setAnalyticsStats(null);
+      });
+  }, []);
+
   const stats = [
-    { label: "COMPONENTS", value: "1" },
-    { label: "VISITORS", value: "12.8K" },
-    { label: "VIEWS", value: "47.2K" },
+    {
+      label: "COMPONENTS",
+      value: analyticsStats
+        ? formatCompactCount(analyticsStats.components)
+        : "--",
+    },
+    {
+      label: "VISITORS",
+      value: analyticsStats ? formatCompactCount(analyticsStats.visitors) : "--",
+    },
+    {
+      label: "VIEWS",
+      value: analyticsStats ? formatCompactCount(analyticsStats.views) : "--",
+    },
   ];
 
   return (

@@ -173,7 +173,7 @@
   --shadow-lg: var(--shadow-lg);
   --shadow-xl: var(--shadow-xl);
   --shadow-2xl: var(--shadow-2xl);
-  --shadow-primary-inset: inset 0 0 12px var(--popover);
+  --shadow-primary-inset: inset 0 0 12px rgb(255 255 255 / 0.72);
 }
 
 @layer base {

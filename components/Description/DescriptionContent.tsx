@@ -54,10 +54,18 @@ export default function DescriptionContent({
       {item?.usage && (
         <div className="flex flex-col gap-3">
           <SectionLabel as="h2">How to use</SectionLabel>
-          <PanelCode
-            code={item.usage}
-            className="rounded-lg"
-          />
+          <div className="relative">
+            <PanelCode
+              code={item.usage}
+              className="rounded-lg pr-11"
+            />
+            <CopyButton
+              value={item.usage}
+              label="Copy example"
+              title=""
+              className="absolute right-2 top-2 text-foreground/60 hover:text-foreground"
+            />
+          </div>
         </div>
       )}
 

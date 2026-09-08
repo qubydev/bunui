@@ -3,7 +3,6 @@ import { Analytics } from "@vercel/analytics/next";
 import { Inter, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import GooeyNavbar from "@/components/GooeyNavbar";
-import { ThemeProvider } from "@/components/theme-provider";
 import {
   SITE_DESCRIPTION,
   SITE_NAME,
@@ -102,24 +101,27 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${geistMono.variable} ${openRunde.variable} h-full antialiased`}
+      className={`dark ${inter.variable} ${geistMono.variable} ${openRunde.variable} h-full antialiased`}
     >
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+try {
+  var theme = localStorage.getItem("bunui-theme");
+  document.documentElement.classList.toggle("dark", theme ? theme === "dark" : true);
+} catch {}
+`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd()) }}
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <GooeyNavbar />
-          <div className="flex flex-1 flex-col">{children}</div>
-        </ThemeProvider>
+        <GooeyNavbar />
+        <div className="flex flex-1 flex-col">{children}</div>
         <Analytics />
       </body>
     </html>

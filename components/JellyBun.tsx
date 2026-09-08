@@ -878,15 +878,15 @@ export function JellyBun({
           <feGaussianBlur stdDeviation="18" />
         </filter>
         <radialGradient id={mainGlowId} cx="36%" cy="20%" r="78%">
-          <stop offset="0%" stopColor="var(--background)" stopOpacity="0.28" />
-          <stop offset="36%" stopColor="var(--background)" stopOpacity="0.1" />
-          <stop offset="72%" stopColor="var(--background)" stopOpacity="0.02" />
-          <stop offset="100%" stopColor="var(--background)" stopOpacity="0" />
+          <stop offset="0%" stopColor="white" stopOpacity="0.28" />
+          <stop offset="36%" stopColor="white" stopOpacity="0.1" />
+          <stop offset="72%" stopColor="white" stopOpacity="0.02" />
+          <stop offset="100%" stopColor="white" stopOpacity="0" />
         </radialGradient>
         <radialGradient id={rimGlowId} cx="50%" cy="50%" r="50%">
-          <stop offset="72%" stopColor="var(--background)" stopOpacity="0" />
-          <stop offset="92%" stopColor="var(--background)" stopOpacity="0.16" />
-          <stop offset="100%" stopColor="var(--background)" stopOpacity="0.24" />
+          <stop offset="72%" stopColor="white" stopOpacity="0" />
+          <stop offset="92%" stopColor="white" stopOpacity="0.16" />
+          <stop offset="100%" stopColor="white" stopOpacity="0.24" />
         </radialGradient>
       </defs>
 
@@ -919,7 +919,7 @@ export function JellyBun({
             fill="none"
             filter={`url(#${blurId})`}
             opacity="0.16"
-            stroke="var(--background)"
+            stroke="white"
             strokeWidth="26"
           />
         </g>

@@ -132,10 +132,10 @@ function SidebarShellContent({
               onClick={() => setMode(tab.id)}
               aria-pressed={active}
               className={cn(
-                "h-8 rounded-full px-3.5 text-[11px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:h-9 sm:px-4 sm:text-xs",
+                "h-8 rounded-full border border-transparent px-3.5 text-[11px] font-semibold transition-[background-color,border-color,color,box-shadow] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:h-9 sm:px-4 sm:text-xs",
                 active
-                  ? "bg-primary text-primary-foreground shadow-primary-inset"
-                  : "text-muted-foreground hover:text-foreground",
+                  ? "border-primary bg-primary text-primary-foreground shadow-primary-inset"
+                  : "text-muted-foreground hover:border-border hover:bg-muted/70 hover:text-foreground",
               )}
             >
               {tab.label}

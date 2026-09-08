@@ -6,6 +6,7 @@ import { useEffect, useId, useState } from "react";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { GithubLogo } from "@/components/logos";
+import ThemeToggle from "@/components/ThemeToggle";
 import {
   formatStars,
   getCachedGithubStars,
@@ -45,7 +46,7 @@ function TopbarBunLogo({ className }: { className?: string }) {
             result="inner"
           />
           <feFlood
-            floodColor="var(--popover)"
+            floodColor="white"
             floodOpacity="1"
             result="color"
           />
@@ -123,9 +124,9 @@ export default function GooeyNavbar({ className }: { className?: string }) {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "rounded-full px-2.5 py-2 transition-colors hover:bg-muted hover:text-primary-foreground sm:px-3",
+                  "rounded-full px-2.5 py-2 transition-colors hover:bg-muted hover:text-foreground sm:px-3",
                   active
-                    ? "bg-muted text-primary-foreground"
+                    ? "bg-muted text-foreground"
                     : "text-muted-foreground",
                 )}
               >
@@ -135,23 +136,26 @@ export default function GooeyNavbar({ className }: { className?: string }) {
           })}
         </div>
 
-        <Button
-          href={GITHUB_URL}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="GitHub repository"
-          size="sm"
-          className="group h-10 gap-1.5 overflow-hidden px-3 font-medium leading-none tabular-nums sm:px-4"
-        >
-          <span
-            className="relative flex size-4.5 shrink-0 items-center justify-center"
-            aria-hidden="true"
+        <div className="ml-auto flex shrink-0 items-center gap-1.5">
+          <ThemeToggle />
+          <Button
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="GitHub repository"
+            size="sm"
+            className="group h-10 gap-1.5 overflow-hidden px-3 font-medium leading-none tabular-nums sm:px-4"
           >
-            <GithubLogo className="absolute size-4.5 transition-all duration-200 group-hover:scale-75 group-hover:opacity-0" />
-            <Star className="absolute size-4.5 scale-75 fill-primary-foreground text-primary-foreground opacity-0 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100" />
-          </span>
-          {stars != null && <span>{formatStars(stars)}</span>}
-        </Button>
+            <span
+              className="relative flex size-4.5 shrink-0 items-center justify-center"
+              aria-hidden="true"
+            >
+              <GithubLogo className="absolute size-4.5 transition-all duration-200 group-hover:scale-75 group-hover:opacity-0" />
+              <Star className="absolute size-4.5 scale-75 fill-primary-foreground text-primary-foreground opacity-0 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100" />
+            </span>
+            {stars != null && <span>{formatStars(stars)}</span>}
+          </Button>
+        </div>
       </nav>
     </header>
   );
