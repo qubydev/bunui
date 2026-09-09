@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
 import ComponentCard from "@/components/gallery/ComponentCard";
 import { components } from "@/lib/components";
-import { SITE_KEYWORDS } from "@/lib/seo";
+import {
+  absoluteUrl,
+  componentsJsonLd,
+  SITE_KEYWORDS,
+  SITE_OG_IMAGE,
+} from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Components",
@@ -11,11 +17,33 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/components",
   },
+  openGraph: {
+    title: "Bun UI Components",
+    description:
+      "Browse animated React components built with Tailwind CSS, Motion, and the shadcn CLI.",
+    url: absoluteUrl("/components"),
+    images: [
+      {
+        url: absoluteUrl(SITE_OG_IMAGE),
+        width: 1200,
+        height: 630,
+        alt: "Bun UI components gallery",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bun UI Components",
+    description:
+      "Browse animated React components built with Tailwind CSS, Motion, and the shadcn CLI.",
+    images: [absoluteUrl(SITE_OG_IMAGE)],
+  },
 };
 
 export default function ComponentsIndexPage() {
   return (
     <div className="mx-auto w-full max-w-6xl">
+      <JsonLd data={componentsJsonLd()} />
       {components.length === 0 ? (
         <div className="mx-auto flex min-h-[50vh] max-w-lg flex-col items-center justify-center text-center">
           <h1 className="font-runde text-2xl font-bold tracking-tight sm:text-3xl">

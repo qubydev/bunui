@@ -1,4 +1,5 @@
-import { componentPageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
+import { componentJsonLd, componentPageMetadata } from "@/lib/seo";
 import Demo from "./demo";
 
 const HREF = "/components/vinyl-player";
@@ -6,5 +7,10 @@ const HREF = "/components/vinyl-player";
 export const metadata = componentPageMetadata(HREF);
 
 export default function Page() {
-  return <Demo />;
+  return (
+    <>
+      <JsonLd data={componentJsonLd(HREF)} />
+      <Demo />
+    </>
+  );
 }

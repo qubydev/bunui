@@ -149,19 +149,21 @@ export function Demo() {
         name: "data",
         type: "StreakGridDay[]",
         required: true,
-        description: "Daily activity entries with a date, count, and optional label or explicit intensity level.",
+        description:
+          "Daily activity entries with a date, count, and optional label or explicit intensity level.",
       },
       {
         name: "weekStartsOn",
         type: "0 | 1",
         default: "0",
         options: ["0", "1"],
-        description: "Choose Sunday (0) or Monday (1) as the first day of the week.",
+        description:
+          "Choose Sunday (0) or Monday (1) as the first day of the week.",
       },
       {
         name: "itemLabel",
         type: "string",
-        default: "\"activities\"",
+        default: '"activities"',
         description: "Text shown after the total count in the summary.",
       },
       {
@@ -186,23 +188,27 @@ export function Demo() {
         name: "cellSize",
         type: "number",
         default: "12",
-        description: "Cell size in pixels. Values are clamped between 8 and 28.",
+        description:
+          "Cell size in pixels. Values are clamped between 8 and 28.",
       },
       {
         name: "gap",
         type: "number",
         default: "3",
-        description: "Gap between cells in pixels. Values are clamped between 1 and 12.",
+        description:
+          "Gap between cells in pixels. Values are clamped between 1 and 12.",
       },
       {
         name: "formatTooltip",
         type: "(day: StreakGridResolvedDay) => React.ReactNode",
-        description: "Optional custom tooltip renderer for pointer and keyboard users.",
+        description:
+          "Optional custom tooltip renderer for pointer and keyboard users.",
       },
       {
         name: "formatSelection",
         type: "(day: StreakGridResolvedDay) => React.ReactNode",
-        description: "Optional custom summary content shown for three seconds after clicking or tapping a day.",
+        description:
+          "Optional custom summary content shown for three seconds after clicking or tapping a day.",
       },
       {
         name: "className",
@@ -211,6 +217,7 @@ export function Demo() {
       },
     ],
     usage: `import { StreakGrid } from "@/components/ui/streak-grid"
+import { TooltipProvider } from "@/components/ui/tooltip"
 
 const activity = [
   { date: "2026-09-01", count: 2 },
@@ -220,11 +227,13 @@ const activity = [
 
 export function Demo() {
   return (
-    <StreakGrid
-      data={activity}
-      itemLabel="activities"
-      weekStartsOn={1}
-    />
+    <TooltipProvider>
+      <StreakGrid
+        data={activity}
+        itemLabel="activities"
+        weekStartsOn={1}
+      />
+    </TooltipProvider>
   )
 }`,
   },

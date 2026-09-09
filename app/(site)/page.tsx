@@ -2,11 +2,45 @@ import type { Metadata } from "next";
 import { JellyBun } from "@/components/JellyBun";
 import CopyButton from "@/components/CopyButton";
 import BentoGrid from "@/components/BentoGrid";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { REGISTRY_REPO } from "@/lib/components";
+import { SITE_DESCRIPTION, SITE_TAGLINE } from "@/lib/site";
+import {
+  absoluteUrl,
+  SITE_FAQS,
+  SITE_OG_IMAGE,
+  SITE_TWITTER_IMAGE,
+} from "@/lib/seo";
 
 export const metadata: Metadata = {
+  title: SITE_TAGLINE,
+  description: SITE_DESCRIPTION,
   alternates: {
     canonical: "/",
+  },
+  openGraph: {
+    title: SITE_TAGLINE,
+    description: SITE_DESCRIPTION,
+    url: absoluteUrl("/"),
+    images: [
+      {
+        url: absoluteUrl(SITE_OG_IMAGE),
+        width: 1200,
+        height: 630,
+        alt: "Bun UI animated React components",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TAGLINE,
+    description: SITE_DESCRIPTION,
+    images: [absoluteUrl(SITE_TWITTER_IMAGE)],
   },
 };
 
@@ -52,6 +86,37 @@ export default function Home() {
         </div>
       </section>
       <BentoGrid />
+      <section className="pt-16 sm:pt-20 lg:pt-24" aria-labelledby="faq-title">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2
+            id="faq-title"
+            className="text-balance font-runde text-2xl font-semibold tracking-tight sm:text-3xl"
+          >
+            Frequently asked
+          </h2>
+
+          <Accordion
+            type="single"
+            collapsible
+            className="mt-7 flex flex-col gap-3 text-left"
+          >
+            {SITE_FAQS.map((item, index) => (
+              <AccordionItem
+                key={item.question}
+                value={`faq-${index}`}
+                className="group rounded-2xl border-0 bg-card/75 px-4 shadow-sm ring-1 ring-foreground/[0.03] transition-colors duration-300 ease-out hover:bg-muted/70 data-[state=open]:bg-popover/85 sm:px-5"
+              >
+                <AccordionTrigger className="py-4 font-runde text-base font-semibold text-foreground hover:no-underline [&>svg]:text-primary [&>svg]:transition-transform [&>svg]:duration-300 [&>svg]:ease-out">
+                  {item.question}
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 pr-8 text-sm font-medium leading-6 text-muted-foreground">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
     </div>
   );
 }

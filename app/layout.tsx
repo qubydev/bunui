@@ -4,12 +4,23 @@ import { Inter, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import GooeyNavbar from "@/components/GooeyNavbar";
 import {
+  SITE_AUTHOR,
+  SITE_DOMAIN,
   SITE_DESCRIPTION,
   SITE_NAME,
+  SITE_SHORT_NAME,
   SITE_TAGLINE,
   SITE_URL,
 } from "@/lib/site";
-import { SITE_KEYWORDS, siteJsonLd } from "@/lib/seo";
+import {
+  absoluteUrl,
+  SITE_APP_ICON,
+  SITE_KEYWORDS,
+  SITE_LOGO_IMAGE,
+  SITE_OG_IMAGE,
+  SITE_TWITTER_IMAGE,
+  siteJsonLd,
+} from "@/lib/seo";
 import "./globals.css";
 
 const inter = Inter({
@@ -57,12 +68,18 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   keywords: SITE_KEYWORDS,
   applicationName: SITE_NAME,
-  authors: [{ name: "Quby Dev", url: "https://github.com/qubydev" }],
-  creator: "Quby Dev",
+  authors: [{ name: SITE_AUTHOR.name, url: SITE_AUTHOR.url }],
+  creator: SITE_AUTHOR.name,
   publisher: SITE_NAME,
+  generator: "Next.js",
+  referrer: "origin-when-cross-origin",
+  category: "technology",
+  classification:
+    "Open-source animated React components, Tailwind CSS components, shadcn registry",
   alternates: {
     canonical: "/",
   },
+  manifest: "/manifest.webmanifest",
   robots: {
     index: true,
     follow: true,
@@ -75,20 +92,50 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: [{ url: "/logos/Bunui.svg", type: "image/svg+xml" }],
+    icon: [
+      { url: absoluteUrl("/logos/Bunui.svg"), type: "image/svg+xml" },
+      { url: absoluteUrl("/favicon.ico"), sizes: "any" },
+      {
+        url: absoluteUrl("/icon-192.png"),
+        sizes: "192x192",
+        type: "image/png",
+      },
+      { url: absoluteUrl(SITE_APP_ICON), sizes: "512x512", type: "image/png" },
+    ],
+    apple: [{ url: absoluteUrl("/apple-touch-icon.png"), sizes: "180x180" }],
   },
   openGraph: {
     title: SITE_TAGLINE,
     description: SITE_DESCRIPTION,
-    url: "/",
+    url: SITE_URL,
     siteName: SITE_NAME,
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: absoluteUrl(SITE_OG_IMAGE),
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} animated React component library`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_TAGLINE,
     description: SITE_DESCRIPTION,
+    creator: SITE_AUTHOR.handle,
+    site: SITE_AUTHOR.handle,
+    images: [absoluteUrl(SITE_TWITTER_IMAGE)],
+  },
+  other: {
+    "og:logo": absoluteUrl(SITE_LOGO_IMAGE),
+    "application-name": SITE_SHORT_NAME,
+    "apple-mobile-web-app-title": SITE_SHORT_NAME,
+    "msapplication-TileImage": absoluteUrl("/mstile-150x150.png"),
+    "msapplication-TileColor": "#0b0b0f",
+    "theme-color": "#0b0b0f",
+    "twitter:domain": SITE_DOMAIN,
   },
 };
 

@@ -45,11 +45,7 @@ function TopbarBunLogo({ className }: { className?: string }) {
             operator="out"
             result="inner"
           />
-          <feFlood
-            floodColor="white"
-            floodOpacity="1"
-            result="color"
-          />
+          <feFlood floodColor="white" floodOpacity="1" result="color" />
           <feComposite in="color" in2="inner" operator="in" result="shadow" />
           <feComposite in="shadow" in2="SourceGraphic" operator="over" />
         </filter>
@@ -102,49 +98,51 @@ export default function GooeyNavbar({ className }: { className?: string }) {
         className,
       )}
     >
-      <nav className="pointer-events-auto relative mx-auto flex min-h-13 w-full max-w-navbar items-center justify-between gap-2 overflow-hidden rounded-full border border-border bg-popover/92 py-2 pl-3 pr-2 text-foreground backdrop-blur-xl transition-[max-width] duration-300 ease-out hover:max-w-navbar-hover motion-reduce:transition-none sm:min-h-14 sm:pl-4">
+      <nav className="pointer-events-auto mx-auto flex min-h-13 w-full max-w-navbar items-center gap-1.5 overflow-hidden rounded-full border border-border bg-popover/92 px-2.5 py-2 text-foreground backdrop-blur-xl min-[380px]:gap-2 sm:min-h-14 sm:gap-3 sm:px-4">
         <Link
           href="/"
           aria-label="Bun UI home"
-          className="flex h-7 w-9 shrink-0 items-center justify-center text-primary transition-opacity hover:opacity-80 sm:h-8 sm:w-10"
+          className="flex h-7 w-8 shrink-0 items-center justify-center text-primary transition-opacity hover:opacity-80 sm:h-8 sm:w-10"
         >
-          <TopbarBunLogo className="h-7 w-9 sm:h-8 sm:w-10" />
+          <TopbarBunLogo className="h-7 w-8 sm:h-8 sm:w-10" />
         </Link>
 
-        <div className="absolute left-1/2 flex min-w-0 -translate-x-1/2 items-center gap-1 whitespace-nowrap text-sm font-medium">
-          {LINKS.map((link) => {
-            const active =
-              link.href === "/components"
-                ? pathname === "/components" ||
-                  pathname.startsWith("/components/")
-                : pathname === link.href;
+        <div className="flex min-w-0 flex-1 items-center justify-center px-1">
+          <div className="flex min-w-0 items-center justify-center gap-0.5 whitespace-nowrap text-xs font-medium min-[380px]:gap-1 min-[380px]:text-sm">
+            {LINKS.map((link) => {
+              const active =
+                link.href === "/components"
+                  ? pathname === "/components" ||
+                    pathname.startsWith("/components/")
+                  : pathname === link.href;
 
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "rounded-full px-2.5 py-2 transition-colors hover:bg-muted hover:text-foreground sm:px-3",
-                  active
-                    ? "bg-muted text-foreground"
-                    : "text-muted-foreground",
-                )}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={cn(
+                    "rounded-full px-2 py-2 transition-colors hover:bg-muted hover:text-foreground min-[380px]:px-2.5 sm:px-3",
+                    active
+                      ? "bg-muted text-foreground"
+                      : "text-muted-foreground",
+                  )}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
-        <div className="ml-auto flex shrink-0 items-center gap-1.5">
-          <ThemeToggle />
+        <div className="flex shrink-0 items-center gap-1 min-[380px]:gap-1.5 sm:pl-1">
+          <ThemeToggle className="size-9 sm:size-10" />
           <Button
             href={GITHUB_URL}
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub repository"
             size="sm"
-            className="group h-10 gap-1.5 overflow-hidden px-3 font-medium leading-none tabular-nums sm:px-4"
+            className="group h-9 gap-1.5 overflow-hidden px-3 font-medium leading-none tabular-nums sm:h-10 sm:px-4"
           >
             <span
               className="relative flex size-4.5 shrink-0 items-center justify-center"

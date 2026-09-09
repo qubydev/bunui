@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
+import { components } from "@/lib/components";
 import { getPool } from "@/lib/db";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const VISITOR_COOKIE = "bunui_visitor_id";
-const COMPONENT_COUNT = 1;
 let analyticsTableReady: Promise<void> | null = null;
 
 type AnalyticsStats = {
@@ -16,7 +16,8 @@ type AnalyticsStats = {
 
 async function ensureAnalyticsTable() {
   analyticsTableReady ??= getPool()
-    .query(`
+    .query(
+      `
       CREATE TABLE IF NOT EXISTS analytics_page_views (
         id bigserial PRIMARY KEY,
         visitor_id text NOT NULL,
@@ -31,7 +32,8 @@ async function ensureAnalyticsTable() {
 
       CREATE INDEX IF NOT EXISTS analytics_page_views_visitor_id_idx
         ON analytics_page_views (visitor_id);
-    `)
+    `,
+    )
     .then(() => undefined);
 
   await analyticsTableReady;
@@ -49,7 +51,7 @@ async function getStats(): Promise<AnalyticsStats> {
   `);
 
   return {
-    components: COMPONENT_COUNT,
+    components: components.length,
     visitors: Number(rows[0]?.visitors ?? 0),
     views: Number(rows[0]?.views ?? 0),
   };

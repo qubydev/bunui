@@ -4,7 +4,6 @@ import * as React from "react";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
@@ -115,10 +114,11 @@ export function StreakGrid({
   formatTooltip,
   formatSelection,
 }: StreakGridProps) {
-  const [selectedDay, setSelectedDay] = React.useState<StreakGridResolvedDay | null>(
+  const [selectedDay, setSelectedDay] =
+    React.useState<StreakGridResolvedDay | null>(null);
+  const resetTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(
     null,
   );
-  const resetTimerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const prepared = React.useMemo(() => {
     if (data.length === 0) return null;
@@ -182,7 +182,8 @@ export function StreakGrid({
       if (visibleDays.length === 0) return;
 
       const firstOfMonth = visibleDays.find((day) => day.date.getDate() === 1);
-      const markerDay = firstOfMonth ?? (weekIndex === 0 ? visibleDays[0] : null);
+      const markerDay =
+        firstOfMonth ?? (weekIndex === 0 ? visibleDays[0] : null);
       if (!markerDay) return;
 
       const key = `${markerDay.date.getFullYear()}-${markerDay.date.getMonth()}`;
@@ -248,162 +249,160 @@ export function StreakGrid({
     }, 3000);
   };
 
-  const selectedSummary = selectedDay
-    ? formatSelection
-      ? formatSelection(selectedDay)
-      : (
-          <>
-            <strong className="font-semibold text-foreground">
-              {selectedDay.count}
-            </strong>{" "}
-            {itemLabel} · {readableDate(selectedDay.date)}
-          </>
-        )
-    : null;
+  const selectedSummary = selectedDay ? (
+    formatSelection ? (
+      formatSelection(selectedDay)
+    ) : (
+      <>
+        <strong className="font-semibold text-foreground">
+          {selectedDay.count}
+        </strong>{" "}
+        {itemLabel} · {readableDate(selectedDay.date)}
+      </>
+    )
+  ) : null;
 
   return (
-    <TooltipProvider delayDuration={150}>
-      <div className={cn("w-full min-w-0", className)}>
-        <div
-          className="mx-auto min-w-0"
-          style={{ width: `min(100%, ${prepared.width}px)` }}
-        >
-          <div className="min-w-0 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-            <div style={{ width: prepared.width }}>
-              {showMonthLabels && prepared.weeks.length > 2 && (
-                <div
-                  className="mb-1 grid h-4 text-[11px] text-muted-foreground"
-                  style={{
-                    width: prepared.width,
-                    gridTemplateColumns: `repeat(${prepared.weeks.length}, ${prepared.cellSize}px)`,
-                    columnGap: prepared.gap,
-                  }}
-                >
-                  {prepared.monthMarkers.map((month) => (
-                    <span
-                      key={month.key}
-                      className="whitespace-nowrap"
-                      style={{
-                    gridColumn: `${Math.min(month.column, prepared.weeks.length - 2)} / span 3`,
-                  }}
-                    >
-                      {month.label}
-                    </span>
-                  ))}
-                </div>
-              )}
-
+    <div className={cn("w-full min-w-0", className)}>
+      <div
+        className="mx-auto min-w-0"
+        style={{ width: `min(100%, ${prepared.width}px)` }}
+      >
+        <div className="min-w-0 overflow-x-auto overscroll-x-contain pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+          <div style={{ width: prepared.width }}>
+            {showMonthLabels && prepared.weeks.length > 2 && (
               <div
-                role="grid"
-                aria-label={`${itemLabel} streak grid`}
-                className="grid"
+                className="mb-1 grid h-4 text-[11px] text-muted-foreground"
                 style={{
                   width: prepared.width,
                   gridTemplateColumns: `repeat(${prepared.weeks.length}, ${prepared.cellSize}px)`,
                   columnGap: prepared.gap,
                 }}
               >
-                {prepared.weeks.map((week, weekIndex) => (
-                  <div
-                    key={weekIndex}
-                    role="row"
-                    className="flex flex-col"
-                    style={{ gap: prepared.gap }}
+                {prepared.monthMarkers.map((month) => (
+                  <span
+                    key={month.key}
+                    className="whitespace-nowrap"
+                    style={{
+                      gridColumn: `${Math.min(month.column, prepared.weeks.length - 2)} / span 3`,
+                    }}
                   >
-                    {week.map((day) => {
-                      const resolvedDay: StreakGridResolvedDay = {
-                        date: day.date,
-                        count: day.count,
-                        label: day.label,
-                        level: day.level,
-                      };
-
-                      const cell = (
-                        <span
-                          role="gridcell"
-                          aria-hidden={day.outsideRange || undefined}
-                          aria-label={
-                            day.outsideRange
-                              ? undefined
-                              : `${day.count} ${itemLabel} on ${readableDate(day.date)}`
-                          }
-                          tabIndex={day.outsideRange ? -1 : 0}
-                          onClick={() => {
-                            if (!day.outsideRange) selectDay(resolvedDay);
-                          }}
-                          className={cn(
-                            "shrink-0 rounded-[3px] transition-[transform,background-color,opacity] duration-150 ease-out",
-                            day.outsideRange
-                              ? "pointer-events-none bg-transparent opacity-0"
-                              : cn(
-                                  "cursor-pointer hover:scale-110 focus-visible:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background",
-                                  LEVEL_CLASSES[day.level],
-                                ),
-                          )}
-                          style={{
-                            width: prepared.cellSize,
-                            height: prepared.cellSize,
-                          }}
-                        />
-                      );
-
-                      if (day.outsideRange) {
-                        return (
-                          <React.Fragment key={dateKey(day.date)}>
-                            {cell}
-                          </React.Fragment>
-                        );
-                      }
-
-                      return (
-                        <Tooltip key={dateKey(day.date)}>
-                          <TooltipTrigger asChild>{cell}</TooltipTrigger>
-                          <TooltipContent side="top" sideOffset={6}>
-                            {tooltipContent(resolvedDay)}
-                          </TooltipContent>
-                        </Tooltip>
-                      );
-                    })}
-                  </div>
+                    {month.label}
+                  </span>
                 ))}
               </div>
+            )}
+
+            <div
+              role="grid"
+              aria-label={`${itemLabel} streak grid`}
+              className="grid"
+              style={{
+                width: prepared.width,
+                gridTemplateColumns: `repeat(${prepared.weeks.length}, ${prepared.cellSize}px)`,
+                columnGap: prepared.gap,
+              }}
+            >
+              {prepared.weeks.map((week, weekIndex) => (
+                <div
+                  key={weekIndex}
+                  role="row"
+                  className="flex flex-col"
+                  style={{ gap: prepared.gap }}
+                >
+                  {week.map((day) => {
+                    const resolvedDay: StreakGridResolvedDay = {
+                      date: day.date,
+                      count: day.count,
+                      label: day.label,
+                      level: day.level,
+                    };
+
+                    const cell = (
+                      <span
+                        role="gridcell"
+                        aria-hidden={day.outsideRange || undefined}
+                        aria-label={
+                          day.outsideRange
+                            ? undefined
+                            : `${day.count} ${itemLabel} on ${readableDate(day.date)}`
+                        }
+                        tabIndex={day.outsideRange ? -1 : 0}
+                        onClick={() => {
+                          if (!day.outsideRange) selectDay(resolvedDay);
+                        }}
+                        className={cn(
+                          "shrink-0 rounded-[3px] transition-[transform,background-color,opacity] duration-150 ease-out",
+                          day.outsideRange
+                            ? "pointer-events-none bg-transparent opacity-0"
+                            : cn(
+                                "cursor-pointer hover:scale-110 focus-visible:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background",
+                                LEVEL_CLASSES[day.level],
+                              ),
+                        )}
+                        style={{
+                          width: prepared.cellSize,
+                          height: prepared.cellSize,
+                        }}
+                      />
+                    );
+
+                    if (day.outsideRange) {
+                      return (
+                        <React.Fragment key={dateKey(day.date)}>
+                          {cell}
+                        </React.Fragment>
+                      );
+                    }
+
+                    return (
+                      <Tooltip key={dateKey(day.date)}>
+                        <TooltipTrigger asChild>{cell}</TooltipTrigger>
+                        <TooltipContent side="top" sideOffset={6}>
+                          {tooltipContent(resolvedDay)}
+                        </TooltipContent>
+                      </Tooltip>
+                    );
+                  })}
+                </div>
+              ))}
             </div>
           </div>
-
-          {(showSummary || showLegend) && (
-            <div className="mt-3 flex min-w-0 flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[11px] text-muted-foreground">
-              {showSummary ? (
-                <span className="min-w-0 truncate" aria-live="polite">
-                  {selectedSummary ?? (
-                    <>
-                      <strong className="font-semibold text-foreground">
-                        {prepared.total}
-                      </strong>{" "}
-                      {itemLabel} last year
-                    </>
-                  )}
-                </span>
-              ) : (
-                <span />
-              )}
-
-              {showLegend && (
-                <div className="flex shrink-0 items-center gap-[3px]">
-                  <span>{lessLabel}</span>
-                  {LEVEL_CLASSES.map((levelClass, index) => (
-                    <span
-                      key={index}
-                      aria-hidden="true"
-                      className={cn("size-[10px] rounded-[3px]", levelClass)}
-                    />
-                  ))}
-                  <span>{moreLabel}</span>
-                </div>
-              )}
-            </div>
-          )}
         </div>
+
+        {(showSummary || showLegend) && (
+          <div className="mt-3 flex min-w-0 flex-wrap items-center justify-between gap-x-4 gap-y-2 text-[11px] text-muted-foreground">
+            {showSummary ? (
+              <span className="min-w-0 truncate" aria-live="polite">
+                {selectedSummary ?? (
+                  <>
+                    <strong className="font-semibold text-foreground">
+                      {prepared.total}
+                    </strong>{" "}
+                    {itemLabel} last year
+                  </>
+                )}
+              </span>
+            ) : (
+              <span />
+            )}
+
+            {showLegend && (
+              <div className="flex shrink-0 items-center gap-[3px]">
+                <span>{lessLabel}</span>
+                {LEVEL_CLASSES.map((levelClass, index) => (
+                  <span
+                    key={index}
+                    aria-hidden="true"
+                    className={cn("size-[10px] rounded-[3px]", levelClass)}
+                  />
+                ))}
+                <span>{moreLabel}</span>
+              </div>
+            )}
+          </div>
+        )}
       </div>
-    </TooltipProvider>
+    </div>
   );
 }
