@@ -24,7 +24,7 @@ const SOCIAL_LINKS = [
 
 export default function Footer() {
   return (
-    <footer className="mx-auto mt-16 flex w-full max-w-5xl flex-col gap-4 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+    <footer className="mx-auto mt-16 flex w-full max-w-4xl flex-col gap-4 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
       <p>© {new Date().getFullYear()} Bun UI</p>
 
       <div className="flex items-center gap-1">

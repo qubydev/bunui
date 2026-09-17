@@ -59,13 +59,8 @@ function SidebarShellContent({
     mode === "code" && item?.registry && !source ? SOURCE_LOADING : source;
 
   return (
-    <div className="relative h-full min-h-0 overflow-hidden bg-background">
-      <main
-        className={cn(
-          "no-scrollbar h-full min-h-0 min-w-0 overflow-x-hidden overflow-y-auto",
-          pagePaddingClassName,
-        )}
-      >
+    <div className="relative min-w-0 bg-background">
+      <main className={cn("min-w-0 overflow-x-hidden", pagePaddingClassName)}>
         {mode === "preview" ? (
           <div className={cn(pageContentClassName, "flex min-w-0 flex-col")}>
             <div className="h-72 w-full overflow-hidden sm:h-80 lg:h-[360px]">
@@ -81,7 +76,7 @@ function SidebarShellContent({
           </div>
         ) : (
           <div
-            className={cn(pageContentClassName, "flex min-h-full items-start")}
+            className={cn(pageContentClassName, "flex items-start")}
           >
             {item?.registry ? (
               <PanelCode

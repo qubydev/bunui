@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { Inter, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import GooeyNavbar from "@/components/GooeyNavbar";
+import Footer from "@/components/Footer";
 import {
   SITE_AUTHOR,
   SITE_DOMAIN,
@@ -169,6 +170,9 @@ try {
       <body className="min-h-full flex flex-col">
         <GooeyNavbar />
         <div className="flex flex-1 flex-col">{children}</div>
+        <div className="w-full px-5 sm:px-6 md:px-8">
+          <Footer />
+        </div>
         <Analytics />
       </body>
     </html>
