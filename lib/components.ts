@@ -247,7 +247,7 @@ export function Demo() {
     preview: "/recordings/command-menu-preview.mp4",
     dependencies: [{ name: "dialog" }],
     description:
-      "A ⌘K command palette whose shortcut keys physically squeeze as you hold them, then spring open the menu on release.",
+      "A ⌘K command palette and keyboard shortcut with squeeze effect.",
     source: `${REGISTRY_HOMEPAGE}/blob/main/components/ui/command-menu.tsx`,
     interaction:
       "Hold the modifier and the hotkey to watch the shortcut chips squeeze down like real keys, then release to pop the menu open. Search, arrow up and down to move, Enter to run, Esc to close. Clicking the trigger opens it too.",

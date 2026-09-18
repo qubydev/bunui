@@ -46,7 +46,7 @@
       "name": "command-menu",
       "type": "registry:ui",
       "title": "Command Menu",
-      "description": "A ⌘K command palette whose shortcut keys physically squeeze as you hold them, then spring open the menu on release.",
+      "description": "A ⌘K command palette and keyboard shortcut with squeeze effect.",
       "dependencies": ["lucide-react"],
       "registryDependencies": ["utils", "dialog"],
       "files": [

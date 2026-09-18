@@ -2,7 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "command-menu",
   "title": "Command Menu",
-  "description": "A ⌘K command palette whose shortcut keys physically squeeze as you hold them, then spring open the menu on release.",
+  "description": "A ⌘K command palette and keyboard shortcut with squeeze effect.",
   "dependencies": [
     "lucide-react"
   ],
