@@ -106,7 +106,7 @@ export default function Home() {
                 value={`faq-${index}`}
                 className="group rounded-2xl border-0 bg-card/75 px-4 shadow-sm ring-1 ring-foreground/[0.03] transition-colors duration-300 ease-out hover:bg-muted/70 data-[state=open]:bg-popover/85 sm:px-5"
               >
-                <AccordionTrigger className="py-4 font-runde text-base font-semibold text-foreground hover:no-underline [&>svg]:text-primary [&>svg]:transition-transform [&>svg]:duration-300 [&>svg]:ease-out">
+                <AccordionTrigger className="py-4 font-runde text-base font-semibold text-foreground hover:no-underline [&>svg]:transition-transform [&>svg]:duration-300 [&>svg]:ease-out">
                   {item.question}
                 </AccordionTrigger>
                 <AccordionContent className="pb-5 pr-8 text-sm font-medium leading-6 text-muted-foreground">
