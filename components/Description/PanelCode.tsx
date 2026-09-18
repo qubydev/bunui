@@ -48,7 +48,7 @@ export default function PanelCode({
               "min-h-0 w-full overflow-auto p-4 font-mono text-xs leading-6",
               contentClassName,
             )}
-            style={{ ...style, margin: 0, backgroundColor: "transparent" }}
+            style={{ ...style, margin: 0, backgroundColor: "transparent", textShadow: "none" }}
           >
             {tokens.map((line, index) => (
               <div key={index} {...getLineProps({ line })}>
@@ -57,9 +57,16 @@ export default function PanelCode({
                     {index + 1}
                   </span>
                 )}
-                {line.map((token, tokenIndex) => (
-                  <span key={tokenIndex} {...getTokenProps({ token })} />
-                ))}
+                {line.map((token, tokenIndex) => {
+                  const tokenProps = getTokenProps({ token });
+                  return (
+                    <span
+                      key={tokenIndex}
+                      {...tokenProps}
+                      style={{ ...tokenProps.style, textShadow: "none" }}
+                    />
+                  );
+                })}
               </div>
             ))}
           </pre>

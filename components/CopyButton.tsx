@@ -26,7 +26,7 @@ const CheckGlyph = () => (
     />
     <path
       d="M6 10.4225L8.33333 12.8182L14 7"
-      stroke="white"
+      stroke="var(--primary-foreground)"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"

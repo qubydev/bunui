@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Star } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/Button";
 import { GithubLogo, XLogo } from "@/components/logos";
 import { REGISTRY_HOMEPAGE } from "@/lib/components";
 import {

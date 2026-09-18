@@ -237,6 +237,102 @@ export function Demo() {
   )
 }`,
   },
+  {
+    name: "Command menu",
+    href: "/components/command-menu",
+    category: "navigation",
+    isNew: true,
+    featured: true,
+    registry: "command-menu",
+    preview: "/recordings/command-menu-preview.mp4",
+    dependencies: [{ name: "dialog" }],
+    description:
+      "A ⌘K command palette whose shortcut keys physically squeeze as you hold them, then spring open the menu on release.",
+    source: `${REGISTRY_HOMEPAGE}/blob/main/components/ui/command-menu.tsx`,
+    interaction:
+      "Hold the modifier and the hotkey to watch the shortcut chips squeeze down like real keys, then release to pop the menu open. Search, arrow up and down to move, Enter to run, Esc to close. Clicking the trigger opens it too.",
+    props: [
+      {
+        name: "items",
+        type: "CommandMenuItem[]",
+        required: true,
+        description:
+          "Commands to render. Each item has an id, label, and optional icon, description, shortcut, keywords, group, and onSelect.",
+      },
+      {
+        name: "open",
+        type: "boolean",
+        description:
+          "Open state for controlled usage. Leave it out to let the component manage itself.",
+      },
+      {
+        name: "defaultOpen",
+        type: "boolean",
+        default: "false",
+        description: "Initial open state when the component is uncontrolled.",
+      },
+      {
+        name: "onOpenChange",
+        type: "(open: boolean) => void",
+        description: "Called whenever the open state changes.",
+      },
+      {
+        name: "onSelect",
+        type: "(item: CommandMenuItem) => void",
+        description:
+          "Called with the chosen item, in addition to the item's own onSelect.",
+      },
+      {
+        name: "hotkey",
+        type: "string",
+        default: '"k"',
+        description:
+          "Letter pressed with the modifier (⌘ on macOS, Ctrl elsewhere) to open the menu.",
+      },
+      {
+        name: "placeholder",
+        type: "string",
+        default: '"Type a command or search…"',
+        description: "Placeholder shown inside the search input.",
+      },
+      {
+        name: "triggerPlaceholder",
+        type: "string",
+        default: '"Search…"',
+        description: "Label shown inside the trigger before the shortcut chips.",
+      },
+      {
+        name: "emptyMessage",
+        type: "string",
+        default: '"No results found."',
+        description: "Message shown when no item matches the query.",
+      },
+      {
+        name: "showTrigger",
+        type: "boolean",
+        default: "true",
+        description:
+          "Renders the built-in search-style trigger. Set false to open via the hotkey only.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Extra classes merged onto the trigger.",
+      },
+    ],
+    usage: `import { CommandMenu } from "@/components/ui/command-menu"
+import { Home, Settings, User } from "lucide-react"
+
+const items = [
+  { id: "home", label: "Go to Dashboard", icon: <Home />, group: "Navigation" },
+  { id: "profile", label: "Open Profile", icon: <User />, group: "Navigation" },
+  { id: "settings", label: "Settings", icon: <Settings />, shortcut: "⌘," },
+]
+
+export function Demo() {
+  return <CommandMenu items={items} onSelect={(item) => console.log(item.id)} />
+}`,
+  },
 ];
 
 export type PackageManager = "npm" | "pnpm" | "yarn" | "bun";

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Check, Copy } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/Button";
 
 const INSTALL_COMMAND = "npx shadcn@latest add qubydev/bunui/<component>";
 
