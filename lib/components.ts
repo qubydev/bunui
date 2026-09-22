@@ -340,6 +340,7 @@ export function Demo() {
     isNew: true,
     featured: true,
     registry: "bendy-slider",
+    preview: "/recordings/bendy-slider-preview.mp4",
     dependencies: [{ name: "lucide-react" }],
     description:
       "A tactile pill slider whose knob dynamically bends to match the curvature of the capsule edges.",

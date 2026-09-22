@@ -276,24 +276,8 @@ export function BendySlider({
   const leftThreshold = cfg.margin + cfg.iconWidth + 4;
   const rightThreshold = trackWidth - cfg.margin - cfg.textWidth - 4;
 
-  const [iconFlipped, setIconFlipped] = React.useState(false);
-  const [textFlipped, setTextFlipped] = React.useState(false);
-
-  React.useEffect(() => {
-    if (knobX < leftThreshold) {
-      setIconFlipped(true);
-    } else if (knobX > leftThreshold + 4) {
-      setIconFlipped(false);
-    }
-  }, [knobX, leftThreshold]);
-
-  React.useEffect(() => {
-    if (knobX > rightThreshold) {
-      setTextFlipped(true);
-    } else if (knobX < rightThreshold - 4) {
-      setTextFlipped(false);
-    }
-  }, [knobX, rightThreshold]);
+  const iconFlipped = knobX < leftThreshold;
+  const textFlipped = knobX > rightThreshold;
 
   // Target X coordinates for icon and text
   const iconX = iconFlipped ? knobX + gap : cfg.margin;
@@ -322,7 +306,6 @@ export function BendySlider({
       data-disabled={disabled || undefined}
       className={cn(
         "group relative flex w-full select-none items-center rounded-full border bg-gradient-to-r from-[#93c5fd] via-white to-[#f97316] outline-none",
-        "cursor-grab active:cursor-grabbing",
         "text-stone-900 shadow-xs",
         "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         cfg.heightClass,

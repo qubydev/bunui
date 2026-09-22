@@ -137,7 +137,7 @@ function NewsletterCard() {
           Get the good stuff.
         </p>
         <p className="mt-1 max-w-sm text-sm leading-relaxed text-muted-foreground">
-          New components, tiny experiments, and Bun UI updates (we don't spam) into your inbox.
+          New components, tiny experiments, and Bun UI updates (we don&apos;t spam) into your inbox.
         </p>
       </div>
 
