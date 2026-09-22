@@ -333,6 +333,101 @@ export function Demo() {
   return <CommandMenu items={items} onSelect={(item) => console.log(item.id)} />
 }`,
   },
+  {
+    name: "Bendy slider",
+    href: "/components/bendy-slider",
+    category: "inputs",
+    isNew: true,
+    featured: true,
+    registry: "bendy-slider",
+    dependencies: [{ name: "lucide-react" }],
+    description:
+      "A tactile pill slider whose knob dynamically bends to match the curvature of the capsule edges.",
+    source: `${REGISTRY_HOMEPAGE}/blob/main/components/ui/bendy-slider.tsx`,
+    interaction:
+      "Drag the knob or click anywhere on the track. As the knob moves from center towards either edge, it smoothly bends to match the rounded boundary.",
+    props: [
+      {
+        name: "value",
+        type: "number",
+        description:
+          "Controlled slider value between min and max.",
+      },
+      {
+        name: "defaultValue",
+        type: "number",
+        default: "50",
+        description: "Initial value when uncontrolled. Defaults to track center.",
+      },
+      {
+        name: "min",
+        type: "number",
+        default: "0",
+        description: "Minimum slider value.",
+      },
+      {
+        name: "max",
+        type: "number",
+        default: "100",
+        description: "Maximum slider value.",
+      },
+      {
+        name: "step",
+        type: "number",
+        default: "1",
+        description: "Step increment value.",
+      },
+      {
+        name: "onValueChange",
+        type: "(value: number) => void",
+        description: "Called whenever the slider value changes during dragging or navigation.",
+      },
+      {
+        name: "onValueCommit",
+        type: "(value: number) => void",
+        description: "Called when dragging ends or keyboard input commits.",
+      },
+      {
+        name: "icon",
+        type: "React.ReactNode",
+        description: "Leading icon rendered on the left of the slider track.",
+      },
+      {
+        name: "formatValue",
+        type: "(value: number) => React.ReactNode",
+        description: "Custom formatter for the value/percentage label on the right.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "default" | "lg"',
+        default: '"default"',
+        options: ["sm", "default", "lg"],
+        description: "Height and knob sizing scale.",
+      },
+      {
+        name: "maxBend",
+        type: "number",
+        default: "4.5",
+        description: "Maximum curvature displacement in pixels at the edges.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        default: "false",
+        description: "Disables interaction and dims the slider.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Extra classes merged onto the slider root element.",
+      },
+    ],
+    usage: `import { BendySlider } from "@/components/ui/bendy-slider"
+
+export function Demo() {
+  return <BendySlider defaultValue={50} />
+}`,
+  },
 ];
 
 export type PackageManager = "npm" | "pnpm" | "yarn" | "bun";

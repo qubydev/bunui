@@ -55,6 +55,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "bendy-slider",
+      "type": "registry:ui",
+      "title": "Bendy Slider",
+      "description": "A tactile pill slider whose knob dynamically bends to match the curvature of the capsule edges.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/bendy-slider.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
