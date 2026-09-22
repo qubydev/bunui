@@ -343,7 +343,7 @@ export function Demo() {
     preview: "/recordings/bendy-slider-preview.mp4",
     dependencies: [{ name: "lucide-react" }],
     description:
-      "A tactile pill slider whose knob dynamically bends to match the curvature of the capsule edges.",
+      "A tactile slider that bends at the edges.",
     source: `${REGISTRY_HOMEPAGE}/blob/main/components/ui/bendy-slider.tsx`,
     interaction:
       "Drag the knob or click anywhere on the track. As the knob moves from center towards either edge, it smoothly bends to match the rounded boundary.",

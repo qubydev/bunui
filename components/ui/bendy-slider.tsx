@@ -170,7 +170,9 @@ export function BendySlider({
     if (disabled || e.button !== 0) return;
     e.currentTarget.focus();
     setIsDragging(true);
-    e.currentTarget.setPointerCapture(e.pointerId);
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {}
     updateFromPointer(e.clientX);
   };
 
@@ -183,10 +185,22 @@ export function BendySlider({
     if (!isDragging) return;
     setIsDragging(false);
     if (e.currentTarget.hasPointerCapture(e.pointerId)) {
-      e.currentTarget.releasePointerCapture(e.pointerId);
+      try {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      } catch {}
     }
     const finalVal = updateFromPointer(e.clientX);
     onValueCommit?.(finalVal ?? value);
+  };
+
+  const handlePointerCancel = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      try {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      } catch {}
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -299,13 +313,14 @@ export function BendySlider({
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
+      onPointerCancel={handlePointerCancel}
+      onLostPointerCapture={() => setIsDragging(false)}
       onKeyDown={handleKeyDown}
       data-slot="bendy-slider"
       data-dragging={isDragging || undefined}
       data-disabled={disabled || undefined}
       className={cn(
-        "group relative flex w-full select-none items-center rounded-full border bg-gradient-to-r from-[#93c5fd] via-white to-[#f97316] outline-none",
+        "group relative flex w-full touch-none select-none items-center rounded-full border bg-gradient-to-r from-[#93c5fd] via-white to-[#f97316] outline-none",
         "text-stone-900 shadow-xs",
         "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         cfg.heightClass,
