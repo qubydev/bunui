@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import DescriptionContent from "../Description/DescriptionContent";
 import PanelCode from "../Description/PanelCode";
 import { fetchSource, SOURCE_LOADING } from "../Description/fetchSource";
+import CreatorBadge from "../CreatorBadge";
 
 type ViewMode = "preview" | "code";
 
@@ -63,8 +64,9 @@ function SidebarShellContent({
       <main className={cn("min-w-0 overflow-x-hidden", pagePaddingClassName)}>
         {mode === "preview" ? (
           <div className={cn(pageContentClassName, "flex min-w-0 flex-col")}>
-            <div className="h-72 w-full overflow-hidden sm:h-80 lg:h-[360px]">
+            <div className="relative h-72 w-full overflow-hidden sm:h-80 lg:h-[360px]">
               {children}
+              {item?.creator && <CreatorBadge creator={item.creator} />}
             </div>
             <section className="py-6">
               <DescriptionContent

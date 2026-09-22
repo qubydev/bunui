@@ -39,12 +39,21 @@ export const CATEGORY_ORDER: ComponentCategory[] = [
   "feedback",
 ];
 
+export type ComponentCreator = {
+  handle: string;
+  url?: string;
+  name?: string;
+  avatar?: string;
+};
+
 export type ComponentItem = {
   name: string;
   href: string;
   category: ComponentCategory;
   isNew?: boolean;
   description?: string;
+  note?: string;
+  creator?: ComponentCreator;
   registry?: string;
   source?: string;
   preview?: string;
@@ -344,6 +353,10 @@ export function Demo() {
     dependencies: [{ name: "lucide-react" }],
     description:
       "A tactile slider that bends at the edges.",
+    creator: {
+      handle: "fabiuix",
+      url: "https://x.com/fabiuix",
+    },
     source: `${REGISTRY_HOMEPAGE}/blob/main/components/ui/bendy-slider.tsx`,
     interaction:
       "Drag the knob or click anywhere on the track. As the knob moves from center towards either edge, it smoothly bends to match the rounded boundary.",
