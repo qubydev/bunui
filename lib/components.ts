@@ -442,6 +442,116 @@ export function Demo() {
   return <BendySlider defaultValue={50} />
 }`,
   },
+  {
+    name: "Recorder",
+    href: "/components/recorder",
+    category: "inputs",
+    isNew: true,
+    featured: true,
+    registry: "recorder",
+    preview: "/recordings/recorder-preview.mp4",
+    dependencies: [
+      { name: "lucide-react" },
+      { name: "motion" },
+      { name: "@fontsource/chakra-petch" },
+    ],
+    description: "A tactile recorder with an animated pixel grid.",
+    interaction:
+      "Click the record button to start. Smoothly expands with countdown, live timer, cancel, and playback review.",
+    props: [
+      {
+        name: "state",
+        type: '"idle" | "recording" | "done"',
+        description: "Controlled state of the recorder.",
+      },
+      {
+        name: "defaultState",
+        type: '"idle" | "recording" | "done"',
+        default: '"idle"',
+        description: "Initial uncontrolled state.",
+      },
+      {
+        name: "onStateChange",
+        type: "(state: RecorderState) => void",
+        description: "Callback fired when the recorder state changes.",
+      },
+      {
+        name: "onStart",
+        type: "() => void",
+        description: "Callback fired when recording starts.",
+      },
+      {
+        name: "onStop",
+        type: "(duration: number) => void",
+        description: "Callback fired when recording is marked as done with duration in seconds.",
+      },
+      {
+        name: "onCancel",
+        type: "() => void",
+        description: "Callback fired when recording is cancelled.",
+      },
+      {
+        name: "onReset",
+        type: "() => void",
+        description: "Callback fired when reset back to idle.",
+      },
+      {
+        name: "onPlay",
+        type: "() => void",
+        description: "Callback fired when playback starts in done state.",
+      },
+      {
+        name: "onPause",
+        type: "() => void",
+        description: "Callback fired when playback is paused in done state.",
+      },
+      {
+        name: "icon",
+        type: "React.ReactNode",
+        description: "Custom icon for the record button in idle state. Defaults to CircleDot.",
+      },
+      {
+        name: "recordingLabel",
+        type: "string",
+        default: '"Recording"',
+        description: "Text label displayed beside the timer in recording state.",
+      },
+      {
+        name: "size",
+        type: '"sm" | "default" | "lg"',
+        default: '"default"',
+        options: ["sm", "default", "lg"],
+        description: "Visual scale variant of the recorder.",
+      },
+      {
+        name: "maxDuration",
+        type: "number",
+        description: "Maximum recording duration in seconds before auto-stopping.",
+      },
+      {
+        name: "disabled",
+        type: "boolean",
+        default: "false",
+        description: "Whether interaction is disabled.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Extra classes merged onto the recorder container element.",
+      },
+    ],
+    usage: `import { Recorder } from "@/components/ui/recorder"
+
+export function Demo() {
+  return (
+    <Recorder
+      onStop={(duration) => {
+        console.log("Recording finished:", duration)
+      }}
+    />
+  )
+}`,
+  },
 ];
 
 export type PackageManager = "npm" | "pnpm" | "yarn" | "bun";

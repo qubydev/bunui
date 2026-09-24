@@ -69,6 +69,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "recorder",
+      "type": "registry:ui",
+      "title": "Recorder",
+      "description": "A tactile recorder with an animated pixel grid.",
+      "dependencies": ["lucide-react", "motion", "@fontsource/chakra-petch"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/recorder.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
