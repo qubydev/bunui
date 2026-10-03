@@ -83,6 +83,20 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "glide-button",
+      "type": "registry:ui",
+      "title": "Glide Button",
+      "description": "A button where inline text glides into an arrow on hover.",
+      "dependencies": ["motion", "lucide-react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "path": "components/ui/glide-button.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

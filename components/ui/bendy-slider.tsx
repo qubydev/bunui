@@ -105,11 +105,13 @@ export function BendySlider({
 
   const [isDragging, setIsDragging] = React.useState(false);
   const [hasMounted, setHasMounted] = React.useState(false);
-  const trackRef = React.useRef<HTMLDivElement>(null);
-  const [trackWidth, setTrackWidth] = React.useState(280);
 
   const cfg = SIZE_CONFIGS[size] ?? SIZE_CONFIGS.default;
   const maxBend = userMaxBend ?? cfg.maxBend;
+
+  const trackRef = React.useRef<HTMLDivElement>(null);
+  const [trackWidth, setTrackWidth] = React.useState(280);
+  const [trackHeight, setTrackHeight] = React.useState<number>(cfg.height - 2);
 
   // Track mount status to disable animations on initial load
   React.useEffect(() => {
@@ -119,22 +121,24 @@ export function BendySlider({
     return () => cancelAnimationFrame(frame);
   }, []);
 
-  // Track width measurement via ResizeObserver
+  // Track inner dimensions measurement via ResizeObserver
   React.useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
 
-    const updateWidth = () => {
-      const rect = el.getBoundingClientRect();
-      if (rect.width > 0) setTrackWidth(rect.width);
+    const updateDimensions = () => {
+      const w = el.clientWidth;
+      const h = el.clientHeight;
+      if (w > 0) setTrackWidth(w);
+      if (h > 0) setTrackHeight(h);
     };
 
-    updateWidth();
-    const observer = new ResizeObserver(updateWidth);
+    updateDimensions();
+    const observer = new ResizeObserver(updateDimensions);
     observer.observe(el);
 
     return () => observer.disconnect();
-  }, []);
+  }, [cfg.height]);
 
   const clampValue = React.useCallback(
     (val: number) => {
@@ -152,8 +156,10 @@ export function BendySlider({
       if (!track || disabled) return;
 
       const rect = track.getBoundingClientRect();
-      const usableWidth = Math.max(1, rect.width - cfg.margin * 2);
-      const relativeX = clientX - rect.left - cfg.margin;
+      const clientLeft = track.clientLeft || 0;
+      const innerWidth = track.clientWidth || rect.width;
+      const usableWidth = Math.max(1, innerWidth - cfg.margin * 2);
+      const relativeX = clientX - rect.left - clientLeft - cfg.margin;
       const ratio = Math.max(0, Math.min(1, relativeX / usableWidth));
       const nextVal = clampValue(min + ratio * (max - min));
 
@@ -254,7 +260,6 @@ export function BendySlider({
   const knobX = cfg.margin + ratio * usableWidth;
 
   // Knob vertical dimensions
-  const trackHeight = cfg.height;
   const knobH = cfg.knobHeight;
   const yTop = (trackHeight - knobH) / 2;
   const yBottom = (trackHeight + knobH) / 2;
@@ -333,7 +338,7 @@ export function BendySlider({
       {/* SVG Layer for bending knob arc */}
       <svg
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 size-full"
+        className="pointer-events-none absolute inset-0 size-full overflow-visible"
       >
         <path
           d={knobPathD}
@@ -389,7 +394,9 @@ export function BendySlider({
         )}
         style={{ width: cfg.textWidth }}
       >
-        {displayedValue}
+        <span className="inline-block leading-none translate-y-[0.5px]">
+          {displayedValue}
+        </span>
       </motion.div>
     </div>
   );

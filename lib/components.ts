@@ -552,6 +552,69 @@ export function Demo() {
   )
 }`,
   },
+  {
+    name: "Glide button",
+    href: "/components/glide-button",
+    category: "inputs",
+    isNew: true,
+    featured: true,
+    registry: "glide-button",
+    preview: "/recordings/glide-button-preview.mp4",
+    dependencies: [{ name: "motion" }],
+    description: "A button where inline text glides into an arrow on hover.",
+    creator: {
+      handle: "marcelkargul",
+      url: "https://x.com/marcelkargul",
+    },
+    source: `${REGISTRY_HOMEPAGE}/blob/main/components/ui/glide-button.tsx`,
+    interaction:
+      "Hover over the button. The selected text glides to the right end and morphs midway into an arrow, while the surrounding text glides left to fill the gap.",
+    props: [
+      {
+        name: "children",
+        type: "ReactNode",
+        required: true,
+        description: "The text or elements inside the button (e.g. 'Start <Arrow>a</Arrow> project').",
+      },
+      {
+        name: "arrow",
+        type: "string",
+        description:
+          "Optional fallback prop for the transforming text substring.",
+      },
+      {
+        name: "href",
+        type: "string",
+        description: "Optional URL. If provided, renders an accessible Next.js Link.",
+      },
+      {
+        name: "variant",
+        type: '"default" | "outline" | "secondary" | "ghost"',
+        default: '"default"',
+        description: "Visual appearance style.",
+      },
+      {
+        name: "size",
+        type: '"default" | "sm" | "lg"',
+        default: '"lg"',
+        description: "Size preset.",
+      },
+      {
+        name: "className",
+        type: "string",
+        description: "Extra classes merged onto the button container.",
+      },
+    ],
+    usage: `import { GlideButton, Arrow } from "@/components/ui/glide-button"
+
+export function Demo() {
+  return (
+    <GlideButton>
+      Start <Arrow>a</Arrow> project
+    </GlideButton>
+  )
+}`,
+  },
 ];
 
 export type PackageManager = "npm" | "pnpm" | "yarn" | "bun";
